@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://marbaquero.github.io/sitemap.xml
