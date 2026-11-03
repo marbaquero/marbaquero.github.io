@@ -785,9 +785,7 @@ a[href^="tel:"]{display:inline-flex;align-items:center;gap:8px;min-height:44px}
           el.style.display="none";
         }
       });
-      if(display){
-        display.scrollIntoView({behavior:"smooth", block:"start"});
-      }
+      
       if(hint){
         var active = document.querySelector(".card7.active");
         hint.textContent = active ? (document.documentElement.lang==="en" ? "Showing demo for " + active.querySelector("b").textContent : "Mostrando demo de " + active.querySelector("b").textContent) : "";
