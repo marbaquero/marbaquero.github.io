@@ -222,10 +222,10 @@ footer{padding-block:28px;display:flex;justify-content:space-between;gap:12px;fl
 .apps7 .wrap{display:grid;grid-template-columns:minmax(0,1fr) 180px;column-gap:34px;align-items:center}
 .apps7 .wrap > h2,.apps7 .wrap > p.sub,.apps7 .wrap > #icon-demo-hint{grid-column:1/-1}
 .apps7 .grid7{grid-column:1;grid-row:3;align-self:center}
-.iphone-apps-showcase{grid-column:2;grid-row:3;display:flex;flex-direction:column;align-items:center;gap:6px;margin:0 auto;width:100%;max-width:104px;text-align:center}
-.iphone-apps-showcase img{display:block;width:100%;height:auto;max-height:225px;aspect-ratio:709/1536;object-fit:cover;object-position:center;border:0;border-radius:15px;background:transparent;box-shadow:0 5px 14px rgba(23,45,56,.10)}
-.iphone-apps-showcase figcaption{font-size:.62rem;line-height:1.35;letter-spacing:.01em;color:#52666F}
-@media(max-width:760px){.apps7 .wrap{display:block}.apps7 .grid7{margin-top:24px}.iphone-apps-showcase{width:70px;max-width:70px;margin:14px auto 0;gap:4px}.iphone-apps-showcase img{max-height:152px;border-radius:11px}.iphone-apps-showcase figcaption{font-size:.58rem}}
+.iphone-apps-showcase{grid-column:2;grid-row:3;display:flex;flex-direction:column;align-items:center;gap:8px;margin:0 auto;width:100%;max-width:180px;text-align:center}
+.iphone-apps-showcase img{display:block;width:48px;height:auto;max-height:none;aspect-ratio:709/1536;object-fit:cover;object-position:center;border:0;border-radius:9px;background:transparent;box-shadow:0 5px 14px rgba(23,45,56,.10);transform:rotate(90deg)}
+.iphone-apps-showcase figcaption{font-family:var(--f-body);font-size:.82rem;font-weight:500;line-height:1.4;letter-spacing:0;text-transform:none;color:var(--muted)}
+@media(max-width:760px){.apps7 .wrap{display:block}.apps7 .grid7{margin-top:24px}.iphone-apps-showcase{width:100%;max-width:180px;margin:14px auto 0;gap:7px}.iphone-apps-showcase img{width:32px;border-radius:7px}.iphone-apps-showcase figcaption{font-size:.78rem}}
 
 .demo-display .demo{margin-top:0}
 
@@ -579,7 +579,7 @@ footer{margin:0!important;padding-top:14px!important;padding-bottom:14px!importa
         </div>
         <figure class="iphone-apps-showcase">
           <img src="/preview/images/Analysis%20output%202.png" alt="Las siete aplicaciones organizadas en una carpeta del iPhone" loading="lazy">
-          <figcaption class="mono" data-en="The seven apps, together on your iPhone">Las siete aplicaciones, juntas en su iPhone</figcaption>
+          <figcaption data-en="The seven apps, together on your iPhone">Las siete aplicaciones, juntas en su iPhone</figcaption>
         </figure>
         <div id="icon-demo-hint" class="mono" style="margin-top:20px" data-en="↑ Click an icon above to see its demo">↑ Toca un ícono arriba para ver su demo</div>
       </div>
