@@ -222,10 +222,10 @@ footer{padding-block:28px;display:flex;justify-content:space-between;gap:12px;fl
 .apps7 .wrap{display:grid;grid-template-columns:minmax(0,1fr) 180px;column-gap:34px;align-items:center}
 .apps7 .wrap > h2,.apps7 .wrap > p.sub,.apps7 .wrap > #icon-demo-hint{grid-column:1/-1}
 .apps7 .grid7{grid-column:1;grid-row:3;align-self:center}
-.iphone-apps-showcase{grid-column:2;grid-row:3;display:flex;flex-direction:column;align-items:center;gap:9px;margin:0;width:100%;max-width:180px;text-align:center}
-.iphone-apps-showcase img{display:block;width:100%;height:auto;max-height:390px;aspect-ratio:709/1536;object-fit:cover;object-position:center;border:0;border-radius:22px;background:transparent;box-shadow:0 10px 26px rgba(23,45,56,.13)}
-.iphone-apps-showcase figcaption{font-size:.68rem;line-height:1.4;letter-spacing:.025em;color:#52666F}
-@media(max-width:760px){.apps7 .wrap{display:block}.apps7 .grid7{margin-top:24px}.iphone-apps-showcase{width:118px;max-width:118px;margin:20px auto 0;gap:6px}.iphone-apps-showcase img{max-height:255px;border-radius:16px}.iphone-apps-showcase figcaption{font-size:.62rem}}
+.iphone-apps-showcase{grid-column:2;grid-row:3;display:flex;flex-direction:column;align-items:center;gap:6px;margin:0 auto;width:100%;max-width:104px;text-align:center}
+.iphone-apps-showcase img{display:block;width:100%;height:auto;max-height:225px;aspect-ratio:709/1536;object-fit:cover;object-position:center;border:0;border-radius:15px;background:transparent;box-shadow:0 5px 14px rgba(23,45,56,.10)}
+.iphone-apps-showcase figcaption{font-size:.62rem;line-height:1.35;letter-spacing:.01em;color:#52666F}
+@media(max-width:760px){.apps7 .wrap{display:block}.apps7 .grid7{margin-top:24px}.iphone-apps-showcase{width:70px;max-width:70px;margin:14px auto 0;gap:4px}.iphone-apps-showcase img{max-height:152px;border-radius:11px}.iphone-apps-showcase figcaption{font-size:.58rem}}
 
 .demo-display .demo{margin-top:0}
 
@@ -427,18 +427,11 @@ footer{margin:0!important;padding-top:14px!important;padding-bottom:14px!importa
 
 
 /* Persistent home shortcut */
-.home-float{
- position:fixed;right:22px;bottom:22px;z-index:1000;
- width:52px;height:52px;display:grid;place-items:center;
- border-radius:50%;background:#172D38;color:#fff;
- border:1px solid rgba(255,255,255,.35);
- box-shadow:0 8px 24px rgba(23,45,56,.22);
- text-decoration:none;font-size:1.35rem;line-height:1;
- transition:transform .18s ease,background .18s ease;
-}
-.home-float:hover{transform:translateY(-2px);background:#0A6F6A}
-.home-float:focus-visible{outline:3px solid #0A8B80;outline-offset:4px}
-@media(max-width:600px){.home-float{right:16px;bottom:16px;width:48px;height:48px}}
+.home-float{position:fixed;right:20px;bottom:20px;z-index:1000;min-height:48px;display:flex;align-items:center;gap:9px;padding:7px 15px 7px 8px;border-radius:999px;background:#172D38;color:#fff;border:1px solid rgba(255,255,255,.4);box-shadow:0 6px 18px rgba(23,45,56,.18);text-decoration:none;line-height:1;transition:transform .18s ease,background .18s ease}
+.home-mark{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#DCEFE8;color:#087F78;font-size:1.15rem;font-weight:700}
+.home-label{font-size:.82rem;font-weight:650;letter-spacing:-.01em;white-space:nowrap}
+.home-float:hover{transform:translateY(-2px);background:#0A6F6A}.home-float:focus-visible{outline:3px solid #0A8B80;outline-offset:4px}
+@media(max-width:600px){.home-float{right:12px;bottom:12px;min-height:42px;gap:7px;padding:5px 11px 5px 6px}.home-mark{width:28px;height:28px;font-size:1rem}.home-label{font-size:.74rem}}
 
 </style>
 
@@ -446,7 +439,7 @@ footer{margin:0!important;padding-top:14px!important;padding-bottom:14px!importa
 
 </head>
 <body>
-<a class="home-float" href="#top" aria-label="Volver al inicio" title="Volver al inicio">⌂</a>
+<a class="home-float" href="#top" aria-label="Cuidar a Distancia — volver al inicio" title="Cuidar a Distancia — volver al inicio"><span class="home-mark" aria-hidden="true">✳</span><span class="home-label">Cuidar a Distancia</span></a>
 <div class="wrap">
   <header class="top">
     <a class="brand" href="#top">Cuidar a Distancia</a>
@@ -692,7 +685,7 @@ footer{margin:0!important;padding-top:14px!important;padding-bottom:14px!importa
             <h3 style="margin-top:10px" data-en="Free forever">Gratis para siempre</h3>
             <p style="color:var(--muted);margin-top:8px;font-size:.9rem" data-en="Try all 7 demos on this page. No account needed.">Prueba las 7 demos de esta página. Sin cuenta.</p>
             <div style="margin-top:16px;font:600 1.6rem var(--f-display)">$0</div>
-            <a class="btn ghost" href="#apps7" style="margin-top:16px" data-en="Try demos">Probar demos</a>
+            <a class="btn ghost" href="#demos" style="margin-top:16px" data-en="Try demos">Probar demos</a>
           </div>
           <div class="ui" style="border-top:3px solid var(--accent);box-shadow:0 4px 20px rgba(0,0,0,.06)">
             <span class="mono" style="color:var(--accent)">Más popular</span>
@@ -981,6 +974,8 @@ footer{margin:0!important;padding-top:14px!important;padding-bottom:14px!importa
         card.classList.add("active");
         var demoId = card.getAttribute("data-demo");
         showDemo(demoId);
+        var demoSection = document.getElementById("demos");
+        if(demoSection) demoSection.scrollIntoView({behavior:"smooth",block:"start"});
       });
       card.addEventListener("keydown", function(e){
         if(e.key==="Enter"||e.key===" "){
