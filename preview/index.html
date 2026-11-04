@@ -604,6 +604,25 @@ footer{margin:0!important;padding-top:14px!important;padding-bottom:14px!importa
  .contact-cta{margin-top:19px}
 }
 
+
+/* Portrait-led closing block: human warmth with a premium editorial layout */
+.contact-finale-photo{padding:34px 24px!important}
+.contact-finale-layout{display:grid;grid-template-columns:minmax(190px,260px) minmax(0,1fr);align-items:center;gap:clamp(28px,5vw,64px);max-width:1040px;margin:0 auto}
+.contact-finale-portrait{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:260px}
+.contact-finale-portrait img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 38%;border-radius:18px;border:1px solid rgba(222,239,231,.35);box-shadow:0 14px 36px rgba(0,0,0,.2)}
+.contact-finale-portrait span{color:#C6DCD4;font-size:.76rem;line-height:1.4;text-align:center;font-style:italic}
+.contact-finale-photo .contact-finale-inner{max-width:650px}
+.contact-finale-photo h2{max-width:17ch!important;font-size:clamp(2.1rem,3.8vw,3.35rem)!important}
+.contact-finale-photo p{max-width:48ch!important}
+@media(max-width:600px){
+ .contact-finale-photo{padding:28px 18px!important}
+ .contact-finale-layout{grid-template-columns:minmax(0,1fr);gap:20px;justify-items:start}
+ .contact-finale-portrait{width:min(54%,190px);max-width:190px}
+ .contact-finale-portrait img{border-radius:15px}
+ .contact-finale-portrait span{font-size:.72rem}
+ .contact-finale-photo h2{font-size:clamp(1.95rem,8vw,2.65rem)!important}
+}
+
 </style>
 
 
@@ -886,17 +905,23 @@ footer{margin:0!important;padding-top:14px!important;padding-bottom:14px!importa
       </div>
     </section>
 
-  <div class="close contact-finale" id="contacto">
+  <div class="close contact-finale contact-finale-photo" id="contacto">
     <div class="wrap">
-      <div class="contact-finale-inner">
-        <div class="contact-kicker"><span class="contact-kicker-mark">✳</span><span data-en="CUIDAR A DISTANCIA">CUIDAR A DISTANCIA</span></div>
-        <h2 data-en="Distance should never mean caring alone.">La distancia nunca debería significar cuidar en soledad.</h2>
-        <p data-en="A more thoughtful, connected way to care for the people who matter most.">Una manera más cercana, clara y organizada de acompañar a quienes más importan.</p>
-        <a class="contact-cta" href="mailto:marbaquero@yahoo.com">
-          <span class="contact-cta-icon" aria-hidden="true">✉</span>
-          <span data-en="Let's talk">Hablemos</span>
-          <span class="contact-cta-arrow" aria-hidden="true">↗</span>
-        </a>
+      <div class="contact-finale-layout">
+        <div class="contact-finale-portrait">
+          <img src="/preview/images/mom-contact.png" alt="Portrait of a beloved mother, the inspiration behind Cuidar a Distancia" loading="lazy">
+          <span data-en="Inspired by someone very special.">Inspirado por alguien muy especial.</span>
+        </div>
+        <div class="contact-finale-inner">
+          <div class="contact-kicker"><span class="contact-kicker-mark">✳</span><span data-en="CUIDAR A DISTANCIA">CUIDAR A DISTANCIA</span></div>
+          <h2 data-en="Distance should never mean caring alone.">La distancia nunca debería significar cuidar en soledad.</h2>
+          <p data-en="A more thoughtful, connected way to care for the people who matter most.">Una manera más cercana, clara y organizada de acompañar a quienes más importan.</p>
+          <a class="contact-cta" href="mailto:marbaquero@yahoo.com">
+            <span class="contact-cta-icon" aria-hidden="true">✉</span>
+            <span data-en="Let's talk">Hablemos</span>
+            <span class="contact-cta-arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
