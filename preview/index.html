@@ -582,6 +582,28 @@ footer{margin:0!important;padding-top:14px!important;padding-bottom:14px!importa
  .contact-email>.btn{width:auto!important}
 }
 
+
+/* Final contact moment: premium restraint with a warm human note */
+.contact-finale{position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(112deg,#172D38 0%,#1C3941 62%,#21464A 100%)!important;color:#F6F8F5!important;padding:38px 24px!important}
+.contact-finale:before{content:"";position:absolute;z-index:-1;width:340px;height:340px;right:-105px;top:-205px;border-radius:50%;border:1px solid rgba(185,220,207,.14);box-shadow:0 0 0 34px rgba(185,220,207,.035),0 0 0 68px rgba(185,220,207,.025)}
+.contact-finale .wrap{display:block!important;max-width:1040px!important;margin:0 auto!important}
+.contact-finale-inner{max-width:790px}
+.contact-kicker{display:flex;align-items:center;gap:9px;color:#B9D9CC;font-size:.68rem;font-weight:700;letter-spacing:.16em}
+.contact-kicker-mark{display:grid;place-items:center;width:25px;height:25px;border:1px solid rgba(185,217,204,.45);border-radius:50%;font-size:13px;color:#C7E2D7}
+.contact-finale h2{max-width:19ch!important;margin:15px 0 0!important;color:#F6F8F5!important;font-size:clamp(2.15rem,4.2vw,3.65rem)!important;line-height:1.02!important;letter-spacing:-.05em!important}
+.contact-finale p{max-width:52ch!important;margin:13px 0 0!important;color:#D0DFDB!important;font-size:1.02rem!important;line-height:1.55!important}
+.contact-cta{display:inline-flex;align-items:center;gap:12px;margin-top:23px;padding:11px 17px;border:1px solid rgba(226,241,234,.58);border-radius:999px;color:#F6F8F5!important;text-decoration:none!important;font-weight:650;font-size:.94rem;transition:background .2s,border-color .2s,transform .2s}
+.contact-cta:hover{background:rgba(226,241,234,.1);border-color:#D9EEE3;transform:translateY(-1px)}
+.contact-cta-icon{display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:#D7E9DF;color:#19343B;font-size:13px}
+.contact-cta-arrow{margin-left:5px;color:#B9D9CC;font-size:1.05rem}
+@media(max-width:600px){
+ .contact-finale{padding:30px 18px!important}
+ .contact-finale:before{width:250px;height:250px;right:-125px;top:-150px}
+ .contact-finale h2{font-size:clamp(2rem,8vw,2.75rem)!important;max-width:17ch!important}
+ .contact-finale p{font-size:.96rem!important}
+ .contact-cta{margin-top:19px}
+}
+
 </style>
 
 
@@ -864,21 +886,17 @@ footer{margin:0!important;padding-top:14px!important;padding-bottom:14px!importa
       </div>
     </section>
 
-  <div class="close" id="contacto">
+  <div class="close contact-finale" id="contacto">
     <div class="wrap">
-      <div class="contact-close-content">
-        <h2 data-en="Caring from far away should not be improvised.">Cuidar a distancia no debería ser improvisado.</h2>
-        <p data-en="We are preparing the first group of families and setting each one up personally.">Estamos preparando la primera cohorte de familias y armando cada instalación personalmente.</p>
-        <div class="contact-email">
-          <a class="btn" href="mailto:marbaquero@yahoo.com" data-en="Email me">Escríbeme</a>
-          <div class="contact-email-address">
-            <span class="contact-email-icon" aria-hidden="true">✉</span>
-            <span>
-              <span class="mono" data-en="EMAIL">EMAIL</span>
-              <a href="mailto:marbaquero@yahoo.com">marbaquero@yahoo.com</a>
-            </span>
-          </div>
-        </div>
+      <div class="contact-finale-inner">
+        <div class="contact-kicker"><span class="contact-kicker-mark">✳</span><span data-en="CUIDAR A DISTANCIA">CUIDAR A DISTANCIA</span></div>
+        <h2 data-en="Distance should never mean caring alone.">La distancia nunca debería significar cuidar en soledad.</h2>
+        <p data-en="A more thoughtful, connected way to care for the people who matter most.">Una manera más cercana, clara y organizada de acompañar a quienes más importan.</p>
+        <a class="contact-cta" href="mailto:marbaquero@yahoo.com">
+          <span class="contact-cta-icon" aria-hidden="true">✉</span>
+          <span data-en="Let's talk">Hablemos</span>
+          <span class="contact-cta-arrow" aria-hidden="true">↗</span>
+        </a>
       </div>
     </div>
   </div>
