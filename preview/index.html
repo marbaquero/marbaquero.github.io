@@ -221,16 +221,16 @@ footer{padding-block:28px;display:flex;justify-content:space-between;gap:12px;fl
 .historial-shot{object-fit:cover;object-position:top center;border:1px solid #DCE5E1;background:#fff}
 .apps7 .wrap{display:block}
 .apps7 .grid7{margin-top:28px}
-.card7.pagos-card{position:relative;align-items:flex-start;padding-bottom:76px}
-.iphone-apps-showcase{position:absolute;left:14px;bottom:10px;display:flex;align-items:center;gap:7px;margin:0;width:auto;max-width:none;text-align:left;cursor:zoom-in}
-.iphone-apps-showcase img{display:block;width:38px;height:auto;aspect-ratio:709/1536;object-fit:cover;object-position:center;border:0;border-radius:7px;background:transparent;box-shadow:0 3px 9px rgba(23,45,56,.12);transform:rotate(90deg)}
-.iphone-apps-showcase figcaption{font-family:var(--f-body);font-size:.72rem;font-weight:500;line-height:1.3;letter-spacing:0;text-transform:none;color:var(--muted)}
+.iphone-apps-card{grid-column:4;grid-row:2;cursor:zoom-in}
+.iphone-apps-card .iphone-apps-thumb{width:46px;height:46px;flex:0 0 46px;object-fit:contain;object-position:center;border-radius:9px;background:#F2F5F2;padding:2px}
+.iphone-apps-card span{font-size:.82rem}
 .iphone-modal{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(12,27,34,.78);backdrop-filter:blur(5px)}
 .iphone-modal.open{display:flex}
 .iphone-modal-inner{position:relative;max-width:min(92vw,900px);max-height:88vh;padding:18px;background:#F6F8F5;border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.35)}
 .iphone-modal img{display:block;max-width:100%;max-height:calc(88vh - 36px);width:auto;height:auto;object-fit:contain;border-radius:12px}
 .iphone-modal-close{position:absolute;right:-12px;top:-12px;width:38px;height:38px;border:0;border-radius:50%;background:#172D38;color:white;font-size:22px;cursor:pointer}
-@media(max-width:500px){.card7.pagos-card{padding-bottom:70px}.iphone-apps-showcase{left:12px;bottom:9px}.iphone-apps-showcase img{width:34px}.iphone-modal-inner{padding:12px;border-radius:16px}}
+@media(max-width:900px){.iphone-apps-card{grid-column:auto;grid-row:auto}}
+@media(max-width:500px){.iphone-apps-card .iphone-apps-thumb{width:40px;height:40px;flex-basis:40px}.iphone-modal-inner{padding:12px;border-radius:16px}}
 
 .demo-display .demo{margin-top:0}
 
@@ -578,7 +578,8 @@ footer{margin:0!important;padding-top:14px!important;padding-bottom:14px!importa
           <div class="card7" data-demo="d4" role="button" tabindex="0" aria-label="Gastos Admin demo"><div class="icon7 admin">$</div><div><b data-en="Admin Expenses">Gastos Admin</b><span data-en="Full control">Control total</span></div></div>
           <div class="card7" data-demo="d4" role="button" tabindex="0" aria-label="Gastos Mama demo"><div class="icon7 mama">$</div><div><b data-en="Mom's Expenses">Gastos Mamá</b><span data-en="Deposits">Depósitos</span></div></div>
           <div class="card7" data-demo="d1" role="button" tabindex="0" aria-label="Rosita demo"><div class="icon7 rosita">R</div><div><b>Rosita</b><span data-en="Daily report">Reporte diario</span></div></div>
-          <div class="card7 pagos-card" data-demo="d3" role="button" tabindex="0" aria-label="Pagos demo"><div class="icon7 pagos">P</div><div><b data-en="Payments">Pagos</b><span data-en="Weekly">Semanal</span></div><figure class="iphone-apps-showcase" id="iphone-apps-trigger" role="button" tabindex="0" aria-label="Ampliar imagen de las siete aplicaciones"><img src="/preview/images/Analysis%20output%202.png" alt="Carpeta con las siete aplicaciones en el iPhone" loading="lazy"><figcaption data-en="View the seven apps">Ver las siete aplicaciones</figcaption></figure></div>
+          <div class="card7" data-demo="d3" role="button" tabindex="0" aria-label="Pagos demo"><div class="icon7 pagos">P</div><div><b data-en="Payments">Pagos</b><span data-en="Weekly">Semanal</span></div></div>
+           <div class="card7 iphone-apps-card" id="iphone-apps-trigger" role="button" tabindex="0" aria-label="Ampliar imagen de las siete aplicaciones"><img class="iphone-apps-thumb" src="/preview/images/Analysis%20output%202.png" alt="Carpeta con las siete aplicaciones en el iPhone" loading="lazy"><div><b data-en="All apps">Las siete apps</b><span data-en="View app folder">Ver carpeta de apps</span></div></div>
           <div class="card7" data-demo="d4" role="button" tabindex="0" aria-label="Historial demo"><img class="icon7 historial-shot" src="/preview/images/Analysis%20output%201.png" alt="Vista de la aplicación Historial" loading="lazy"><div><b data-en="History">Historial</b><span data-en="Reports and charts">Reportes y gráficas</span></div></div>
           <div class="card7" data-demo="d2" role="button" tabindex="0" aria-label="Inventario demo"><div class="icon7 inventario">+</div><div><b data-en="Inventory">Inventario</b><span data-en="Medicine stock">Medicinas stock</span></div></div>
           <div class="card7" data-demo="d2" role="button" tabindex="0" aria-label="Medico demo"><div class="icon7 medico">♥</div><div><b data-en="Medical">Médico</b><span data-en="Appointments / pillbox">Citas / pastillero</span></div></div>
