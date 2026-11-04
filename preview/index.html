@@ -219,9 +219,13 @@ footer{padding-block:28px;display:flex;justify-content:space-between;gap:12px;fl
 
 .card7.active{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent);}
 .historial-shot{object-fit:cover;object-position:top center;border:1px solid #DCE5E1;background:#fff}
-.iphone-apps-showcase{display:flex;flex-direction:column;align-items:center;gap:12px;margin:30px auto 0;width:min(100%,340px);text-align:center}
-.iphone-apps-showcase img{display:block;width:100%;height:auto;max-height:none;aspect-ratio:709/1536;object-fit:cover;object-position:center;border:0;border-radius:30px;background:transparent;box-shadow:0 18px 42px rgba(23,45,56,.16)}
-.iphone-apps-showcase figcaption{font-size:.76rem;letter-spacing:.04em;color:#52666F}
+.apps7 .wrap{display:grid;grid-template-columns:minmax(0,1fr) 180px;column-gap:34px;align-items:center}
+.apps7 .wrap > h2,.apps7 .wrap > p.sub,.apps7 .wrap > #icon-demo-hint{grid-column:1/-1}
+.apps7 .grid7{grid-column:1;grid-row:3;align-self:center}
+.iphone-apps-showcase{grid-column:2;grid-row:3;display:flex;flex-direction:column;align-items:center;gap:9px;margin:0;width:100%;max-width:180px;text-align:center}
+.iphone-apps-showcase img{display:block;width:100%;height:auto;max-height:390px;aspect-ratio:709/1536;object-fit:cover;object-position:center;border:0;border-radius:22px;background:transparent;box-shadow:0 10px 26px rgba(23,45,56,.13)}
+.iphone-apps-showcase figcaption{font-size:.68rem;line-height:1.4;letter-spacing:.025em;color:#52666F}
+@media(max-width:760px){.apps7 .wrap{display:block}.apps7 .grid7{margin-top:24px}.iphone-apps-showcase{width:118px;max-width:118px;margin:20px auto 0;gap:6px}.iphone-apps-showcase img{max-height:255px;border-radius:16px}.iphone-apps-showcase figcaption{font-size:.62rem}}
 
 .demo-display .demo{margin-top:0}
 
