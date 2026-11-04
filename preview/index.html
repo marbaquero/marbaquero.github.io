@@ -438,6 +438,71 @@ footer{margin:0!important;padding-top:14px!important;padding-bottom:14px!importa
 .home-float:hover{transform:translateY(-2px);background:#0A6F6A}.home-float:focus-visible{outline:3px solid #0A8B80;outline-offset:4px}
 @media(max-width:600px){.home-float{right:12px;bottom:12px;min-height:42px;gap:7px;padding:5px 11px 5px 6px}.home-mark{width:28px;height:28px;font-size:1rem}.home-label{font-size:.74rem}}
 
+
+/* iPhone-first finishing pass: tested layout rules for narrow phones through Pro Max */
+@media(max-width:600px){
+  html,body{max-width:100%;overflow-x:hidden}
+  body{font-size:16px;line-height:1.58}
+  .wrap{width:100%;max-width:100%;padding-left:0;padding-right:0}
+  .top{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:12px 0 10px}
+  .brand{font-size:clamp(1rem,4.5vw,1.2rem);white-space:nowrap}
+  .brand:before{width:28px;height:28px;margin-right:6px}
+  .langs{justify-self:end}
+  .langs button{min-width:42px;min-height:40px;padding:7px 10px}
+  .main-nav{grid-column:1/-1;grid-row:2;order:initial;width:100%;margin:0;padding:8px 2px 10px;justify-content:flex-start;gap:20px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none}
+  .main-nav::-webkit-scrollbar{display:none}
+  .main-nav a{font-size:.82rem}
+  .hero{grid-template-columns:minmax(0,1fr);gap:24px;padding:28px 0 30px}
+  .hero h1{font-size:clamp(2.05rem,9.2vw,2.8rem)!important;line-height:1.06;max-width:15ch}
+  .hero .lede{font-size:1rem;line-height:1.55;margin-top:16px}
+  .cta-row{display:grid;grid-template-columns:1fr;gap:10px;margin-top:22px}
+  .cta-row .btn{width:100%;justify-content:center;text-align:center}
+  .clocks{gap:24px;margin-top:22px}
+  .panel{width:100%;min-width:0}
+  .panel-head,.panel-foot{padding-left:14px!important;padding-right:14px!important}
+  .feed{padding-left:14px;padding-right:14px}
+  .apps7{padding:34px 0!important}
+  .apps7 h2{font-size:clamp(1.8rem,7.5vw,2.35rem)!important;line-height:1.1}
+  .apps7 .sub{font-size:.96rem;line-height:1.55}
+  .grid7{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;margin-top:20px!important}
+  .card7{min-width:0;min-height:76px;padding:10px!important;gap:8px!important;border-radius:13px}
+  .card7>div:last-child{min-width:0}
+  .card7 b{font-size:clamp(.78rem,3.5vw,.92rem);line-height:1.2;overflow-wrap:anywhere}
+  .card7 span{font-size:clamp(.67rem,3vw,.76rem);line-height:1.25}
+  .icon7{width:36px;height:36px;flex:0 0 36px;border-radius:11px;font-size:16px}
+  .iphone-apps-card .iphone-apps-thumb{width:36px;height:36px;flex:0 0 36px}
+  .demos{padding:36px 0!important}
+  .tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;margin:20px 0 18px;padding:2px 1px 8px;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs button{flex:0 0 auto;white-space:nowrap;padding:10px 14px;font-size:.8rem}
+  .demo{grid-template-columns:minmax(0,1fr)!important;gap:18px!important}
+  .demo-copy h3{font-size:1.45rem;line-height:1.15}
+  .demo-ui,.ui{width:100%;min-width:0;padding:16px!important;border-radius:15px}
+  .fields{grid-template-columns:minmax(0,1fr)!important}
+  .chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .chips button{min-width:0;min-height:44px;padding:9px 8px;font-size:.78rem}
+  .demo-ui .btn{width:100%;align-self:stretch;justify-content:center}
+  #pricing>div>div[style*="grid-template-columns:repeat(3"]{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+  #pricing .ui{padding:18px!important}
+  .close .wrap{grid-template-columns:minmax(0,1fr)!important}
+  .close .wrap>div:last-child{display:grid;grid-template-columns:1fr;gap:10px;width:100%}
+  .close .wrap>div:last-child .btn{width:100%;justify-content:center}
+  footer{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:16px 0}
+  .home-float{right:10px;bottom:calc(10px + env(safe-area-inset-bottom));max-width:calc(100vw - 20px)}
+  .iphone-modal{padding: max(14px,env(safe-area-inset-top)) 12px max(14px,env(safe-area-inset-bottom))}
+  .iphone-modal-inner{max-width:100%;max-height:84dvh}
+  .iphone-modal img{max-height:calc(84dvh - 24px)}
+}
+@media(max-width:360px){
+  .brand{font-size:.98rem}
+  .grid7{gap:7px!important}
+  .card7{padding:8px!important;gap:6px!important}
+  .icon7{width:32px;height:32px;flex-basis:32px;border-radius:9px}
+  .card7 b{font-size:.76rem}
+  .card7 span{font-size:.65rem}
+  .iphone-apps-card .iphone-apps-thumb{width:32px;height:32px;flex-basis:32px}
+}
+
 </style>
 
 
