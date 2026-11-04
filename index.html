@@ -13,24 +13,24 @@
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180.png">
 <link rel="icon" type="image/png" href="apple-touch-icon.png">
 
-<title>Cuidar a Distancia | Coordinate family care from anywhere</title>
+<title>Cuidar a Distancia | Coordina el cuidado familiar a distancia</title>
 <meta name="google-site-verification" content="1QR7AHAzI8DEBszIC6gbovxjDfD-cFfSRsTNLmsNFY8" />
-<meta name="description" content="A practical care-coordination platform for families supporting an older loved one from another city or country. Daily updates, medicine tracking, caregiver payments and household expenses.">
+<meta name="description" content="Siete herramientas para coordinar el cuidado de un familiar mayor desde otra ciudad o país: reportes diarios, control de medicinas, pagos a cuidadoras y gastos del hogar." data-es-content="Siete herramientas para coordinar el cuidado de un familiar mayor desde otra ciudad o país: reportes diarios, control de medicinas, pagos a cuidadoras y gastos del hogar." data-en-content="Seven practical tools to coordinate care for an older family member from another city or country: daily updates, medicine tracking, caregiver payments and household expenses.">
 <link rel="canonical" href="https://marbaquero.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://marbaquero.github.io/">
-<meta property="og:title" content="Cuidar a Distancia | Family care, coordinated from anywhere">
-<meta property="og:description" content="Seven practical tools to coordinate daily care, medicine inventory, caregiver payments and household expenses across distance.">
+<meta property="og:title" content="Cuidar a Distancia | Coordina el cuidado familiar a distancia" data-es-content="Cuidar a Distancia | Coordina el cuidado familiar a distancia" data-en-content="Cuidar a Distancia | Coordinate family care from anywhere">
+<meta property="og:description" content="Siete herramientas para coordinar el cuidado familiar a distancia: reportes, medicinas, pagos y gastos." data-es-content="Siete herramientas para coordinar el cuidado familiar a distancia: reportes, medicinas, pagos y gastos." data-en-content="Seven practical tools to coordinate family care across distance: reports, medicines, payments and expenses.">
 <meta property="og:image" content="https://marbaquero.github.io/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Cuidar a Distancia | Family care coordination">
-<meta name="twitter:description" content="Coordinate daily updates, medicines, caregiver payments and household expenses from anywhere.">
+<meta name="twitter:title" content="Cuidar a Distancia | Coordinación del cuidado familiar" data-es-content="Cuidar a Distancia | Coordinación del cuidado familiar" data-en-content="Cuidar a Distancia | Family care coordination">
+<meta name="twitter:description" content="Coordine reportes diarios, medicinas, pagos a cuidadoras y gastos del hogar desde cualquier lugar." data-es-content="Coordine reportes diarios, medicinas, pagos a cuidadoras y gastos del hogar desde cualquier lugar." data-en-content="Coordinate daily updates, medicines, caregiver payments and household expenses from anywhere.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "name": "Cuidar a Distancia - Mamá Apps",
-  "description": "7 apps para familias que cuidan a padres mayores desde el extranjero. Reportes diarios, medicinas, pagos y gastos.",
+  "description": "Siete herramientas para familias que coordinan el cuidado de un familiar mayor a distancia: reportes diarios, medicinas, pagos y gastos.",
   "applicationCategory": "LifestyleApplication",
   "operatingSystem": "Web",
   "offers": {
@@ -317,7 +317,7 @@ footer{padding-block:28px;font-size:.7rem}
       <div>
         <p class="mono" data-en="For families caring from abroad">Para familias que cuidan desde lejos</p>
         <h1 style="margin-top:16px" data-en="Your parent is there. You can still be in charge of their care.">Tu mamá o tu papá está allá. Tú sigues al mando de su cuidado.</h1>
-        <p class="lede" data-en="Seven practical tools to follow daily updates, track medicines, coordinate caregiver payments and understand household spending — wherever you are.">Cuatro apps sencillas que te dicen qué pasó hoy, qué medicina se está acabando, a quién se le pagó y en qué se gastó el dinero.</p>
+        <p class="lede" data-en="Seven practical tools to follow daily updates, track medicines, coordinate caregiver payments and understand household spending — wherever you are.">Siete herramientas prácticas para seguir los reportes diarios, controlar las medicinas, coordinar los pagos a cuidadoras y conocer los gastos del hogar, desde cualquier lugar.</p>
         <div class="cta-row">
           <a class="btn primary" href="#contacto" data-en="Talk about your family’s needs">Conversemos sobre su familia</a>
           <a class="btn" href="#demos" data-en="Try a demo">Probar una demo</a>
@@ -530,7 +530,7 @@ footer{padding-block:28px;font-size:.7rem}
       <div class="wrap">
         <p class="mono" data-en="Pricing - Early families">Precios - Familias pioneras</p>
         <h2 style="margin-top:12px;max-width:22ch" data-en="Simple pricing to start. Cancel anytime.">Precio simple para empezar. Cancela cuando quieras.</h2>
-        <p class="sub" style="color:var(--muted);margin-top:14px;max-width:56ch" data-en="A personal setup helps each household start with its own caregivers, routines and records.">Instalo cada familia personalmente. Aún no es autoservicio, por eso es accesible.</p>
+        <p class="sub" style="color:var(--muted);margin-top:14px;max-width:56ch" data-en="A personal setup helps each household start with its own caregivers, routines and records.">La configuración personalizada permite comenzar con sus propias cuidadoras, rutinas y registros.</p>
         <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:32px">
           <div class="ui" style="border-top:3px solid var(--line)">
             <span class="mono">Demo</span>
@@ -598,6 +598,12 @@ footer{padding-block:28px;font-size:.7rem}
   function setLang(l){
     nodes.forEach(function(n){n.textContent=n.getAttribute("data-"+l)});
     document.documentElement.lang=l;
+    document.title = l === "en"
+      ? "Cuidar a Distancia | Coordinate family care from anywhere"
+      : "Cuidar a Distancia | Coordina el cuidado familiar a distancia";
+    document.querySelectorAll("meta[data-en-content]").forEach(function(meta){
+      meta.setAttribute("content", l === "en" ? meta.getAttribute("data-en-content") : meta.getAttribute("data-es-content") || meta.getAttribute("content"));
+    });
     
     var esBtn = document.getElementById("l-es");
     var enBtn = document.getElementById("l-en");
