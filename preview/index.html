@@ -503,6 +503,32 @@ footer{margin:0!important;padding-top:14px!important;padding-bottom:14px!importa
   .iphone-apps-card .iphone-apps-thumb{width:32px;height:32px;flex-basis:32px}
 }
 
+
+/* Mobile demo interaction polish */
+@media(max-width:600px){
+  .demo-display{width:100%;min-width:0;overflow:visible}
+  .demo{margin-top:18px!important;min-width:0}
+  .demo-copy{min-width:0}
+  .demo-copy h3{overflow-wrap:anywhere}
+  .demo-ui .row{min-width:0;grid-template-columns:minmax(0,1fr) auto;gap:8px 10px}
+  .demo-ui .row>span:first-child{min-width:0;overflow-wrap:anywhere}
+  .demo-ui .row>span:last-child{min-width:0;max-width:100%;text-align:right}
+  #o2 .row{grid-template-columns:minmax(0,1fr) auto}
+  #o2 .row .bar{min-width:0}
+  #o3 .row{grid-template-columns:minmax(0,1fr);gap:8px;align-items:start}
+  #o3 .row>span:last-child{display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;gap:8px;text-align:left}
+  #o3 .mini{min-width:104px;min-height:44px;padding:9px 12px}
+  #o4 .row{grid-template-columns:minmax(0,1fr) auto;align-items:start}
+  #o4 .row .num{white-space:nowrap}
+  #o4 .total{align-items:flex-start;flex-wrap:wrap}
+  #o4 .total .num{margin-left:auto}
+  .demo-ui .feed{padding-left:0;padding-right:0}
+  .demo-ui .feed li{grid-template-columns:3.5rem minmax(0,1fr);gap:9px}
+  .demo-ui .feed strong{overflow-wrap:anywhere}
+  .demo-ui .btns{display:grid;grid-template-columns:1fr;width:100%}
+  .demo-ui .btns .btn{width:100%;margin:0}
+}
+
 </style>
 
 
