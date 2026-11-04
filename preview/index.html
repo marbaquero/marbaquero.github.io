@@ -292,6 +292,34 @@ footer{padding-block:28px;font-size:.7rem}
 @media(max-width:900px){.main-nav{order:3;width:100%;justify-content:center;margin:4px 0 0;gap:22px}.hero{padding-block:54px 66px}.hero:before{right:-280px}.panel{transform:none}.grid7{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.top{gap:12px}.main-nav{justify-content:flex-start;overflow-x:auto;gap:18px;padding:6px 0}.main-nav a{white-space:nowrap;font-size:.84rem}.hero{padding-block:42px 58px}.hero h1{font-size:clamp(2.55rem,12vw,3.6rem)}.hero .lede{font-size:1.04rem}.panel{border-radius:18px}.strip{grid-template-columns:1fr}.strip div{padding:18px}.app{padding-block:44px}.apps7{padding-block:58px}.grid7{gap:10px}.card7{padding:12px;gap:10px;min-height:82px}.icon7{width:40px;height:40px}.ui{padding:18px}.demos,.how,.faq{padding-block:58px}#pricing{padding-block:60px!important}.close{padding-block:64px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn,.card7{transition:none}}
+
+/* Accessibility correction: keep the approved light palette regardless of OS dark-mode preference. */
+:root,
+:root:not([data-theme="light"]),
+:root[data-theme="dark"]{
+  color-scheme:light !important;
+  --bg:#F6F8F5 !important;
+  --surface:#FFFFFF !important;
+  --ink:#172D38 !important;
+  --muted:#52666F !important;
+  --line:#DCE5E1 !important;
+  --accent:#14766D !important;
+  --accent-ink:#FFFFFF !important;
+  --signal:#9A5B12 !important;
+  --good:#216B4B !important;
+}
+body{color:var(--ink) !important;background:var(--bg) !important}
+.apps7{background:#EDF3EF !important;color:#172D38 !important}
+.apps7 h2,.apps7 p,.apps7 .mono{color:#172D38 !important}
+.apps7 .sub{color:#52666F !important}
+.card7{background:#FFFFFF !important;color:#172D38 !important;border-color:#DCE5E1 !important}
+.card7 b{color:#172D38 !important}
+.card7 span{color:#52666F !important}
+.close{background:#172D38 !important;color:#F6F8F5 !important}
+.close h2,.close p,.close a{color:#F6F8F5}
+.close .mono{color:#AFC2C5 !important}
+.close a.btn{color:#F6F8F5 !important;border-color:#F6F8F5 !important}
+
 </style>
 
 
