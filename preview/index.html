@@ -218,6 +218,11 @@ footer{padding-block:28px;display:flex;justify-content:space-between;gap:12px;fl
 
 
 .card7.active{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent);}
+.historial-shot{object-fit:cover;object-position:top center;border:1px solid #DCE5E1;background:#fff}
+.iphone-apps-showcase{display:flex;flex-direction:column;align-items:center;gap:10px;margin:28px auto 0;max-width:260px;text-align:center}
+.iphone-apps-showcase img{display:block;width:100%;height:auto;max-height:390px;object-fit:contain;border-radius:22px;box-shadow:0 12px 30px rgba(23,45,56,.12)}
+.iphone-apps-showcase figcaption{font-size:.76rem;letter-spacing:.04em;color:#52666F}
+
 .demo-display .demo{margin-top:0}
 
 
@@ -571,10 +576,14 @@ footer{margin:0!important;padding-top:14px!important;padding-bottom:14px!importa
           <div class="card7" data-demo="d4" role="button" tabindex="0" aria-label="Gastos Mama demo"><div class="icon7 mama">$</div><div><b data-en="Mom's Expenses">Gastos Mamá</b><span data-en="Deposits">Depósitos</span></div></div>
           <div class="card7" data-demo="d1" role="button" tabindex="0" aria-label="Rosita demo"><div class="icon7 rosita">R</div><div><b>Rosita</b><span data-en="Daily report">Reporte diario</span></div></div>
           <div class="card7" data-demo="d3" role="button" tabindex="0" aria-label="Pagos demo"><div class="icon7 pagos">P</div><div><b data-en="Payments">Pagos</b><span data-en="Weekly">Semanal</span></div></div>
-          <div class="card7" data-demo="d4" role="button" tabindex="0" aria-label="Historial demo"><div class="icon7 historial">📈</div><div><b data-en="History">Historial</b><span data-en="Charts">Gráficas</span></div></div>
+          <div class="card7" data-demo="d4" role="button" tabindex="0" aria-label="Historial demo"><img class="icon7 historial-shot" src="/preview/images/Analysis%20output%201.png" alt="Vista de la aplicación Historial" loading="lazy"><div><b data-en="History">Historial</b><span data-en="Reports and charts">Reportes y gráficas</span></div></div>
           <div class="card7" data-demo="d2" role="button" tabindex="0" aria-label="Inventario demo"><div class="icon7 inventario">+</div><div><b data-en="Inventory">Inventario</b><span data-en="Medicine stock">Medicinas stock</span></div></div>
           <div class="card7" data-demo="d2" role="button" tabindex="0" aria-label="Medico demo"><div class="icon7 medico">♥</div><div><b data-en="Medical">Médico</b><span data-en="Appointments / pillbox">Citas / pastillero</span></div></div>
         </div>
+        <figure class="iphone-apps-showcase">
+          <img src="/preview/images/Analysis%20output%202.png" alt="Las siete aplicaciones organizadas en una carpeta del iPhone" loading="lazy">
+          <figcaption class="mono" data-en="The seven apps, together on your iPhone">Las siete aplicaciones, juntas en su iPhone</figcaption>
+        </figure>
         <div id="icon-demo-hint" class="mono" style="margin-top:20px" data-en="↑ Click an icon above to see its demo">↑ Toca un ícono arriba para ver su demo</div>
       </div>
     </section>
