@@ -29,16 +29,57 @@
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Cuidar a Distancia - Mamá Apps",
-  "description": "Siete herramientas para familias que coordinan el cuidado de un familiar mayor a distancia: reportes diarios, medicinas, pagos y gastos.",
+  "name": "Cuidar a Distancia",
+  "description": "Seven practical tools to coordinate care for an older family member from another city or country: daily updates, medicine tracking, caregiver payments and household expenses.",
   "applicationCategory": "LifestyleApplication",
   "operatingSystem": "Web",
-  "offers": {
-    "@type": "Offer",
-    "price": "29",
-    "priceCurrency": "USD"
-  },
-  "author": {"@type":"Person","name":"Marcello Baquero","email":"marbaquero@yahoo.com"}
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Demo",
+      "description": "Free interactive demonstrations of the seven tools. No account required.",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    {
+      "@type": "Offer",
+      "name": "Family Plan",
+      "description": "All seven apps for one household, personally configured for the family.",
+      "price": "29",
+      "priceCurrency": "USD",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "29",
+        "priceCurrency": "USD",
+        "unitCode": "MON"
+      }
+    },
+    {
+      "@type": "Offer",
+      "name": "Full Setup",
+      "description": "One-time data migration and one-to-one caregiver training. Ongoing service is billed separately at $49 per month.",
+      "price": "99",
+      "priceCurrency": "USD"
+    },
+    {
+      "@type": "Offer",
+      "name": "Full Setup monthly service",
+      "description": "Monthly service for the Full Setup plan, including the weekly email summary described on the website.",
+      "price": "49",
+      "priceCurrency": "USD",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "49",
+        "priceCurrency": "USD",
+        "unitCode": "MON"
+      }
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "Cuidar a Distancia",
+    "url": "https://marbaquero.github.io/"
+  }
 }
 </script>
 <!-- Add the verified GA4 measurement ID here when analytics is configured. -->
