@@ -416,12 +416,28 @@ footer{margin:0!important;padding-top:14px!important;padding-bottom:14px!importa
  footer{padding-top:12px!important;padding-bottom:12px!important}
 }
 
+
+/* Persistent home shortcut */
+.home-float{
+ position:fixed;right:22px;bottom:22px;z-index:1000;
+ width:52px;height:52px;display:grid;place-items:center;
+ border-radius:50%;background:#172D38;color:#fff;
+ border:1px solid rgba(255,255,255,.35);
+ box-shadow:0 8px 24px rgba(23,45,56,.22);
+ text-decoration:none;font-size:1.35rem;line-height:1;
+ transition:transform .18s ease,background .18s ease;
+}
+.home-float:hover{transform:translateY(-2px);background:#0A6F6A}
+.home-float:focus-visible{outline:3px solid #0A8B80;outline-offset:4px}
+@media(max-width:600px){.home-float{right:16px;bottom:16px;width:48px;height:48px}}
+
 </style>
 
 
 
 </head>
 <body>
+<a class="home-float" href="#top" aria-label="Volver al inicio" title="Volver al inicio">⌂</a>
 <div class="wrap">
   <header class="top">
     <a class="brand" href="#top">Cuidar a Distancia</a>
@@ -446,7 +462,7 @@ footer{margin:0!important;padding-top:14px!important;padding-bottom:14px!importa
         <p class="lede" data-en="Seven practical tools to follow daily updates, track medicines, coordinate caregiver payments and understand household spending — wherever you are.">Siete herramientas prácticas para seguir los reportes diarios, controlar las medicinas, coordinar los pagos a cuidadoras y conocer los gastos del hogar, desde cualquier lugar.</p>
         <div class="cta-row">
           <a class="btn primary" href="#contacto" data-en="Talk about your family’s needs">Conversemos sobre su familia</a>
-          <a class="btn" href="#demos" data-en="Try a demo">Probar una demo</a>
+          <a class="btn" href="#apps7" data-en="Try a demo">Probar una demo</a>
         </div>
         <div class="clocks" aria-label="Hora">
           <div class="clock"><span class="mono">Houston</span><b id="t-hou">--:--</b></div>
