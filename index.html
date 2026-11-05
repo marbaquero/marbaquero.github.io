@@ -1527,7 +1527,10 @@ html,body{background:#E3DED2!important;color:#19313A!important}
       if(href.indexOf("wa.me/")!==-1){
         var label=(link.textContent||"").trim();
         var plan=label.indexOf("Family")!==-1||label.indexOf("Familia")!==-1?"plan_familia":label.indexOf("Setup")!==-1||label.indexOf("instalación")!==-1?"full_setup":"general";
-        send("whatsapp_click",{contact_method:"whatsapp",plan:plan,link_location:link.closest("#pricing")?"pricing":link.closest("#contacto")?"contact_section":"other"});
+        var location=link.closest("#pricing")?"pricing":link.closest("#contacto")?"contact_section":"other";
+        send("whatsapp_click",{contact_method:"whatsapp",plan:plan,link_location:location});
+        if(location==="pricing"&&plan==="plan_familia")send("plan_familia_click",{plan:"plan_familia",price:29,currency:"USD"});
+        if(location==="pricing"&&plan==="full_setup")send("full_setup_click",{plan:"full_setup",setup_fee:99,monthly_fee:49,currency:"USD"});
       }else if(href.indexOf("mailto:")===0){
         send("email_click",{contact_method:"email",link_location:link.closest("#contacto")?"contact_section":"other"});
       }
