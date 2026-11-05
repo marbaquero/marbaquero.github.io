@@ -82,7 +82,14 @@
   }
 }
 </script>
-<!-- Add the verified GA4 measurement ID here when analytics is configured. -->
+<!-- Google tag (gtag.js) — Cuidar a Distancia GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-90NN55DPHT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-90NN55DPHT');
+</script>
 
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
@@ -1504,5 +1511,40 @@ html,body{background:#E3DED2!important;color:#19313A!important}
 <script>(function(){var trigger=document.getElementById("historial-trigger"),modal=document.getElementById("historial-modal");if(!trigger||!modal)return;var close=modal.querySelector(".iphone-modal-close");function open(){modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";close.focus()}function shut(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.style.overflow="";trigger.focus()}trigger.addEventListener("click",open);trigger.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();open()}});close.addEventListener("click",shut);modal.addEventListener("click",function(e){if(e.target===modal)shut()});document.addEventListener("keydown",function(e){if(e.key==="Escape"&&modal.classList.contains("open"))shut()})})();</script>
 <script>(function(){var trigger=document.getElementById("admin-trigger"),modal=document.getElementById("admin-modal");if(!trigger||!modal)return;var close=modal.querySelector(".iphone-modal-close");function open(){modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";close.focus()}function shut(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.style.overflow="";trigger.focus()}trigger.addEventListener("click",open);trigger.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();open()}});close.addEventListener("click",shut);modal.addEventListener("click",function(e){if(e.target===modal)shut()});document.addEventListener("keydown",function(e){if(e.key==="Escape"&&modal.classList.contains("open"))shut()})})();</script>
 <script>(function(){function wire(id,mid){var trigger=document.getElementById(id),modal=document.getElementById(mid);if(!trigger||!modal)return;var close=modal.querySelector(".iphone-modal-close");function open(){modal.classList.add("open");modal.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";close.focus()}function shut(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true");document.body.style.overflow="";trigger.focus()}trigger.addEventListener("click",open);trigger.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();open()}});close.addEventListener("click",shut);modal.addEventListener("click",function(e){if(e.target===modal)shut()});document.addEventListener("keydown",function(e){if(e.key==="Escape"&&modal.classList.contains("open"))shut()})}wire("mama-trigger","mama-modal");wire("rosita-trigger","rosita-modal");wire("medico-trigger","medico-modal")})();</script>
+<script>
+(function(){
+  function send(name,params){
+    if(typeof window.gtag==="function"){
+      var data=params||{};
+      data.language=document.documentElement.lang||"es";
+      window.gtag("event",name,data);
+    }
+  }
+  document.addEventListener("click",function(ev){
+    var link=ev.target.closest("a");
+    if(link){
+      var href=link.getAttribute("href")||"";
+      if(href.indexOf("wa.me/")!==-1){
+        var label=(link.textContent||"").trim();
+        var plan=label.indexOf("Family")!==-1||label.indexOf("Familia")!==-1?"plan_familia":label.indexOf("Setup")!==-1||label.indexOf("instalación")!==-1?"full_setup":"general";
+        send("whatsapp_click",{contact_method:"whatsapp",plan:plan,link_location:link.closest("#pricing")?"pricing":link.closest("#contacto")?"contact_section":"other"});
+      }else if(href.indexOf("mailto:")===0){
+        send("email_click",{contact_method:"email",link_location:link.closest("#contacto")?"contact_section":"other"});
+      }
+    }
+    var demoControl=ev.target.closest("#demos button, #apps7 a, #apps7 button");
+    if(demoControl){
+      var demoPanel=demoControl.closest(".demo");
+      var demoId=demoPanel?demoPanel.id:"apps7";
+      send("demo_interaction",{demo_id:demoId,control_type:demoControl.tagName.toLowerCase()});
+    }
+  },true);
+  document.addEventListener("submit",function(ev){
+    var form=ev.target;
+    if(form&&form.id==="f1")send("demo_interaction",{demo_id:"d1",action:"report_submitted"});
+    if(form&&form.id==="f4")send("demo_interaction",{demo_id:"d4",action:"expense_submitted"});
+  },true);
+})();
+</script>
 </body>
 </html>
