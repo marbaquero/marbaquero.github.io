@@ -3,7 +3,8 @@
 Last checked: 2026-11-06  
 Repository: `marbaquero/marbaquero.github.io`  
 Working branch: `customer-portal-auth`  
-Pull request: #3 (draft)
+Pull request: #3 (draft)  
+Validated branch head: `82eff4d0b0f4e83b60ac017f2e164cbb7d71716f`
 
 This checklist defines what “wrapped up” means. A successful CI run validates the portal source and isolated control-plane tenant policies; it does not mean the complete SaaS is ready to accept paying customers.
 
@@ -21,7 +22,7 @@ This checklist defines what “wrapped up” means. A successful CI run validate
 - [x] Automated tenant-isolation tests with 29 assertions.
 - [x] Production database upgrade runbook.
 - [x] Security and seven-app integration architecture notes.
-- [x] Latest GitHub Actions run #35 passed both jobs: portal/security validation and isolated Supabase migration + tenant-isolation test.
+- [x] Latest GitHub Actions [run #51](https://github.com/marbaquero/marbaquero.github.io/actions/runs/42299885720) passed both jobs on the validated branch head: portal/billing security validation and disposable Supabase migration + tenant-isolation tests.
 
 ## Blocking before a customer-facing production launch
 
