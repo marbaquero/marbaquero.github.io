@@ -82,12 +82,15 @@ Deno.serve(async (req: Request) => {
     if (payload.action === "dispense") {
       const medicineId = typeof payload.medicine_id === "string" ? payload.medicine_id : "";
       const quantity = positiveNumber(payload.quantity);
-      if (!isUuid(medicineId) || quantity === null) return json({ error: "Invalid medicine or quantity" }, 400);
+      const caregiverLabel = boundedText(payload.caregiver_label, 120);
+      if (!isUuid(medicineId) || quantity === null || caregiverLabel === "\\u0000") {
+        return json({ error: "Invalid medicine, quantity, or caregiver label" }, 400);
+      }
       const { data, error } = await admin.rpc("record_customer_dispensing", {
         p_household_id: householdId,
         p_medicine_id: medicineId,
         p_quantity: quantity,
-        p_caregiver_label: boundedText(payload.caregiver_label, 120),
+        p_caregiver_label: caregiverLabel,
         p_event_date: typeof payload.event_date === "string" ? payload.event_date : new Date().toISOString(),
       });
       if (error) {
