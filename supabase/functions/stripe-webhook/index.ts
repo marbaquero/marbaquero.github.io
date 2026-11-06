@@ -49,12 +49,6 @@ Deno.serve(async (req: Request) => {
       status = mapStatus(object.status);
       periodStart = object.current_period_start ? new Date(object.current_period_start * 1000).toISOString() : null;
       periodEnd = object.current_period_end ? new Date(object.current_period_end * 1000).toISOString() : null;
-    } else if (event.type === "invoice.payment_failed") {
-      subscriptionId = typeof object.subscription === "string" ? object.subscription : object.subscription?.id || null;
-      status = "past_due";
-    } else if (event.type === "invoice.paid") {
-      subscriptionId = typeof object.subscription === "string" ? object.subscription : object.subscription?.id || null;
-      status = "active";
     } else {
       await recordWebhookEvent(admin, event.id, event.type, true);
       return new Response(JSON.stringify({ received: true, ignored: event.type }), {
