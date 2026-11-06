@@ -73,7 +73,22 @@ Policy implementation must be tested against real JWT roles and representative S
 | Historial | `reportes_aracely` | `care_reports` | admin actions, delete/update permissions |
 | Médico | `reportes_aracely` | `medical_records` | distinguish clinical data from daily care reports |
 
-Related cognitive-session page currently uses `sesiones_cognitivas`; determine whether it belongs in the customer catalog and, if so, scope it as `cognitive_sessions`.
+### Source-level data contract findings (read-only inspection)
+
+The following details were observed in the current `main` branches of the five app repositories. They describe source behavior, not a finalized customer schema.
+
+- **Pagos** reads/writes `kv_store` keys `pagos_config`, `pagos_registros`, and `settings`. The settings write stores an `adminPin` in the JSON value. The app also has a Google Apps Script / Drive receipt lookup flow. This must be redesigned for customer isolation; neither the PIN nor a Drive link is an authorization mechanism.
+- **Inventario** reads/writes `kv_store` keys `medications`, `purchases`, `dispensing`, `fills`, `settings`, and `adjustments`. Settings also store an `adminPin`. These are separate domain collections currently serialized as key/value JSON, so schema extraction must preserve their relationships and history rather than treating the whole inventory as one untyped blob.
+- **Gastos Admin** performs direct REST operations on `movimientos` (select, insert, update, delete) and manages receipt objects in the `recibos` Storage bucket, including signed reads and deletes.
+- **Gastos Mamá** performs direct REST operations on the same `movimientos` table, uploads/reads receipt objects in `recibos`, and also uses browser `localStorage` for some state. Its write path includes a compatibility fallback for a possibly absent `registrado_por` column.
+- **Rosita** inserts structured daily-care reports into `reportes_aracely`. The payload includes caregiver, date/shift, meal and hydration observations, medication checklist, blood pressure, activities, home condition, observations, and night-sleep fields.
+- **Historial** reads, updates, and deletes `reportes_aracely` records. Its current admin UI state is stored in `sessionStorage`; this is UI state, not a secure role.
+- **Médico** reads `reportes_aracely` and presents it as a medical/reporting view. The actual clinical-vs-daily-care field boundary must be designed deliberately; the current shared table does not itself establish that separation.
+- **Cognitive sessions** are a related page in the `reporte-rosita` repository, outside the seven-app catalog. It reads/writes `sesiones_cognitivas` and should be treated as a separately scoped feature decision, not silently counted as an eighth app.
+
+The source files inspected hard-code the legacy project endpoint and publishable key in browser code. A publishable key is expected to be public, but the current broad anonymous table/storage policies mean these apps are not safe to expose as a multi-household SaaS. Do not change those existing policies in place: the family-care apps depend on their current behavior.
+
+This source inspection is not yet exhaustive. Before schema design, inspect the complete CRUD paths, all nested JSON shapes, receipt upload conventions, Drive script permissions, and any other pages/scripts in each repository. Do not copy any current live data into the customer platform.
 
 This mapping is a design hypothesis, not a finalized schema. Exact fields, relationships, constraints, indexes, and retention rules must be derived from full source and data-shape inspection before migration design.
 
