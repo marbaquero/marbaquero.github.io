@@ -2,99 +2,77 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-create table public.ci_households (
-  id uuid primary key,
-  name text not null
-);
+-- Synthetic auth users only. The auth trigger should create their profiles.
+insert into auth.users (
+  id, aud, role, email, encrypted_password, email_confirmed_at,
+  raw_app_meta_data, raw_user_meta_data, created_at, updated_at
+) values
+  ('11111111-1111-4111-8111-111111111111', 'authenticated', 'authenticated',
+   'tenant-a@example.invalid', '', now(), '{}'::jsonb, '{}'::jsonb, now(), now()),
+  ('22222222-2222-4222-8222-222222222222', 'authenticated', 'authenticated',
+   'tenant-b@example.invalid', '', now(), '{}'::jsonb, '{}'::jsonb, now(), now())
+on conflict (id) do nothing;
 
-create table public.ci_household_members (
-  household_id uuid not null references public.ci_households(id),
-  user_id uuid not null,
-  primary key (household_id, user_id)
-);
+insert into public.households (id, name, created_by) values
+  ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'Synthetic Household A',
+   '11111111-1111-4111-8111-111111111111'),
+  ('bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb', 'Synthetic Household B',
+   '22222222-2222-4222-8222-222222222222');
 
-create table public.ci_records (
-  id bigint generated always as identity primary key,
-  household_id uuid not null references public.ci_households(id),
-  payload text not null
-);
+insert into public.household_members (household_id, user_id, role) values
+  ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', '11111111-1111-4111-8111-111111111111', 'owner'),
+  ('bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb', '22222222-2222-4222-8222-222222222222', 'owner');
 
-create or replace function public.ci_is_household_member(target_household uuid)
-returns boolean
-language sql
-stable
-security definer
-set search_path = public
-as $$
-  select exists (
-    select 1
-    from public.ci_household_members m
-    where m.household_id = target_household
-      and m.user_id = auth.uid()
-  );
-$$;
+insert into public.subscriptions (household_id, plan_key, status) values
+  ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'family', 'active'),
+  ('bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb', 'full_setup', 'active');
 
-revoke all on function public.ci_is_household_member(uuid) from public, anon;
-grant execute on function public.ci_is_household_member(uuid) to authenticated;
+insert into public.household_app_access (household_id, app_key, is_enabled)
+select 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', app_key, true
+from public.app_catalog;
+insert into public.household_app_access (household_id, app_key, is_enabled)
+select 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb', app_key, true
+from public.app_catalog;
 
-alter table public.ci_households enable row level security;
-alter table public.ci_household_members enable row level security;
-alter table public.ci_records enable row level security;
+insert into public.customer_onboarding (household_id, status) values
+  ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'completed'),
+  ('bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb', 'completed');
 
-create policy "ci household members can view their households"
-on public.ci_households for select to authenticated
-using (public.ci_is_household_member(id));
+select plan(10);
 
-create policy "ci users can view their own memberships"
-on public.ci_household_members for select to authenticated
-using (user_id = auth.uid());
+-- Confirm the clean baseline contains the seven configured applications.
+select is((select count(*)::integer from public.app_catalog where is_active), 7,
+  'Baseline includes exactly seven active applications');
 
-create policy "ci members can read household records"
-on public.ci_records for select to authenticated
-using (public.ci_is_household_member(household_id));
-
-create policy "ci members can insert household records"
-on public.ci_records for insert to authenticated
-with check (public.ci_is_household_member(household_id));
-
-grant select on public.ci_households, public.ci_household_members, public.ci_records to authenticated;
-grant insert on public.ci_records to authenticated;
-grant usage, select on sequence public.ci_records_id_seq to authenticated;
-
-insert into public.ci_households (id, name) values
-  ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'Synthetic Household A'),
-  ('bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb', 'Synthetic Household B');
-
-insert into public.ci_household_members (household_id, user_id) values
-  ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', '11111111-1111-4111-8111-111111111111'),
-  ('bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb', '22222222-2222-4222-8222-222222222222');
-
-insert into public.ci_records (household_id, payload) values
-  ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'A record 1'),
-  ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'A record 2'),
-  ('bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb', 'B record 1');
-
-select plan(5);
-
+-- User A: verify household-scoped reads across the real platform tables.
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '11111111-1111-4111-8111-111111111111', true);
-select is((select count(*)::integer from public.ci_records), 2, 'Household A user sees both own records');
-select is((select count(*)::integer from public.ci_records where household_id = 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb'), 0, 'Household A user cannot read Household B records');
-select lives_ok(
-  $$insert into public.ci_records (household_id, payload) values ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'A new record')$$,
-  'Household A user can insert into own household'
-);
-select throws_ok(
-  $$insert into public.ci_records (household_id, payload) values ('bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb', 'cross-tenant attempt')$$,
-  '42501',
-  null,
-  'Household A user cannot insert into Household B'
-);
 
+select is((select count(*)::integer from public.customer_profiles), 1,
+  'User A can read only their own customer profile');
+select is((select count(*)::integer from public.households), 1,
+  'User A can read only their own household');
+select is((select count(*)::integer from public.household_members), 1,
+  'User A can read only their own household membership');
+select is((select count(*)::integer from public.subscriptions), 1,
+  'User A can read only their own subscription');
+select is((select count(*)::integer from public.household_app_access), 7,
+  'User A can read only their household app access rows');
+select is((select count(*)::integer from public.customer_onboarding), 1,
+  'User A can read only their own onboarding status');
+select is((select count(*)::integer from public.households
+  where id = 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb'), 0,
+  'User A cannot read Household B');
+
+-- User B: ensure the policies are symmetric and do not leak A's data.
 reset role;
 set local role authenticated;
 select set_config('request.jwt.claim.sub', '22222222-2222-4222-8222-222222222222', true);
-select is((select count(*)::integer from public.ci_records), 1, 'Household B user sees only own record');
+
+select is((select count(*)::integer from public.households), 1,
+  'User B can read only their own household');
+select is((select count(*)::integer from public.household_app_access), 7,
+  'User B can read only their household app access rows');
 
 select * from finish();
 rollback;
