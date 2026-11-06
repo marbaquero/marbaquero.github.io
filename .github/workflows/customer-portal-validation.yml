@@ -19,3 +19,28 @@ jobs:
           node-version: 22
       - name: Validate portal and billing security invariants
         run: node scripts/validate-customer-portal.mjs
+
+  tenant-isolation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v3
+        with:
+          version: 2.84.2
+      - name: Create disposable Supabase test project
+        run: |
+          mkdir -p /tmp/supabase-tenant-ci
+          cd /tmp/supabase-tenant-ci
+          supabase init
+          mkdir -p supabase/tests
+          cp "$GITHUB_WORKSPACE/tests/tenant-isolation.test.sql" supabase/tests/tenant-isolation.test.sql
+      - name: Start isolated Supabase stack
+        working-directory: /tmp/supabase-tenant-ci
+        run: supabase start
+      - name: Test household data isolation with synthetic users
+        working-directory: /tmp/supabase-tenant-ci
+        run: supabase test db
+      - name: Stop isolated Supabase stack
+        if: always()
+        working-directory: /tmp/supabase-tenant-ci
+        run: supabase stop --no-backup
