@@ -1,6 +1,6 @@
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(18);
+select plan(24);
 
 select ok(to_regnamespace('customer_data') is not null,
   'Private customer_data schema exists');
@@ -61,6 +61,20 @@ select ok(exists (select 1 from pg_constraint
 
 select ok(to_regclass('customer_data.medicines_household_active_idx') is not null,
   'Medicine household lookup index exists');
+
+
+select ok(to_regprocedure('public.list_customer_medicines(uuid)') is not null,
+  'Private medicine read RPC exists');
+select ok(not has_function_privilege('anon','public.list_customer_medicines(uuid)','execute'),
+  'Anonymous role cannot execute medicine read RPC');
+select ok(not has_function_privilege('authenticated','public.list_customer_medicines(uuid)','execute'),
+  'Browser role cannot execute medicine read RPC');
+select ok(has_function_privilege('service_role','public.list_customer_medicines(uuid)','execute'),
+  'Service role can execute medicine read RPC');
+select ok(not has_function_privilege('authenticated','public.create_customer_medicine(uuid,text,text,text,numeric,numeric,numeric,text,numeric)','execute'),
+  'Browser role cannot execute medicine creation RPC');
+select ok(has_function_privilege('service_role','public.record_customer_dispensing(uuid,uuid,numeric,text,timestamp with time zone)','execute'),
+  'Service role can execute atomic dispensing RPC');
 
 select * from finish();
 rollback;
