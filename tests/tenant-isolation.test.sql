@@ -41,12 +41,22 @@ insert into public.customer_onboarding (household_id, status) values
 -- Confirm the post-hardening event trigger still enables RLS on newly created
 -- public tables even after PUBLIC/anon/authenticated EXECUTE was revoked.
 create table public._ci_post_hardening_rls_probe (id bigint);
-select plan(17);
+select plan(29);
 select ok(
   (select relrowsecurity from pg_class where oid = 'public._ci_post_hardening_rls_probe'::regclass),
   'RLS auto-enable event trigger still works after its function EXECUTE grant is revoked'
 );
 drop table public._ci_post_hardening_rls_probe;
+
+-- Verify indexes that support the platform's foreign-key joins and deletes.
+select ok(to_regclass('public.household_app_access_app_key_idx') is not null,
+  'Application access app-key foreign key has a supporting index');
+select ok(to_regclass('public.household_members_user_id_idx') is not null,
+  'Household member user-id foreign key has a supporting index');
+select ok(to_regclass('public.households_created_by_idx') is not null,
+  'Household creator foreign key has a supporting index');
+select ok(to_regclass('public.subscriptions_household_id_idx') is not null,
+  'Subscription household foreign key has a supporting index');
 
 -- Confirm the clean baseline contains the seven configured applications.
 select is((select count(*)::integer from public.app_catalog where is_active), 7,
@@ -65,6 +75,26 @@ select ok(has_table_privilege('service_role', 'public.household_app_access', 'se
   'Backend service role can filter household application access rows');
 select ok(has_table_privilege('service_role', 'public.household_app_access', 'update'),
   'Backend service role can enable or disable household application access');
+
+-- Verify security-definer RPC execution grants are limited to their intended callers.
+select ok(not has_function_privilege('anon', 'public.rls_auto_enable()', 'execute'),
+  'Anonymous users cannot execute the RLS auto-enable security-definer function');
+select ok(not has_function_privilege('authenticated', 'public.rls_auto_enable()', 'execute'),
+  'Authenticated users cannot execute the RLS auto-enable security-definer function');
+select ok(not has_function_privilege('anon', 'public.create_household(text)', 'execute'),
+  'Anonymous users cannot execute the create-household security-definer function');
+select ok(not has_function_privilege('authenticated', 'public.create_household(text)', 'execute'),
+  'Authenticated users cannot execute the create-household security-definer function');
+select ok(has_function_privilege('authenticated', 'public.is_household_member(uuid)', 'execute'),
+  'Authenticated users retain the membership predicate required by RLS');
+select ok(has_function_privilege('authenticated', 'public.is_household_owner(uuid)', 'execute'),
+  'Authenticated users retain the owner predicate required by RLS');
+select ok(has_function_privilege('service_role',
+  'public.complete_customer_onboarding(uuid,text,text,text,text)', 'execute'),
+  'Only trusted backend code can execute the onboarding RPC');
+select ok(not has_function_privilege('authenticated',
+  'public.complete_customer_onboarding(uuid,text,text,text,text)', 'execute'),
+  'Authenticated users cannot call the onboarding RPC directly');
 
 -- User A: verify household-scoped reads across the real platform tables.
 set local role authenticated;
