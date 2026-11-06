@@ -34,7 +34,7 @@ jobs:
           supabase init
           mkdir -p supabase/migrations supabase/tests
           cp "$GITHUB_WORKSPACE"/supabase/migrations/*.sql supabase/migrations/
-          cp "$GITHUB_WORKSPACE/tests/tenant-isolation.test.sql" supabase/tests/tenant-isolation.test.sql
+          cp "$GITHUB_WORKSPACE"/tests/*.test.sql supabase/tests/
       - name: Start isolated Supabase stack
         working-directory: /tmp/supabase-tenant-ci
         run: supabase start
