@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Customer Portal | Cuidar a Distancia</title>
+<meta name="description" content="Secure customer access to Cuidar a Distancia applications.">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#17212b;background:#f4f6f8}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px}
+main{width:min(100%,560px);background:#fff;border:1px solid #e4e8ed;border-radius:20px;padding:32px;box-shadow:0 12px 40px #14202b12}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:26px}
+h1{font-size:27px;line-height:1.15;margin:0 0 8px}p{color:#5d6874;line-height:1.5;margin:0 0 20px}
+.small{font-size:13px}.tabs{display:flex;gap:8px;margin:18px 0 22px}
+button,.tab{border:0;border-radius:10px;padding:12px 16px;font:inherit;cursor:pointer}
+.tab{background:#eef1f4;color:#334155;flex:1}.tab[aria-selected=true],.primary{background:#176b55;color:white}
+label{display:block;font-size:14px;font-weight:600;margin:14px 0 6px}
+input,select{width:100%;padding:13px;border:1px solid #ccd4dc;border-radius:10px;font:inherit;background:#fff}
+.primary{width:100%;margin-top:20px;font-weight:650}.secondary{background:#eef1f4;color:#24313d}
+.notice{padding:12px 14px;border-radius:10px;background:#f1f5f9;color:#334155;margin-top:16px;font-size:14px;display:none}
+.notice.error{background:#fff0ef;color:#9b2921}.hidden{display:none!important}
+.apps{margin-top:20px;display:grid;gap:10px}.app{padding:14px;border:1px solid #e3e8ed;border-radius:12px;display:flex;justify-content:space-between;gap:12px}
+.status{font-size:12px;color:#66727e}.muted{color:#697583;font-size:13px}
+@media(max-width:480px){main{padding:22px}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<main>
+<header><div><div class="small" style="font-weight:700;letter-spacing:.08em;color:#176b55">CUIDAR A DISTANCIA</div><div class="muted">Customer Portal</div></div><button class="secondary" id="language" type="button">Español</button></header>
+<section id="authView">
+<h1 id="heading">Welcome back</h1>
+<p id="intro">Sign in to securely access your family care applications.</p>
+<div class="tabs"><button class="tab" id="loginTab" aria-selected="true" type="button">Sign in</button><button class="tab" id="signupTab" aria-selected="false" type="button">Create account</button></div>
+<form id="authForm">
+<div id="nameWrap" class="hidden"><label for="name" id="nameLabel">Your name</label><input id="name" autocomplete="name" maxlength="100"></div>
+<label for="email" id="emailLabel">Email address</label><input id="email" type="email" autocomplete="email" required>
+<label for="password" id="passwordLabel">Password</label><input id="password" type="password" autocomplete="current-password" minlength="8" required>
+<div id="planWrap" class="hidden"><label for="plan" id="planLabel">Choose your plan</label><select id="plan"><option value="family">Family Plan — $29/month</option><option value="full_setup">Full Setup — $99 setup + $49/month</option></select></div>
+<button class="primary" id="submit" type="submit">Sign in</button>
+</form>
+<button class="secondary" id="reset" type="button" style="width:100%;margin-top:10px">Forgot password?</button>
+<div id="authNotice" class="notice" role="status"></div>
+</section>
+<section id="portalView" class="hidden">
+<h1 id="portalHeading">Your applications</h1><p id="portalIntro">Your account and application access.</p>
+<div id="apps" class="apps"></div>
+<button class="secondary" id="signout" type="button" style="width:100%;margin-top:22px">Sign out</button>
+<div id="portalNotice" class="notice" role="status"></div>
+</section>
+<p class="muted" style="margin:26px 0 0;text-align:center">Secure access · English / Español</p>
+</main>
+<script>
+(() => {
+ const SUPABASE_URL = "https://fftnffmttuzfftntzzhu.supabase.co";
+ const SUPABASE_KEY = "sb_publishable_f5py08cOv3Bdo0Yvm6lmbA_VBxnbEsP";
+ const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+ const $ = id => document.getElementById(id);
+ let mode = "login", lang = "en";
+ const words = {
+  en:{welcome:"Welcome back",intro:"Sign in to securely access your family care applications.",login:"Sign in",signup:"Create account",name:"Your name",email:"Email address",password:"Password",plan:"Choose your plan",submitLogin:"Sign in",submitSignup:"Create account",forgot:"Forgot password?",portal:"Your applications",portalIntro:"Your account and application access.",signout:"Sign out",enabled:"Access enabled",pending:"Not yet enabled",checking:"Checking access…",verify:"Check your email to confirm your account, then sign in here.",resetSent:"Password reset email sent.",signedOut:"You have signed out.",noHousehold:"Your account is signed in, but household setup is not complete yet.",error:"Something went wrong. Please try again.",language:"Español"},
+  es:{welcome:"Bienvenido",intro:"Inicie sesión para acceder de forma segura a sus aplicaciones de cuidado familiar.",login:"Iniciar sesión",signup:"Crear cuenta",name:"Su nombre",email:"Correo electrónico",password:"Contraseña",plan:"Seleccione su plan",submitLogin:"Iniciar sesión",submitSignup:"Crear cuenta",forgot:"¿Olvidó su contraseña?",portal:"Sus aplicaciones",portalIntro:"Su cuenta y acceso a las aplicaciones.",signout:"Cerrar sesión",enabled:"Acceso habilitado",pending:"Aún no habilitado",checking:"Verificando acceso…",verify:"Revise su correo para confirmar la cuenta y luego inicie sesión aquí.",resetSent:"Se envió el correo para restablecer la contraseña.",signedOut:"Ha cerrado sesión.",noHousehold:"Su sesión está activa, pero la configuración del hogar aún no está completa.",error:"Ocurrió un error. Inténtelo nuevamente.",language:"English"}
+ };
+ const w = k => words[lang][k];
+ function notice(id,msg,error=false){const el=$(id);el.textContent=msg;el.className="notice"+(error?" error":"");el.style.display="block";}
+ function setMode(next){mode=next; $("loginTab").setAttribute("aria-selected",String(mode==="login"));$("signupTab").setAttribute("aria-selected",String(mode==="signup"));$("nameWrap").classList.toggle("hidden",mode!=="signup");$("planWrap").classList.toggle("hidden",mode!=="signup");$("heading").textContent=mode==="login"?w("welcome"):w("signup");$("intro").textContent=w("intro");$("submit").textContent=mode==="login"?w("submitLogin"):w("submitSignup");$("reset").textContent=w("forgot");$("authNotice").style.display="none";}
+ function paintLanguage(){$("language").textContent=w("language");$("loginTab").textContent=w("login");$("signupTab").textContent=w("signup");$("nameLabel").textContent=w("name");$("emailLabel").textContent=w("email");$("passwordLabel").textContent=w("password");$("planLabel").textContent=w("plan");$("portalHeading").textContent=w("portal");$("portalIntro").textContent=w("portalIntro");$("signout").textContent=w("signout");setMode(mode);}
+ async function showPortal(user){
+  $("authView").classList.add("hidden");$("portalView").classList.remove("hidden");
+  const box=$("apps");box.innerHTML="";notice("portalNotice",w("checking"));
+  const {data:membership,error:memberError}=await client.from("household_members").select("household_id,role").eq("user_id",user.id).limit(1).maybeSingle();
+  if(memberError||!membership){notice("portalNotice",w("noHousehold"),true);return;}
+  const {data:access,error:accessError}=await client.from("household_app_access").select("app_key,is_enabled,app_catalog(display_name)").eq("household_id",membership.household_id);
+  if(accessError){notice("portalNotice",w("error"),true);return;}
+  (access||[]).forEach(item=>{const row=document.createElement("div");row.className="app";const name=document.createElement("strong");name.textContent=item.app_catalog?.display_name||item.app_key;const status=document.createElement("span");status.className="status";status.textContent=item.is_enabled?w("enabled"):w("pending");row.append(name,status);box.append(row);});
+  $("portalNotice").style.display="none";
+ }
+ async function ensureOnboarding(user){
+  const {data:existing}=await client.from("household_members").select("household_id").eq("user_id",user.id).limit(1).maybeSingle();
+  if(existing)return;
+  const name=$("name").value.trim()||user.user_metadata?.display_name||user.email?.split("@")[0]||"Customer";
+  const planKey=$("plan").value;
+  const {error}=await client.functions.invoke("complete-onboarding",{body:{name,plan_key:planKey,locale:lang,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone}});
+  if(error)throw error;
+ }
+ $("loginTab").onclick=()=>setMode("login");$("signupTab").onclick=()=>setMode("signup");
+ $("language").onclick=()=>{lang=lang==="en"?"es":"en";paintLanguage();};
+ $("authForm").addEventListener("submit",async e=>{
+  e.preventDefault();$("submit").disabled=true;$("authNotice").style.display="none";
+  try{
+   let result;
+   if(mode==="signup"){
+    const name=$("name").value.trim();if(!name)throw new Error(lang==="en"?"Please enter your name.":"Ingrese su nombre.");
+    result=await client.auth.signUp({email:$("email").value.trim(),password:$("password").value,options:{data:{display_name:name},emailRedirectTo:location.href}});
+    if(result.error)throw result.error;
+    if(!result.data.session){notice("authNotice",w("verify"));return;}
+    await ensureOnboarding(result.data.user);
+   }else{
+    result=await client.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});
+    if(result.error)throw result.error;
+    await ensureOnboarding(result.data.user);
+   }
+   await showPortal(result.data.user);
+  }catch(err){notice("authNotice",err.message||w("error"),true);}
+  finally{$("submit").disabled=false;}
+ });
+ $("reset").onclick=async()=>{const email=$("email").value.trim();if(!email){notice("authNotice",lang==="en"?"Enter your email address first.":"Primero ingrese su correo.",true);return;}const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo:location.href});if(error)notice("authNotice",error.message,true);else notice("authNotice",w("resetSent"));};
+ $("signout").onclick=async()=>{await client.auth.signOut();$("portalView").classList.add("hidden");$("authView").classList.remove("hidden");notice("authNotice",w("signedOut"));};
+ client.auth.getSession().then(({data})=>{if(data.session)showPortal(data.session.user);});
+ paintLanguage();
+})();
+</script>
+</body>
+</html>
