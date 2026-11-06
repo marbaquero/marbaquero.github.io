@@ -61,5 +61,7 @@ assert.ok(inventario.includes('admin.rpc("record_customer_dispensing"'), "Dispen
 assert.ok(inventario.includes('admin.rpc("record_customer_purchase"'), "Purchases must use the atomic server-only RPC");
 assert.ok(inventario.includes('admin.rpc("record_customer_weekly_fill"'), "Weekly fills must use the atomic server-only RPC");
 assert.ok(inventario.includes('admin.rpc("record_customer_stock_count"'), "Physical counts must use the atomic server-only RPC");
+assert.ok(inventario.includes("normalizeItems"), "Inventory workflow payloads must be validated");
+assert.ok(inventario.includes("no partial changes were saved"), "Atomic workflow errors must communicate rollback semantics");
 assert.ok(!inventario.includes('.schema("customer_data")'), "Private schema must not be exposed through PostgREST");
 console.log("Customer portal checks passed.");
