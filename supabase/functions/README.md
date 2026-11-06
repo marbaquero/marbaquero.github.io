@@ -20,6 +20,12 @@ Required Supabase function secrets:
 - `STRIPE_FULL_SETUP_FEE_PRICE_ID`
 - `PORTAL_RETURN_URL` (must be the final HTTPS portal URL)
 
+## create-billing-portal-session
+
+- Requires a signed-in household owner.
+- Creates a Stripe customer portal session for the linked Stripe customer.
+- Uses the same `STRIPE_SECRET_KEY` and `PORTAL_RETURN_URL` secrets.
+
 ## stripe-webhook
 
 Configure the Stripe webhook endpoint to this function and subscribe to:
