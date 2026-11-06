@@ -32,12 +32,16 @@ jobs:
           mkdir -p /tmp/supabase-tenant-ci
           cd /tmp/supabase-tenant-ci
           supabase init
-          mkdir -p supabase/tests
+          mkdir -p supabase/migrations supabase/tests
+          cp "$GITHUB_WORKSPACE"/supabase/migrations/*.sql supabase/migrations/
           cp "$GITHUB_WORKSPACE/tests/tenant-isolation.test.sql" supabase/tests/tenant-isolation.test.sql
       - name: Start isolated Supabase stack
         working-directory: /tmp/supabase-tenant-ci
         run: supabase start
-      - name: Test household data isolation with synthetic users
+      - name: Apply baseline and incremental migrations
+        working-directory: /tmp/supabase-tenant-ci
+        run: supabase migration up
+      - name: Test actual customer-platform tenant isolation
         working-directory: /tmp/supabase-tenant-ci
         run: supabase test db
       - name: Stop isolated Supabase stack
