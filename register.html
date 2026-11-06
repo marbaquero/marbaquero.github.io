@@ -103,7 +103,7 @@ form.addEventListener('submit',async function(e){
  var teamMap={'Family members':'Family members','Professional caregivers':'Professional caregivers','Both':'Both','Other':'Other'};
  var needMap={'Caregiver schedules':'Caregiver schedules','Daily care reports':'Daily care reports','Medication inventory':'Medication inventory','Expenses and payments':'Expenses and payments','Family coordination':'Family coordination','Medical visit records':'Medical visit records','Care activities':'Care activities','All seven applications':'All seven applications'};
  var currentMap={'Spreadsheets':'Spreadsheets','Messaging apps':'Messaging apps','Paper records':'Paper records','Several tools':'Several tools','No system':'No system'};
- var startMap={'Immediately':'Immediately','Within 7 days':'Within 7 days','Within 30 days':'Within 30 days','Just exploring':'Just exploring'};
+ var startMap={'Immediately':'Immediately','Within 7 days':'Within 7 days','Within 30 days':'Within 30 days','Exploring':'Just exploring'};
  var planValue=fd.get('plan')||'';
  var captchaToken=turnstileToken;
  if(!captchaToken){errorBox.textContent=lang==='en'?'Please complete the security check.':'Complete la verificación de seguridad.';submitButton.disabled=false;submitButton.textContent=lang==='en'?'Submit inquiry':'Enviar consulta';return;}
