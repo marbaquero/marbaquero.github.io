@@ -48,9 +48,7 @@ Deno.serve(async (req: Request) => {
     }
 
     if (req.method === "GET") {
-      const { data, error } = await admin.schema("customer_data").from("medicines")
-        .select("id,name,dose,brand,stock_quantity,minimum_threshold,daily_dose,unit,unit_cost,active,created_at,updated_at")
-        .eq("household_id", householdId).order("name");
+      const { data, error } = await admin.rpc("list_customer_medicines", { p_household_id: householdId });
       if (error) {
         console.error("Inventario list failed", error);
         return json({ error: "Unable to load medicines" }, 500);
@@ -72,8 +70,8 @@ Deno.serve(async (req: Request) => {
         p_unit: boundedText(payload.unit, 40) || "unidad",
         p_unit_cost: nonNegativeNumber(payload.unit_cost),
       };
-      if (Object.values(args).some((v) => v === null)) return json({ error: "Invalid medicine values" }, 400);
-      const { data, error } = await admin.schema("customer_data").rpc("create_medicine", args);
+      if (Object.values(args).some((v) => v === null || v === "\\u0000")) return json({ error: "Invalid medicine values" }, 400);
+      const { data, error } = await admin.rpc("create_medicine", args);
       if (error) {
         console.error("Create medicine failed", error);
         return json({ error: "Unable to save medicine" }, 400);
@@ -85,7 +83,7 @@ Deno.serve(async (req: Request) => {
       const medicineId = typeof payload.medicine_id === "string" ? payload.medicine_id : "";
       const quantity = positiveNumber(payload.quantity);
       if (!isUuid(medicineId) || quantity === null) return json({ error: "Invalid medicine or quantity" }, 400);
-      const { data, error } = await admin.schema("customer_data").rpc("record_dispensing", {
+      const { data, error } = await admin.rpc("record_dispensing", {
         p_household_id: householdId,
         p_medicine_id: medicineId,
         p_quantity: quantity,
