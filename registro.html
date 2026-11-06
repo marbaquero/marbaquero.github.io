@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#F8F5ED">
+<title>Registro | Cuidar a Distancia</title>
+<style>
+:root{--bg:#f8f5ed;--paper:#fff;--ink:#292722;--muted:#70695d;--green:#40583b;--line:#e8dfcf;--soft:#f3efe5;--shadow:0 12px 32px rgba(54,45,30,.06)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Aptos","Segoe UI",sans-serif;padding:24px 18px 56px}
+main{max-width:820px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:6px 0 54px}.brand,.eyebrow{font:700 .78rem/1.4 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}.brand{display:flex;align-items:center;gap:10px}.dot{width:9px;height:9px;border-radius:50%;background:#647a5d}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:4px;background:#fff}.lang button{border:0;border-radius:999px;background:transparent;color:var(--muted);padding:8px 13px;font-weight:700;cursor:pointer}.lang button[aria-pressed=true]{background:var(--green);color:white}
+h1,h2,legend{font-family:Georgia,"Times New Roman",serif;line-height:1.12;letter-spacing:-.025em}h1{font-size:clamp(2.5rem,7vw,4.3rem);margin:14px 0 18px}h1 em{color:var(--green)}.intro{max-width:610px;color:var(--muted);font-size:1.12rem;margin:0 0 32px}
+.progress{display:flex;align-items:center;gap:12px;margin:0 0 30px;color:var(--muted);font-size:.82rem}.track{height:5px;background:var(--line);border-radius:8px;flex:1;overflow:hidden}.track span{display:block;width:50%;height:100%;background:var(--green)}
+section{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:26px 28px;margin:18px 0;box-shadow:var(--shadow)}h2{font-size:1.55rem;margin:0 0 20px}fieldset{border:0;padding:0;margin:0}legend{font-size:1.45rem;font-weight:700;margin-bottom:18px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}label,.field-label{font-size:.9rem;font-weight:650;color:#625b50}.field input{width:100%;border:1px solid var(--line);border-radius:12px;padding:14px 15px;background:#fff;color:var(--ink);font:inherit;min-height:52px}.field input:focus{outline:3px solid #dce5d5;border-color:var(--green)}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choice{width:100%;text-align:left;border:1px solid var(--line);border-radius:13px;padding:15px;background:#fff;color:var(--ink);font:inherit;cursor:pointer;display:flex;align-items:center;gap:11px;min-height:60px}.choice:hover{border-color:#9aa88f}.choice[aria-pressed=true]{background:#edf1e9;border:2px solid var(--green);padding:14px}.mark{width:19px;height:19px;border:1.5px solid #a59c8d;border-radius:5px;flex:none;display:grid;place-items:center;color:white;font-size:13px}.choice[aria-pressed=true] .mark{background:var(--green);border-color:var(--green)}
+.hint{color:var(--muted);font-size:.9rem;margin:-9px 0 15px}.plan{align-items:flex-start}.plan strong{display:block;font-size:1.05rem}.plan small{display:block;color:var(--muted);margin-top:3px;font-size:.85rem}.price{margin-left:auto;color:var(--green);font-weight:750;white-space:nowrap}
+.actions{display:flex;justify-content:flex-end;margin-top:26px}.submit{border:0;border-radius:12px;background:var(--green);color:white;padding:16px 25px;font:700 1rem inherit;cursor:pointer;min-height:54px}.submit:hover{background:#30452d}.fine{font-size:.78rem;color:var(--muted);text-align:center;margin-top:18px}.notice{display:none;background:#edf1e9;border:1px solid #cbd7c4;border-radius:12px;padding:15px;margin-top:18px;color:#30452d}.notice.show{display:block}.back{color:var(--green);font-weight:700;text-decoration:none}.foot{display:flex;justify-content:space-between;gap:12px;margin-top:30px;color:var(--muted);font-size:.8rem}
+@media(max-width:600px){body{padding:16px 13px 40px}.top{margin-bottom:38px}section{padding:22px 17px;border-radius:16px}.grid,.choices{grid-template-columns:1fr}.field.full{grid-column:auto}.actions .submit{width:100%}.foot{flex-direction:column}}
+</style>
+</head>
+<body>
+<main>
+<header class="top"><a class="brand" href="./" style="text-decoration:none"><span class="dot"></span>Cuidar a Distancia</a><div class="lang" aria-label="Language"><button id="es" type="button" aria-pressed="true">ES</button><button id="en" type="button" aria-pressed="false">EN</button></div></header>
+<div class="eyebrow" data-es="REGISTRO INICIAL" data-en="GETTING STARTED">REGISTRO INICIAL</div>
+<h1 data-es="Conozcamos a su <em>familia</em>" data-en="Let's get to know your <em>family</em>">Conozcamos a su <em>familia</em></h1>
+<p class="intro" data-es="Cuéntenos un poco sobre usted y sobre la persona a quien acompaña. Así podremos orientarle hacia las herramientas adecuadas para su familia." data-en="Tell us a little about yourself and the person you care for. We’ll help you find the right tools for your family.">Cuéntenos un poco sobre usted y sobre la persona a quien acompaña. Así podremos orientarle hacia las herramientas adecuadas para su familia.</p>
+<div class="progress"><span data-es="Paso 1 de 2 · Información básica" data-en="Step 1 of 2 · Basic information">Paso 1 de 2 · Información básica</span><div class="track"><span></span></div></div>
+<form id="leadForm">
+<section>
+<h2 data-es="Sobre usted" data-en="About you">Sobre usted</h2>
+<div class="grid">
+<div class="field"><label for="name" data-es="Nombre completo *" data-en="Full name *">Nombre completo *</label><input id="name" name="name" autocomplete="name" required placeholder="Nombre y apellido"></div>
+<div class="field"><label for="email" data-es="Correo electrónico *" data-en="Email address *">Correo electrónico *</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="nombre@correo.com"></div>
+<div class="field"><label for="country" data-es="País de residencia *" data-en="Country of residence *">País de residencia *</label><input id="country" name="country" autocomplete="country-name" required placeholder="País"></div>
+<div class="field"><label for="phone" data-es="Teléfono (opcional)" data-en="Phone (optional)">Teléfono (opcional)</label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+ código de país"></div>
+</div>
+</section>
+<section>
+<fieldset><legend data-es="¿A quién acompaña?" data-en="Who are you caring for?">¿A quién acompaña?</legend><div class="choices" data-group="person">
+<button class="choice" type="button" aria-pressed="true" data-value="parent"><span class="mark">✓</span><span data-es="Madre o padre" data-en="Mother or father">Madre o padre</span></button>
+<button class="choice" type="button" aria-pressed="false" data-value="grandparent"><span class="mark"></span><span data-es="Abuela o abuelo" data-en="Grandparent">Abuela o abuelo</span></button>
+<button class="choice" type="button" aria-pressed="false" data-value="spouse"><span class="mark"></span><span data-es="Cónyuge o pareja" data-en="Spouse or partner">Cónyuge o pareja</span></button>
+<button class="choice" type="button" aria-pressed="false" data-value="other"><span class="mark"></span><span data-es="Otro familiar" data-en="Other relative">Otro familiar</span></button>
+</div></fieldset>
+</section>
+<section>
+<fieldset><legend data-es="¿Qué le gustaría organizar mejor?" data-en="What would you like to manage better?">¿Qué le gustaría organizar mejor?</legend><p class="hint" data-es="Puede elegir varias opciones." data-en="Select all that apply.">Puede elegir varias opciones.</p><div class="choices" data-group="needs" data-multiple="true">
+<button class="choice" type="button" aria-pressed="false" data-value="caregivers"><span class="mark"></span><span data-es="Horarios de cuidadoras" data-en="Caregiver schedules">Horarios de cuidadoras</span></button>
+<button class="choice" type="button" aria-pressed="false" data-value="medicines"><span class="mark"></span><span data-es="Medicinas e inventario" data-en="Medicines and inventory">Medicinas e inventario</span></button>
+<button class="choice" type="button" aria-pressed="false" data-value="daily"><span class="mark"></span><span data-es="Reportes diarios de cuidado" data-en="Daily care reports">Reportes diarios de cuidado</span></button>
+<button class="choice" type="button" aria-pressed="false" data-value="family"><span class="mark"></span><span data-es="Coordinación familiar" data-en="Family coordination">Coordinación familiar</span></button>
+<button class="choice" type="button" aria-pressed="false" data-value="expenses"><span class="mark"></span><span data-es="Gastos y pagos" data-en="Expenses and payments">Gastos y pagos</span></button>
+<button class="choice" type="button" aria-pressed="false" data-value="medical"><span class="mark"></span><span data-es="Información para médicos" data-en="Medical information">Información para médicos</span></button>
+</div></fieldset>
+</section>
+<section>
+<fieldset><legend data-es="¿Qué plan desea conocer?" data-en="Which plan would you like to explore?">¿Qué plan desea conocer?</legend><div class="choices" data-group="plan">
+<button class="choice plan" type="button" aria-pressed="false" data-value="family"><span class="mark"></span><span><strong data-es="Plan Familia" data-en="Family Plan">Plan Familia</strong><small data-es="Acceso a las siete aplicaciones." data-en="Access to all seven applications.">Acceso a las siete aplicaciones.</small></span><span class="price">$29/mes</span></button>
+<button class="choice plan" type="button" aria-pressed="false" data-value="full"><span class="mark"></span><span><strong data-es="Full Setup" data-en="Full Setup">Full Setup</strong><small data-es="Configuración personalizada." data-en="Personalized setup.">Configuración personalizada.</small></span><span class="price">$49/mes</span></button>
+<button class="choice" type="button" aria-pressed="true" data-value="both"><span class="mark">✓</span><span data-es="Quiero conocer ambos planes" data-en="I'd like to compare both plans">Quiero conocer ambos planes</span></button>
+</div><p class="hint" style="margin:14px 0 0" data-es="Full Setup incluye además un cargo único de configuración de $99." data-en="Full Setup also includes a one-time $99 setup fee.">Full Setup incluye además un cargo único de configuración de $99.</p></fieldset>
+</section>
+<section>
+<div class="field"><label for="timing" data-es="¿Cuándo le gustaría comenzar?" data-en="When would you like to get started?">¿Cuándo le gustaría comenzar?</label><select id="timing" name="timing" style="border:1px solid var(--line);border-radius:12px;padding:14px;background:white;font:inherit"><option value="exploring" data-es="Solo estoy explorando" data-en="Just exploring">Solo estoy explorando</option><option value="now" data-es="Lo antes posible" data-en="As soon as possible">Lo antes posible</option><option value="week" data-es="Dentro de 7 días" data-en="Within 7 days">Dentro de 7 días</option><option value="month" data-es="Dentro de 30 días" data-en="Within 30 days">Dentro de 30 días</option></select></div>
+</section>
+<div class="actions"><button class="submit" type="submit"><span data-es="Enviar información" data-en="Submit information">Enviar información</span> &nbsp;→</button></div>
+<p class="fine" data-es="Al enviar, acepta que podamos contactarle sobre su consulta. Consulte nuestra Política de privacidad." data-en="By submitting, you agree that we may contact you about your inquiry. Please review our Privacy Policy.">Al enviar, acepta que podamos contactarle sobre su consulta. Consulte nuestra Política de privacidad.</p>
+<div class="notice" id="notice" role="status" aria-live="polite"></div>
+</form>
+<div class="foot"><a class="back" href="./" data-es="← Volver a Cuidar a Distancia" data-en="← Back to Cuidar a Distancia">← Volver a Cuidar a Distancia</a><span>© 2026 Cuidar a Distancia</span></div>
+</main>
+<script>
+(function(){
+var lang='es';
+var choices={person:'parent',needs:[],plan:'both'};
+function setLang(next){lang=next;document.documentElement.lang=next;document.getElementById('es').setAttribute('aria-pressed',String(next==='es'));document.getElementById('en').setAttribute('aria-pressed',String(next==='en'));document.querySelectorAll('[data-es][data-en]').forEach(function(el){var value=el.getAttribute('data-'+next);if(el.tagName==='OPTION')el.textContent=value;else el.innerHTML=value;});document.getElementById('name').placeholder=next==='es'?'Nombre y apellido':'First and last name';document.getElementById('email').placeholder=next==='es'?'nombre@correo.com':'name@email.com';document.getElementById('country').placeholder=next==='es'?'País':'Country';document.getElementById('phone').placeholder=next==='es'?'+ código de país':'+ country code';}
+document.getElementById('es').addEventListener('click',function(){setLang('es')});document.getElementById('en').addEventListener('click',function(){setLang('en')});
+document.querySelectorAll('[data-group]').forEach(function(group){group.addEventListener('click',function(ev){var button=ev.target.closest('button.choice');if(!button)return;var key=group.getAttribute('data-group'),value=button.getAttribute('data-value'),multi=group.getAttribute('data-multiple')==='true';if(multi){var arr=choices[key];choices[key]=arr.indexOf(value)>=0?arr.filter(function(x){return x!==value}):arr.concat(value);}else{choices[key]=value;}Array.prototype.forEach.call(group.querySelectorAll('button.choice'),function(b){var active=multi?choices[key].indexOf(b.getAttribute('data-value'))>=0:choices[key]===b.getAttribute('data-value');b.setAttribute('aria-pressed',String(active));b.querySelector('.mark').textContent=active?'✓':'';});});});
+document.getElementById('leadForm').addEventListener('submit',function(ev){ev.preventDefault();var n=document.getElementById('notice');n.classList.add('show');n.textContent=lang==='es'?'Esta es una vista de desarrollo. El formulario todavía no guarda ni envía información. No introduzca datos personales reales.':'This is a development preview. The form does not yet save or send information. Please do not enter real personal data.';n.scrollIntoView({behavior:'smooth',block:'nearest'});});
+})();
+</script>
+</body></html>
