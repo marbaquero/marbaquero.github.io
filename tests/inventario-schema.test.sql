@@ -1,6 +1,6 @@
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(24);
+select plan(30);
 
 select ok(to_regnamespace('customer_data') is not null,
   'Private customer_data schema exists');
@@ -75,6 +75,20 @@ select ok(not has_function_privilege('authenticated','public.create_customer_med
   'Browser role cannot execute medicine creation RPC');
 select ok(has_function_privilege('service_role','public.record_customer_dispensing(uuid,uuid,numeric,text,timestamp with time zone)','execute'),
   'Service role can execute atomic dispensing RPC');
+
+
+select ok(not has_function_privilege('authenticated','public.record_customer_purchase(uuid,date,text,text,numeric,numeric,boolean,jsonb)','execute'),
+  'Browser role cannot execute purchase workflow');
+select ok(has_function_privilege('service_role','public.record_customer_purchase(uuid,date,text,text,numeric,numeric,boolean,jsonb)','execute'),
+  'Service role can execute purchase workflow');
+select ok(not has_function_privilege('authenticated','public.record_customer_weekly_fill(uuid,timestamp with time zone,text,boolean,jsonb)','execute'),
+  'Browser role cannot execute weekly-fill workflow');
+select ok(has_function_privilege('service_role','public.record_customer_weekly_fill(uuid,timestamp with time zone,text,boolean,jsonb)','execute'),
+  'Service role can execute weekly-fill workflow');
+select ok(not has_function_privilege('authenticated','public.record_customer_stock_count(uuid,text,jsonb)','execute'),
+  'Browser role cannot execute physical-count workflow');
+select ok(has_function_privilege('service_role','public.record_customer_stock_count(uuid,text,jsonb)','execute'),
+  'Service role can execute physical-count workflow');
 
 select * from finish();
 rollback;
