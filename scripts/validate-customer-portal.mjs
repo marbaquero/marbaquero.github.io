@@ -6,6 +6,7 @@ const webhook = await read("../supabase/functions/stripe-webhook/index.ts");
 const checkout = await read("../supabase/functions/create-checkout-session/index.ts");
 const billing = await read("../supabase/functions/create-billing-portal-session/index.ts");
 const onboarding = await read("../supabase/functions/complete-onboarding/index.ts");
+const inventario = await read("../supabase/functions/inventario-api/index.ts");
 const scripts = [];
 let cursor = 0;
 while ((cursor = portal.indexOf("<script>", cursor)) !== -1) {
@@ -49,4 +50,13 @@ assert.ok(webhook.includes("processed_at"));
 assert.ok(webhook.includes('event.type.startsWith("customer.subscription.")'));
 assert.ok(!webhook.includes("invoice.payment_succeeded"));
 assert.ok(!webhook.includes("invoice.payment_failed"));
+
+assert.ok(inventario.includes("auth.getUser"), "Inventario API must validate the user session");
+assert.ok(inventario.includes('.eq("household_id", householdId).eq("user_id", user.id)'), "Inventario API must verify household membership");
+assert.ok(inventario.includes('.eq("app_key", "inventario")'), "Inventario API must verify app entitlement");
+assert.ok(inventario.includes('["active", "trialing"].includes(subscription.status)'), "Inventario API must require an active subscription");
+assert.ok(inventario.includes('admin.rpc("list_customer_medicines"'), "Inventario reads must use the private server-only RPC");
+assert.ok(inventario.includes('admin.rpc("create_customer_medicine"'), "Medicine creation must use the server-only RPC");
+assert.ok(inventario.includes('admin.rpc("record_customer_dispensing"'), "Dispensing must use the atomic server-only RPC");
+assert.ok(!inventario.includes('.schema("customer_data")'), "Private schema must not be exposed through PostgREST");
 console.log("Customer portal checks passed.");
