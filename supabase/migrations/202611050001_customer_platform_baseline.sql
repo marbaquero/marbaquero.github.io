@@ -276,7 +276,7 @@ returns event_trigger
 language plpgsql
 security definer
 set search_path = 'pg_catalog'
-as $
+as $function$
 declare
   cmd record;
   tbl name;
@@ -305,7 +305,7 @@ begin
      end if;
   end loop;
 end;
-$;
+$function$;
 
 create event trigger ensure_rls
 on ddl_command_end
