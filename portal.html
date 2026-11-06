@@ -73,7 +73,7 @@ input,select{width:100%;padding:13px;border:1px solid #ccd4dc;border-radius:10px
   const {data:access,error:accessError}=await client.from("household_app_access").select("app_key,is_enabled,app_catalog(display_name)").eq("household_id",membership.household_id);
   if(accessError){notice("portalNotice",w("error"),true);return;}
   (access||[]).forEach(item=>{const row=document.createElement("div");row.className="app";const name=document.createElement("strong");name.textContent=item.app_catalog?.display_name||item.app_key;const status=document.createElement("span");status.className="status";status.textContent=item.is_enabled?w("enabled"):w("pending");row.append(name,status);box.append(row);});
-  $("portalNotice").style.display="none";
+  const checkoutState=new URLSearchParams(location.search).get("checkout");\n  if(checkoutState==="success")notice("portalNotice",w("checkoutSuccess"));\n  else if(checkoutState==="cancel")notice("portalNotice",w("checkoutCancel"));\n  else $("portalNotice").style.display="none";
  }
  async function ensureOnboarding(user){
   const {data:existing}=await client.from("household_members").select("household_id").eq("user_id",user.id).limit(1).maybeSingle();
@@ -110,7 +110,7 @@ input,select{width:100%;padding:13px;border:1px solid #ccd4dc;border-radius:10px
  });
  $("reset").onclick=async()=>{const email=$("email").value.trim();if(!email){notice("authNotice",lang==="en"?"Enter your email address first.":"Primero ingrese su correo.",true);return;}const {error}=await client.auth.resetPasswordForEmail(email,{redirectTo:location.href});if(error)notice("authNotice",error.message,true);else notice("authNotice",w("resetSent"));};
  $("checkoutBtn").onclick=async()=>{const btn=$("checkoutBtn");btn.disabled=true;notice("portalNotice",w("checkoutWorking"));try{const {data,error}=await client.functions.invoke("create-checkout-session",{body:{plan_key:$("billingPlan").value}});if(error)throw error;if(!data?.url)throw new Error(w("error"));location.assign(data.url);}catch(err){notice("portalNotice",err.message||w("error"),true);btn.disabled=false;}};\n $("signout").onclick=async()=>{await client.auth.signOut();$("portalView").classList.add("hidden");$("authView").classList.remove("hidden");notice("authNotice",w("signedOut"));};
- client.auth.getSession().then(({data})=>{if(data.session)showPortal(data.session.user);});\n const checkoutState=new URLSearchParams(location.search).get("checkout");if(checkoutState==="success")notice("authNotice",w("checkoutSuccess"));else if(checkoutState==="cancel")notice("authNotice",w("checkoutCancel"));
+ client.auth.getSession().then(({data})=>{if(data.session)showPortal(data.session.user);});
  paintLanguage();
 })();
 </script>
