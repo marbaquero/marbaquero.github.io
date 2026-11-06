@@ -88,3 +88,16 @@ Never use user-editable raw_user_meta_data as an authorization source. Subscript
 ## Approval boundary
 
 This ADR is documentation and design only. It does not create schemas, alter grants or RLS, change API settings, deploy functions, create projects, or touch production data. Those actions remain gated by the existing release approval boundary.
+
+## Read-only verification of the customer platform (2026-11-06)
+
+The existing customer project was inspected read-only before implementation. No SQL, grants, RLS, Auth settings, or Edge Functions were changed.
+
+- Project: `fftnffmttuzfftntzzhu`, region `us-east-1`, PostgreSQL 17.11, status healthy.
+- The seven existing customer-platform tables are present and RLS-enabled: `customer_profiles`, `households`, `household_members`, `subscriptions`, `app_catalog`, `household_app_access`, and `customer_onboarding`, plus `subscription_plans`.
+- The project has one customer profile record and no household, membership, subscription, household-app-access, or onboarding records. The app catalog has seven rows.
+- The migration-history listing returned no recorded migrations even though the schema already exists. Treat this as schema/migration drift: do not run the branch's clean-install baseline against this hosted project or assume migration history accurately describes its live schema.
+- Security Advisor currently reports four callable SECURITY DEFINER functions: `public.rls_auto_enable()` is callable by anon and authenticated; `public.create_household(text)`, `public.is_household_member(uuid)`, and `public.is_household_owner(uuid)` are callable by authenticated. It also reports leaked-password protection disabled.
+- Performance Advisor reports four unindexed foreign keys in the customer-platform tables: `household_app_access.app_key`, `household_members.user_id`, `households.created_by`, and `subscriptions.household_id`.
+
+These findings are not authorization to change the live project. In particular, do not revoke existing function privileges or alter the Auth setting as part of Inventario work without a separately reviewed migration and explicit approval. New Inventario work must avoid adding another exposed SECURITY DEFINER endpoint. The current GitHub validation workflow uses pinned Supabase CLI `2.84.2` and a disposable local Supabase stack; keep that workflow isolated from hosted projects while developing.
