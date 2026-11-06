@@ -20,6 +20,7 @@
 <p class="intro" data-en="A few thoughtful questions to understand what your family needs and how Cuidar a Distancia can help." data-es="Unas pocas preguntas para comprender las necesidades de su familia y cómo Cuidar a Distancia puede ayudarles.">A few thoughtful questions to understand what your family needs and how Cuidar a Distancia can help.</p>
 <div class="progress" aria-label="Registration progress"><span id="p1" class="active"></span><span id="p2"></span></div>
 <form id="registration" novalidate>
+<input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px">
 <section id="step1">
 <div class="step-label" data-en="STEP 1 OF 2 · INTRODUCTION" data-es="PASO 1 DE 2 · PRESENTACIÓN">STEP 1 OF 2 · INTRODUCTION</div>
 <div class="card"><h2 data-en="About you" data-es="Sobre usted">About you</h2><p class="hint" data-en="How can we reach you?" data-es="¿Cómo podemos comunicarnos con usted?">How can we reach you?</p>
@@ -66,7 +67,7 @@
 </section>
 </form>
 </div>
-<div id="done" class="card success hidden"><div class="mark">✓</div><h2 data-en="Thank you for telling us about your family." data-es="Gracias por contarnos sobre su familia.">Thank you for telling us about your family.</h2><p class="muted" data-en="This is a design preview. Your answers have not been sent or saved. The live form will be connected to a secure customer inquiry system before publication." data-es="Esta es una vista previa del diseño. Sus respuestas no se han enviado ni guardado. Antes de publicarlo, conectaremos el formulario a un sistema seguro de consultas de clientes.">This is a design preview. Your answers have not been sent or saved. The live form will be connected to a secure customer inquiry system before publication.</p><p style="margin-top:18px"><a href="/" data-en="Return to Cuidar a Distancia" data-es="Volver a Cuidar a Distancia">Return to Cuidar a Distancia</a></p></div>
+<div id="done" class="card success hidden"><div class="mark">✓</div><h2 data-en="Thank you for telling us about your family." data-es="Gracias por contarnos sobre su familia.">Thank you for telling us about your family.</h2><p class="muted" data-en="Your inquiry has been received. Reference number: <strong id="leadRef"></strong>. We will review your information and contact you soon." data-es="Hemos recibido su consulta. Número de referencia: <strong id="leadRefEs"></strong>. Revisaremos su información y nos comunicaremos con usted pronto.">This is a design preview. Your answers have not been sent or saved. The live form will be connected to a secure customer inquiry system before publication.</p><p style="margin-top:18px"><a href="/" data-en="Return to Cuidar a Distancia" data-es="Volver a Cuidar a Distancia">Return to Cuidar a Distancia</a></p></div>
 <div class="notice" data-en="Privacy first: this form asks about care coordination needs only. Please do not enter diagnoses, medication details, medical records, or other sensitive health information." data-es="Primero la privacidad: este formulario pregunta únicamente sobre necesidades de coordinación del cuidado. No ingrese diagnósticos, detalles de medicamentos, historias clínicas ni otra información médica sensible.">Privacy first: this form asks about care coordination needs only. Please do not enter diagnoses, medication details, medical records, or other sensitive health information.</div>
 <div class="footer">© 2026 Cuidar a Distancia · <span data-en="Family care, wherever you are." data-es="Cuidado familiar, desde cualquier lugar.">Family care, wherever you are.</span></div>
 </main>
@@ -78,7 +79,49 @@ document.getElementById('en').addEventListener('click',function(){setLang('en')}
 function showStep(n){document.getElementById('step1').classList.toggle('hidden',n!==1);document.getElementById('step2').classList.toggle('hidden',n!==2);document.getElementById('p1').classList.toggle('active',n===1);document.getElementById('p2').classList.toggle('active',n===2);window.scrollTo({top:0,behavior:'smooth'});}
 document.getElementById('next').addEventListener('click',function(){var required=['name','email','country'];var valid=true;required.forEach(function(id){var el=document.getElementById(id);if(!el.value.trim()||!el.checkValidity()){el.reportValidity();valid=false;}});if(!form.querySelector('input[name="person"]:checked')){document.getElementById('err1').textContent=lang==='en'?'Please select who you are coordinating care for.':'Seleccione para quién coordina el cuidado.';valid=false;}else{document.getElementById('err1').textContent='';}if(valid)showStep(2);});
 document.getElementById('back').addEventListener('click',function(){showStep(1)});
-form.addEventListener('submit',function(e){e.preventDefault();if(!document.getElementById('consent').checked){document.getElementById('err2').textContent=lang==='en'?'Please confirm consent before submitting.':'Confirme su autorización antes de enviar.';return;}document.getElementById('err2').textContent='';form.classList.add('hidden');document.getElementById('done').classList.remove('hidden');document.getElementById('formArea').classList.add('hidden');window.scrollTo({top:0,behavior:'smooth'});});
+form.addEventListener('submit',async function(e){
+ e.preventDefault();
+ var errorBox=document.getElementById('err2');
+ if(!document.getElementById('consent').checked){errorBox.textContent=lang==='en'?'Please confirm consent before submitting.':'Confirme su autorización antes de enviar.';return;}
+ var submitButton=form.querySelector('button[type="submit"]');
+ submitButton.disabled=true;submitButton.textContent=lang==='en'?'Sending…':'Enviando…';errorBox.textContent='';
+ var fd=new FormData(form);
+ var relationshipMap={'Mother / Father':'parent','Grandparent':'grandparent','Spouse / Partner':'spouse_partner','Other relative':'other_relative'};
+ var distanceMap={'Same household':'same_household','Same city':'same_city','Different city':'different_city','Different country':'different_country'};
+ var teamMap={'Family members':'family','Professional caregivers':'professional','Both':'both','Other':'other'};
+ var needMap={'Caregiver schedules':'caregiver_schedules','Daily care reports':'daily_reports','Medication inventory':'medication_inventory','Expenses and payments':'expenses_payments','Family coordination':'family_coordination','Medical visit records':'medical_visit_records','Care activities':'care_activities','All seven applications':'all_seven'};
+ var currentMap={'Spreadsheets':'spreadsheets','Messaging apps':'messaging_apps','Paper records':'paper_records','Several tools':'several_tools','No system':'no_system'};
+ var startMap={'Immediately':'immediately','Within 7 days':'within_7_days','Within 30 days':'within_30_days','Just exploring':'exploring'};
+ var planValue=fd.get('plan')||'';
+ var payload={
+  full_name:fd.get('name'),email:fd.get('email'),country:fd.get('country'),phone:fd.get('phone')||null,
+  preferred_language:fd.get('language')==='Español'?'es':'en',
+  care_relationship:relationshipMap[fd.get('person')],
+  loved_one_location:fd.get('careLocation')||null,
+  distance_from_loved_one:distanceMap[fd.get('distance')]||null,
+  care_team:fd.getAll('careTeam').map(v=>teamMap[v]).filter(Boolean),
+  caregiver_count:fd.get('caregivers')||null,
+  requested_plan:planValue.indexOf('Family Plan')===0?'family':planValue.indexOf('Full Setup')===0?'full_setup':'undecided',
+  needs:fd.getAll('needs').map(v=>needMap[v]).filter(Boolean),
+  current_organization:currentMap[fd.get('current')]||null,
+  desired_start:startMap[fd.get('startWhen')]||null,
+  additional_notes:fd.get('notes')||null,
+  contact_consent:true,website:fd.get('website')||''
+ };
+ try{
+  var response=await fetch('https://fftnffmttuzfftntzzhu.supabase.co/functions/v1/submit-customer-lead',{
+   method:'POST',headers:{'Content-Type':'application/json','apikey':'sb_publishable_f5py08cOv3Bdo0Yvm6lmbA_VBxnbEsP'},body:JSON.stringify(payload)
+  });
+  var result=await response.json();
+  if(!response.ok||!result.ok)throw new Error(result.error||'Submission failed');
+  document.getElementById('leadRef').textContent=result.reference;
+  document.getElementById('leadRefEs').textContent=result.reference;
+  form.classList.add('hidden');document.getElementById('done').classList.remove('hidden');document.getElementById('formArea').classList.add('hidden');window.scrollTo({top:0,behavior:'smooth'});
+ }catch(err){
+  errorBox.textContent=lang==='en'?'We could not send your inquiry. Please check your connection and try again.':'No pudimos enviar su consulta. Revise su conexión e inténtelo nuevamente.';
+  submitButton.disabled=false;submitButton.textContent=lang==='en'?'Submit inquiry':'Enviar consulta';
+ }
+});
 setLang('en');
 })();
 </script>
