@@ -23,6 +23,7 @@ assert.ok(portal.includes('value="family"'));
 assert.ok(portal.includes('value="full_setup"'));
 assert.ok(portal.includes("async function restoreSession()"), "confirmed-email sessions must resume pending onboarding");
 assert.ok(portal.includes("await ensureOnboarding(user)"), "session restoration must complete pending household setup");
+assert.ok((portal.match(/if\(updateError\)throw updateError;/g)||[]).length >= 3, "onboarding metadata update failures must not be ignored");
 assert.ok(portal.includes("sb_publishable_"));
 for (const forbidden of ["service_role", "sk_live_", "sk_test_", "whsec_"]) assert.ok(!portal.toLowerCase().includes(forbidden.toLowerCase()));
 for (const source of [checkout, billing]) {
