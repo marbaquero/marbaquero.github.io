@@ -368,6 +368,8 @@ grant select on public.customer_profiles, public.households, public.household_me
 grant execute on function public.create_household(text) to authenticated;
 grant execute on function public.is_household_member(uuid) to authenticated;
 grant execute on function public.is_household_owner(uuid) to authenticated;
+revoke execute on function public.complete_customer_onboarding(uuid, text, text, text, text)
+  from public, anon, authenticated;
 grant execute on function public.complete_customer_onboarding(uuid, text, text, text, text)
   to service_role;
 
