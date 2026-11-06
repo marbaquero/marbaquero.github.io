@@ -14,7 +14,19 @@ Deno.serve(async (req: Request) => {
 
   try {
     const event = JSON.parse(rawBody);
+    if (!event.id || !event.type) return new Response("Invalid Stripe event", { status: 400 });
     const admin = createClient(supabaseUrl, serviceKey, { auth: { persistSession: false } });
+
+    // Stripe retries delivery. Skip events that have already completed successfully.
+    const { data: priorEvent, error: priorError } = await admin
+      .from("stripe_webhook_events").select("processed_at").eq("event_id", event.id).maybeSingle();
+    if (priorError) throw priorError;
+    if (priorEvent?.processed_at) {
+      return new Response(JSON.stringify({ received: true, duplicate: true }), {
+        status: 200, headers: { "Content-Type": "application/json" },
+      });
+    }
+
     const object = event.data?.object || {};
     let householdId = object.metadata?.household_id;
     let planKey = object.metadata?.plan_key;
@@ -28,6 +40,7 @@ Deno.serve(async (req: Request) => {
       householdId ||= object.client_reference_id;
       subscriptionId = typeof object.subscription === "string" ? object.subscription : object.subscription?.id || null;
       if (object.payment_status !== "paid" && object.payment_status !== "no_payment_required") {
+        await recordWebhookEvent(admin, event.id, event.type, true);
         return new Response("Checkout not paid", { status: 200 });
       }
       // Keep the subscription status unchanged here: subscription events may arrive first.
@@ -43,7 +56,10 @@ Deno.serve(async (req: Request) => {
       subscriptionId = typeof object.subscription === "string" ? object.subscription : object.subscription?.id || null;
       status = "active";
     } else {
-      return new Response(JSON.stringify({ received: true, ignored: event.type }), { status: 200 });
+      await recordWebhookEvent(admin, event.id, event.type, true);
+      return new Response(JSON.stringify({ received: true, ignored: event.type }), {
+        status: 200, headers: { "Content-Type": "application/json" },
+      });
     }
 
     if (!householdId && subscriptionId) {
@@ -52,7 +68,7 @@ Deno.serve(async (req: Request) => {
       householdId = data?.household_id;
       planKey ||= data?.plan_key;
     }
-    if (!householdId) return new Response("Missing household metadata", { status: 400 });
+    if (!householdId) throw new Error("Missing household metadata for Stripe event " + event.id);
 
     const { data: existing, error: lookupError } = await admin.from("subscriptions")
       .select("id").eq("household_id", householdId).maybeSingle();
@@ -79,12 +95,35 @@ Deno.serve(async (req: Request) => {
         .update({ is_enabled: enabled }).eq("household_id", householdId);
       if (accessError) throw accessError;
     }
+    await recordWebhookEvent(admin, event.id, event.type, true);
     return new Response(JSON.stringify({ received: true }), { status: 200, headers: { "Content-Type": "application/json" } });
   } catch (error) {
     console.error("stripe-webhook failed", error);
+    // Keep processed_at null so Stripe's retry can safely attempt the event again.
+    try {
+      const event = JSON.parse(rawBody);
+      const admin = createClient(supabaseUrl, serviceKey, { auth: { persistSession: false } });
+      await admin.from("stripe_webhook_events").upsert({
+        event_id: event.id, event_type: event.type,
+        last_error: String(error).slice(0, 1000), processed_at: null,
+      }, { onConflict: "event_id" });
+    } catch (ledgerError) {
+      console.error("stripe-webhook ledger update failed", ledgerError);
+    }
     return new Response("Webhook processing failed", { status: 500 });
   }
 });
+
+async function recordWebhookEvent(admin: ReturnType<typeof createClient>, eventId: string, eventType: string, complete: boolean) {
+  const { error } = await admin.from("stripe_webhook_events").upsert({
+    event_id: eventId,
+    event_type: eventType,
+    processing_started_at: new Date().toISOString(),
+    processed_at: complete ? new Date().toISOString() : null,
+    last_error: null,
+  }, { onConflict: "event_id" });
+  if (error) throw error;
+}
 
 function mapStatus(value: string): string {
   if (value === "active") return "active";
