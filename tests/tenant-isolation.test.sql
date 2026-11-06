@@ -38,11 +38,33 @@ insert into public.customer_onboarding (household_id, status) values
   ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'completed'),
   ('bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb', 'completed');
 
-select plan(10);
+-- Confirm the post-hardening event trigger still enables RLS on newly created
+-- public tables even after PUBLIC/anon/authenticated EXECUTE was revoked.
+create table public._ci_post_hardening_rls_probe (id bigint);
+select plan(17);
+select ok(
+  (select relrowsecurity from pg_class where oid = 'public._ci_post_hardening_rls_probe'::regclass),
+  'RLS auto-enable event trigger still works after its function EXECUTE grant is revoked'
+);
+drop table public._ci_post_hardening_rls_probe;
 
 -- Confirm the clean baseline contains the seven configured applications.
 select is((select count(*)::integer from public.app_catalog where is_active), 7,
   'Baseline includes exactly seven active applications');
+
+-- Trusted Edge Functions use the service_role key for these narrowly scoped operations.
+select ok(has_table_privilege('service_role', 'public.household_members', 'select'),
+  'Backend service role can look up household owner membership');
+select ok(has_table_privilege('service_role', 'public.subscriptions', 'select'),
+  'Backend service role can read subscriptions for billing flows');
+select ok(has_table_privilege('service_role', 'public.subscriptions', 'insert'),
+  'Backend service role can insert subscription records from Stripe webhooks');
+select ok(has_table_privilege('service_role', 'public.subscriptions', 'update'),
+  'Backend service role can update subscription lifecycle state');
+select ok(has_table_privilege('service_role', 'public.household_app_access', 'select'),
+  'Backend service role can filter household application access rows');
+select ok(has_table_privilege('service_role', 'public.household_app_access', 'update'),
+  'Backend service role can enable or disable household application access');
 
 -- User A: verify household-scoped reads across the real platform tables.
 set local role authenticated;
