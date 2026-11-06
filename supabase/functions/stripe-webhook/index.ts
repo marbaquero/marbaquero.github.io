@@ -30,7 +30,7 @@ Deno.serve(async (req: Request) => {
       if (object.payment_status !== "paid" && object.payment_status !== "no_payment_required") {
         return new Response("Checkout not paid", { status: 200 });
       }
-      status = "incomplete";
+      // Keep the subscription status unchanged here: subscription events may arrive first.
     } else if (event.type.startsWith("customer.subscription.")) {
       subscriptionId = object.id;
       status = mapStatus(object.status);
