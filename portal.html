@@ -116,7 +116,23 @@ input,select{width:100%;padding:13px;border:1px solid #ccd4dc;border-radius:10px
  $("manageBillingBtn").onclick=async()=>{const btn=$("manageBillingBtn");btn.disabled=true;notice("portalNotice",w("billingWorking"));try{const {data,error}=await client.functions.invoke("create-billing-portal-session",{body:{}});if(error)throw error;if(!data?.url)throw new Error(w("error"));location.assign(data.url);}catch(err){notice("portalNotice",err.message||w("error"),true);btn.disabled=false;}};
  $("checkoutBtn").onclick=async()=>{const btn=$("checkoutBtn");btn.disabled=true;notice("portalNotice",w("checkoutWorking"));try{const {data,error}=await client.functions.invoke("create-checkout-session",{body:{plan_key:$("billingPlan").value}});if(error)throw error;if(!data?.url)throw new Error(w("error"));location.assign(data.url);}catch(err){notice("portalNotice",err.message||w("error"),true);btn.disabled=false;}};
  $("signout").onclick=async()=>{await client.auth.signOut();$("portalView").classList.add("hidden");$("authView").classList.remove("hidden");notice("authNotice",w("signedOut"));};
- client.auth.getSession().then(({data})=>{if(data.session)showPortal(data.session.user);});
+ async function restoreSession(){
+  const {data,error}=await client.auth.getSession();
+  if(error||!data.session)return;
+  const user=data.session.user;
+  try{
+   if(user.user_metadata?.onboarding_pending===true){
+    await ensureOnboarding(user);
+    const {error:updateError}=await client.auth.updateUser({data:{onboarding_pending:false}});
+    if(updateError)throw updateError;
+   }
+   await showPortal(user);
+  }catch(err){
+   await showPortal(user);
+   notice("portalNotice",err.message||w("error"),true);
+  }
+ }
+ restoreSession();
  paintLanguage();
 })();
 </script>
