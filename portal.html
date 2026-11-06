@@ -79,7 +79,7 @@ input,select{width:100%;padding:13px;border:1px solid #ccd4dc;border-radius:10px
   const {data:existing}=await client.from("household_members").select("household_id").eq("user_id",user.id).limit(1).maybeSingle();
   if(existing)return;
   const name=$("name").value.trim()||user.user_metadata?.display_name||user.email?.split("@")[0]||"Customer";
-  const planKey=$("plan").value;
+  const planKey=user.user_metadata?.plan_key||$("plan").value;
   const {error}=await client.functions.invoke("complete-onboarding",{body:{name,plan_key:planKey,locale:lang,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone}});
   if(error)throw error;
  }
@@ -91,7 +91,7 @@ input,select{width:100%;padding:13px;border:1px solid #ccd4dc;border-radius:10px
    let result;
    if(mode==="signup"){
     const name=$("name").value.trim();if(!name)throw new Error(lang==="en"?"Please enter your name.":"Ingrese su nombre.");
-    result=await client.auth.signUp({email:$("email").value.trim(),password:$("password").value,options:{data:{display_name:name},emailRedirectTo:location.href}});
+    result=await client.auth.signUp({email:$("email").value.trim(),password:$("password").value,options:{data:{display_name:name,onboarding_pending:true,plan_key:$("plan").value,locale:lang},emailRedirectTo:location.href}});
     if(result.error)throw result.error;
     if(!result.data.session){notice("authNotice",w("verify"));return;}
     await ensureOnboarding(result.data.user);
