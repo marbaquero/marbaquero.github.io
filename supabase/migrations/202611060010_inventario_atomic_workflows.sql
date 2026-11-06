@@ -25,7 +25,7 @@ declare
   v_count integer := 0;
 begin
   if p_household_id is null or p_total is null or p_total < 0
-     or coalesce(p_saved,0) < 0 or jsonb_typeof(p_items) <> 'array'
+     or coalesce(p_saved,0) < 0 or p_items is null or jsonb_typeof(p_items) <> 'array'
      or jsonb_array_length(p_items) = 0
      or length(coalesce(p_pharmacy,'')) > 160
      or length(coalesce(p_receipt_reference,'')) > 240 then
@@ -91,7 +91,7 @@ declare
   v_qty numeric;
   v_count integer := 0;
 begin
-  if p_household_id is null or jsonb_typeof(p_items) <> 'array'
+  if p_household_id is null or p_items is null or jsonb_typeof(p_items) <> 'array'
      or jsonb_array_length(p_items)=0
      or length(coalesce(p_caregiver_label,''))>120 then
     raise exception 'Invalid weekly fill fields' using errcode='22023';
@@ -144,7 +144,7 @@ declare
   v_after numeric;
   v_count integer := 0;
 begin
-  if p_household_id is null or jsonb_typeof(p_items)<>'array'
+  if p_household_id is null or p_items is null or jsonb_typeof(p_items)<>'array'
      or jsonb_array_length(p_items)=0
      or length(coalesce(p_caregiver_label,''))>120 then
     raise exception 'Invalid stock count fields' using errcode='22023';
