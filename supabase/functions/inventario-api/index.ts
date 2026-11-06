@@ -100,6 +100,71 @@ Deno.serve(async (req: Request) => {
       return json(data);
     }
 
+
+    if (payload.action === "record_purchase") {
+      const items = normalizeItems(payload.items, "purchase");
+      const total = nonNegativeNumber(payload.total);
+      const saved = nonNegativeNumber(payload.saved);
+      const pharmacy = boundedText(payload.pharmacy, 160);
+      const receipt = boundedText(payload.receipt_reference, 240);
+      const stockApplied = payload.stock_applied === true;
+      if (!items || total === null || saved === null || pharmacy === "\\u0000" || receipt === "\\u0000") {
+        return json({ error: "Invalid purchase information" }, 400);
+      }
+      if (stockApplied && items.some((item) => !item.medicine_id)) {
+        return json({ error: "Link every item to a medicine before adding purchase quantities to stock" }, 400);
+      }
+      const { data, error } = await admin.rpc("record_customer_purchase", {
+        p_household_id: householdId,
+        p_purchase_date: typeof payload.purchase_date === "string" ? payload.purchase_date : null,
+        p_pharmacy: pharmacy,
+        p_receipt_reference: receipt,
+        p_total: total,
+        p_saved: saved,
+        p_stock_applied: stockApplied,
+        p_items: items,
+      });
+      if (error) {
+        console.error("Purchase operation failed", error);
+        return json({ error: "Unable to record purchase; no partial changes were saved" }, 400);
+      }
+      return json(data, 201);
+    }
+
+    if (payload.action === "weekly_fill") {
+      const items = normalizeItems(payload.items, "fill");
+      const caregiver = boundedText(payload.caregiver_label, 120);
+      if (!items || caregiver === "\\u0000") return json({ error: "Invalid weekly fill information" }, 400);
+      const { data, error } = await admin.rpc("record_customer_weekly_fill", {
+        p_household_id: householdId,
+        p_event_date: typeof payload.event_date === "string" ? payload.event_date : new Date().toISOString(),
+        p_caregiver_label: caregiver,
+        p_stock_applied: payload.stock_applied === true,
+        p_items: items,
+      });
+      if (error) {
+        console.error("Weekly fill failed", error);
+        return json({ error: error.message?.includes("Insufficient stock") ? "Insufficient stock for this weekly fill" : "Unable to record weekly fill; no partial changes were saved" }, 400);
+      }
+      return json(data, 201);
+    }
+
+    if (payload.action === "stock_count") {
+      const items = normalizeItems(payload.items, "count");
+      const caregiver = boundedText(payload.caregiver_label, 120);
+      if (!items || caregiver === "\\u0000") return json({ error: "Invalid stock count information" }, 400);
+      const { data, error } = await admin.rpc("record_customer_stock_count", {
+        p_household_id: householdId,
+        p_caregiver_label: caregiver,
+        p_items: items,
+      });
+      if (error) {
+        console.error("Physical count failed", error);
+        return json({ error: "Unable to save physical count; no partial changes were saved" }, 400);
+      }
+      return json(data, 201);
+    }
+
     return json({ error: "Unsupported action" }, 400);
   } catch (error) {
     console.error("inventario-api failed", error);
@@ -119,6 +184,32 @@ function nonNegativeNumber(value: unknown): number | null {
 function positiveNumber(value: unknown): number | null {
   const n = Number(value);
   return Number.isFinite(n) && n > 0 ? n : null;
+}
+function normalizeItems(value: unknown, mode: "purchase" | "fill" | "count"): Record<string, unknown>[] | null {
+  if (!Array.isArray(value) || value.length === 0 || value.length > 100) return null;
+  const result: Record<string, unknown>[] = [];
+  for (const raw of value) {
+    if (!raw || typeof raw !== "object") return null;
+    const item = raw as Record<string, unknown>;
+    const medicineId = typeof item.medicine_id === "string" && isUuid(item.medicine_id) ? item.medicine_id : null;
+    const name = typeof item.name === "string" ? item.name.trim() : "";
+    if (mode === "purchase") {
+      const quantity = positiveNumber(item.quantity);
+      const subtotal = nonNegativeNumber(item.subtotal);
+      if (!name || name.length > 160 || quantity === null || subtotal === null ||
+          (item.medicine_id && !medicineId)) return null;
+      result.push({ name, quantity, subtotal, medicine_id: medicineId });
+    } else if (mode === "fill") {
+      const quantity = positiveNumber(item.quantity);
+      if (!medicineId || quantity === null) return null;
+      result.push({ medicine_id: medicineId, quantity });
+    } else {
+      const quantityAfter = nonNegativeNumber(item.quantity_after);
+      if (!medicineId || quantityAfter === null) return null;
+      result.push({ medicine_id: medicineId, quantity_after: quantityAfter });
+    }
+  }
+  return result;
 }
 function isUuid(value: string): boolean {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
