@@ -45,7 +45,7 @@ begin
     v_qty := (v_item->>'quantity')::numeric;
     v_subtotal := coalesce((v_item->>'subtotal')::numeric,0);
     v_medicine_id := nullif(v_item->>'medicine_id','')::uuid;
-    if length(v_name) not between 1 and 160 or v_qty <= 0 or v_subtotal < 0 then
+    if length(v_name) not between 1 and 160 or v_qty is null or v_qty <= 0 or v_subtotal is null or v_subtotal < 0 then
       raise exception 'Invalid purchase item' using errcode='22023';
     end if;
     if p_stock_applied and v_medicine_id is null then
@@ -106,7 +106,7 @@ begin
   loop
     v_medicine_id := (v_item->>'medicine_id')::uuid;
     v_qty := (v_item->>'quantity')::numeric;
-    if v_qty <= 0 then raise exception 'Fill quantity must be positive' using errcode='22023'; end if;
+    if v_qty is null or v_qty <= 0 then raise exception 'Fill quantity must be positive' using errcode='22023'; end if;
     select * into v_medicine from customer_data.medicines
     where household_id=p_household_id and id=v_medicine_id and active for update;
     if not found then raise exception 'Fill medicine not found' using errcode='P0002'; end if;
@@ -156,7 +156,7 @@ begin
   loop
     v_medicine_id := (v_item->>'medicine_id')::uuid;
     v_after := (v_item->>'quantity_after')::numeric;
-    if v_after < 0 then raise exception 'Count cannot be negative' using errcode='22023'; end if;
+    if v_after is null or v_after < 0 then raise exception 'Count cannot be negative' using errcode='22023'; end if;
     select * into v_medicine from customer_data.medicines
     where household_id=p_household_id and id=v_medicine_id and active for update;
     if not found then raise exception 'Count medicine not found' using errcode='P0002'; end if;
