@@ -40,9 +40,13 @@ Deno.serve(async (req: Request) => {
       .eq("user_id", user.id).eq("role", "owner").limit(1).maybeSingle();
     if (memberError || !membership) return json({ error: "Household owner account required" }, 403);
 
-    const { data: currentSub } = await admin.from("subscriptions")
+    const { data: currentSub, error: subscriptionError } = await admin.from("subscriptions")
       .select("status, provider_subscription_id")
       .eq("household_id", membership.household_id).maybeSingle();
+    if (subscriptionError) {
+      console.error("Checkout subscription lookup failed", subscriptionError);
+      return json({ error: "Unable to verify current subscription" }, 500);
+    }
     if (currentSub?.provider_subscription_id && ["active", "trialing", "past_due"].includes(currentSub.status)) {
       return json({ error: "A subscription already exists. Manage it from the billing portal." }, 409);
     }
