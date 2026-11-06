@@ -33,15 +33,15 @@ Configure the Stripe webhook endpoint to this function and subscribe to:
 - `customer.subscription.created`
 - `customer.subscription.updated`
 - `customer.subscription.deleted`
-- `invoice.paid`
-- `invoice.payment_failed`
 
 Required secrets:
 - `STRIPE_WEBHOOK_SECRET`
 - `SUPABASE_URL`
 - `SUPABASE_SERVICE_ROLE_KEY`
 
-The webhook validates the Stripe signature and enables app access only for active/trialing subscriptions. It disables access for past-due, canceled, unpaid, and incomplete states.
+The webhook validates the Stripe signature, records successfully processed event IDs in the private `stripe_webhook_events` ledger, and uses `customer.subscription.*` lifecycle events as the authority for subscription status. Checkout completion links the Stripe customer/subscription to the household but does not itself grant access. It enables app access only for active/trialing subscriptions and disables access for past-due, canceled, unpaid, and incomplete states.
+
+Apply `supabase/migrations/202611060001_stripe_webhook_event_ledger.sql` to the central customer-platform project before deploying the webhook. This migration has been committed to the feature branch only; it has not been applied to Supabase. Failed webhook processing leaves the event unprocessed so Stripe can retry it.
 
 ## Deployment gate
 
