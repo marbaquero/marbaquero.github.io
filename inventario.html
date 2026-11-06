@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inventario | Cuidar a Distancia</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#18252d;background:#f3f6f5}
+*{box-sizing:border-box}body{margin:0;padding:24px}.shell{max-width:1100px;margin:auto}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:8px 0 24px}
+.brand{font-size:12px;letter-spacing:.12em;font-weight:800;color:#176b55}.sub{color:#68757d;font-size:13px}
+h1{font-size:30px;margin:4px 0}h2{font-size:17px;margin:0 0 14px}
+button,input,select{font:inherit}button{border:0;border-radius:10px;padding:11px 15px;background:#176b55;color:#fff;font-weight:650;cursor:pointer}
+button.secondary{background:#e7eeeb;color:#25443a}button:disabled{opacity:.55;cursor:wait}
+.panel{background:white;border:1px solid #e1e8e4;border-radius:16px;padding:20px;box-shadow:0 5px 18px #1c35220a}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.full{grid-column:1/-1}
+label{display:block;font-size:13px;font-weight:650;margin:10px 0 5px}
+input,select{width:100%;border:1px solid #cdd8d2;border-radius:9px;padding:11px;background:white}
+.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.toolbar{display:flex;gap:8px;align-items:center}.toolbar button{white-space:nowrap}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid #edf0ee}th{color:#607069;font-size:12px}
+.notice{display:none;padding:12px 14px;border-radius:10px;background:#eaf3ef;color:#245541;margin:12px 0}.notice.error{background:#fff0ef;color:#9a3028}
+.muted{color:#738079;font-size:13px}.hidden{display:none!important}.stat{font-size:25px;font-weight:750}.pill{font-size:12px;background:#edf4f0;border-radius:99px;padding:5px 9px}
+@media(max-width:720px){body{padding:14px}.grid{grid-template-columns:1fr}.full{grid-column:auto}header{align-items:flex-start}.toolbar{flex-direction:column;align-items:stretch}}
+</style>
+</head>
+<body><div class="shell">
+<header><div><div class="brand">CUIDAR A DISTANCIA</div><h1 id="title">Medicine inventory</h1><div class="sub" id="subtitle">Private household inventory</div></div><div class="toolbar"><button class="secondary" id="language">Español</button><button class="secondary" id="signout">Sign out</button></div></header>
+<div id="notice" class="notice" role="status"></div>
+<section id="app" class="hidden">
+<div class="grid">
+<div class="panel"><div class="muted" id="countLabel">Active medicines</div><div class="stat" id="count">0</div></div>
+<div class="panel"><div class="muted" id="lowLabel">Low stock</div><div class="stat" id="low">0</div></div>
+<div class="panel full"><div class="actions" style="justify-content:space-between"><h2 id="listTitle">Inventory</h2><button class="secondary" id="refresh">Refresh</button></div>
+<div style="overflow:auto"><table><thead><tr><th id="thMedicine">Medicine</th><th id="thDose">Dose</th><th id="thStock">Stock</th><th id="thMin">Minimum</th><th id="thUnit">Unit</th></tr></thead><tbody id="rows"></tbody></table></div></div>
+<div class="panel"><h2 id="newTitle">Add medicine</h2><form id="newForm">
+<label id="nameLabel">Medicine name</label><input name="name" required maxlength="160">
+<label id="doseLabel">Dose / strength</label><input name="dose" maxlength="80">
+<label id="brandLabel">Brand</label><input name="brand" maxlength="120">
+<label id="stockLabel">Starting stock</label><input name="stock_quantity" type="number" min="0" step="0.001" value="0" required>
+<label id="minLabel">Minimum threshold</label><input name="minimum_threshold" type="number" min="0" step="0.001" value="0">
+<label id="dailyLabel">Daily dose</label><input name="daily_dose" type="number" min="0" step="0.001" value="0">
+<label id="unitLabel">Unit</label><input name="unit" value="unidad" maxlength="40">
+<label id="costLabel">Unit cost</label><input name="unit_cost" type="number" min="0" step="0.0001" value="0">
+<button style="margin-top:14px" id="addBtn">Add medicine</button></form></div>
+<div class="panel"><h2 id="dispenseTitle">Record dispensing</h2><form id="dispenseForm">
+<label id="medicineLabel">Medicine</label><select name="medicine_id" required></select>
+<label id="qtyLabel">Quantity dispensed</label><input name="quantity" type="number" min="0.001" step="0.001" required>
+<label id="caregiverLabel">Caregiver (optional)</label><input name="caregiver_label" maxlength="120">
+<button style="margin-top:14px" id="dispenseBtn">Record dispensing</button></form>
+<p class="muted" id="stockHelp">Stock and dispensing history are saved together. Insufficient stock is rejected.</p></div>
+<div class="panel"><h2 id="purchaseTitle">Record purchase</h2><form id="purchaseForm">
+<label id="purchaseMedicineLabel">Medicine</label><select name="medicine_id" required></select>
+<label id="purchaseQtyLabel">Quantity purchased</label><input name="quantity" type="number" min="0.001" step="0.001" required>
+<label id="purchaseCostLabel">Item subtotal</label><input name="subtotal" type="number" min="0" step="0.01" value="0">
+<label id="pharmacyLabel">Pharmacy</label><input name="pharmacy" maxlength="160">
+<label id="receiptLabel">Receipt reference</label><input name="receipt_reference" maxlength="240">
+<label id="totalLabel">Purchase total</label><input name="total" type="number" min="0" step="0.01" value="0" required>
+<label id="savedLabel">Savings / discount</label><input name="saved" type="number" min="0" step="0.01" value="0">
+<label class="actions" style="font-weight:500"><input name="stock_applied" type="checkbox" checked style="width:auto"> <span id="applyStockLabel">Add this purchase to stock</span></label>
+<button style="margin-top:14px" id="purchaseBtn">Save purchase</button></form></div>
+<div class="panel"><h2 id="fillTitle">Weekly fill</h2><form id="fillForm">
+<label id="fillMedicineLabel">Medicine</label><select name="medicine_id" required></select>
+<label id="fillQtyLabel">Quantity for weekly fill</label><input name="quantity" type="number" min="0.001" step="0.001" required>
+<label id="fillCareLabel">Prepared by</label><input name="caregiver_label" maxlength="120">
+<label class="actions" style="font-weight:500"><input name="stock_applied" type="checkbox" style="width:auto"> <span id="deductLabel">Deduct from stock</span></label>
+<button style="margin-top:14px" id="fillBtn">Save weekly fill</button></form></div>
+<div class="panel"><h2 id="countTitle">Physical stock count</h2><form id="countForm">
+<label id="countMedicineLabel">Medicine</label><select name="medicine_id" required></select>
+<label id="countQtyLabel">Counted quantity</label><input name="quantity_after" type="number" min="0" step="0.001" required>
+<label id="countCareLabel">Counted by</label><input name="caregiver_label" maxlength="120">
+<button style="margin-top:14px" id="countBtn">Save physical count</button></form></div>
+</div></section>
+</div>
+<script>
+(() => {
+const URL="https://fftnffmttuzfftntzzhu.supabase.co";
+const KEY="sb_publishable_f5py08cOv3Bdo0Yvm6lmbA_VBxnbEsP";
+const client=window.supabase.createClient(URL,KEY);let lang="en",householdId="",medicines=[];
+const $=id=>document.getElementById(id);
+const words={
+en:{title:"Medicine inventory",subtitle:"Private household inventory",language:"Español",signout:"Sign out",countLabel:"Active medicines",lowLabel:"Low stock",listTitle:"Inventory",refresh:"Refresh",medicine:"Medicine",dose:"Dose",stock:"Stock",minimum:"Minimum",unit:"Unit",newTitle:"Add medicine",name:"Medicine name",brand:"Brand",starting:"Starting stock",threshold:"Minimum threshold",daily:"Daily dose",unitLabel:"Unit",cost:"Unit cost",add:"Add medicine",dispense:"Record dispensing",select:"Select a medicine",qty:"Quantity",caregiver:"Caregiver (optional)",record:"Record dispensing",stockHelp:"Stock and dispensing history are saved together. Insufficient stock is rejected.",purchase:"Record purchase",purchaseQty:"Quantity purchased",subtotal:"Item subtotal",pharmacy:"Pharmacy",receipt:"Receipt reference",total:"Purchase total",saved:"Savings / discount",apply:"Add this purchase to stock",savePurchase:"Save purchase",fill:"Weekly fill",fillQty:"Quantity for weekly fill",prepared:"Prepared by",deduct:"Deduct from stock",saveFill:"Save weekly fill",count:"Physical stock count",countQty:"Counted quantity",counted:"Counted by",saveCount:"Save physical count",ok:"Saved successfully.",none:"No medicines yet. Add the first medicine.",auth:"Please sign in through the customer portal.",access:"Your household does not currently have Inventario access.",error:"Unable to complete the request. Please try again.",low:"Low",unitCost:"Unit cost",doseLabel:"Dose / strength"},
+es:{title:"Inventario de medicamentos",subtitle:"Inventario privado del hogar",language:"English",signout:"Cerrar sesión",countLabel:"Medicamentos activos",lowLabel:"Existencias bajas",listTitle:"Inventario",refresh:"Actualizar",medicine:"Medicamento",dose:"Dosis",stock:"Existencia",minimum:"Mínimo",unit:"Unidad",newTitle:"Agregar medicamento",name:"Nombre del medicamento",brand:"Marca",starting:"Existencia inicial",threshold:"Nivel mínimo",daily:"Dosis diaria",unitLabel:"Unidad",cost:"Costo por unidad",add:"Agregar medicamento",dispense:"Registrar administración",select:"Seleccione medicamento",qty:"Cantidad",caregiver:"Cuidador (opcional)",record:"Registrar administración",stockHelp:"La existencia y el historial se guardan juntos. No se permite una salida sin existencias suficientes.",purchase:"Registrar compra",purchaseQty:"Cantidad comprada",subtotal:"Subtotal del artículo",pharmacy:"Farmacia",receipt:"Referencia del recibo",total:"Total de compra",saved:"Ahorro / descuento",apply:"Sumar esta compra al inventario",savePurchase:"Guardar compra",fill:"Pastillero semanal",fillQty:"Cantidad para el pastillero",prepared:"Preparado por",deduct:"Descontar del inventario",saveFill:"Guardar pastillero",count:"Conteo físico",countQty:"Cantidad contada",counted:"Contado por",saveCount:"Guardar conteo",ok:"Guardado correctamente.",none:"Todavía no hay medicamentos. Agregue el primero.",auth:"Inicie sesión desde el portal de clientes.",access:"El hogar no tiene acceso activo a Inventario.",error:"No fue posible completar la operación. Inténtelo nuevamente.",low:"Bajo",unitCost:"Costo por unidad",doseLabel:"Dosis / concentración"}
+};
+const w=k=>words[lang][k];
+function msg(text,error=false){$("notice").textContent=text;$("notice").className="notice"+(error?" error":"");$("notice").style.display="block";}
+function paint(){const ids={title:"title",subtitle:"subtitle",language:"language",signout:"signout",countLabel:"countLabel",lowLabel:"lowLabel",listTitle:"listTitle",refresh:"refresh",thMedicine:"medicine",thDose:"dose",thStock:"stock",thMin:"minimum",thUnit:"unit",newTitle:"newTitle",nameLabel:"name",doseLabel:"doseLabel",brandLabel:"brand",stockLabel:"starting",minLabel:"threshold",dailyLabel:"daily",unitLabel:"unitLabel",costLabel:"cost",addBtn:"add",dispenseTitle:"dispense",medicineLabel:"select",qtyLabel:"qty",caregiverLabel:"caregiver",dispenseBtn:"record",stockHelp:"stockHelp",purchaseTitle:"purchase",purchaseMedicineLabel:"select",purchaseQtyLabel:"purchaseQty",purchaseCostLabel:"subtotal",pharmacyLabel:"pharmacy",receiptLabel:"receipt",totalLabel:"total",savedLabel:"saved",applyStockLabel:"apply",purchaseBtn:"savePurchase",fillTitle:"fill",fillMedicineLabel:"select",fillQtyLabel:"fillQty",fillCareLabel:"prepared",deductLabel:"deduct",fillBtn:"saveFill",countTitle:"count",countMedicineLabel:"select",countQtyLabel:"countQty",countCareLabel:"counted",countBtn:"saveCount"};for(const [id,key] of Object.entries(ids))$(id).textContent=w(key);}
+function setBusy(form,busy){form.querySelector("button").disabled=busy;}
+async function api(body){const {data:{session}}=await client.auth.getSession();if(!session)throw new Error(w("auth"));const res=await fetch(URL+"/functions/v1/inventario-api",{method:"POST",headers:{apikey:KEY,Authorization:"Bearer "+session.access_token,"Content-Type":"application/json"},body:JSON.stringify({...body,household_id:householdId})});const data=await res.json();if(!res.ok)throw new Error(data.error||w("error"));return data;}
+async function load(){const {data:{session}}=await client.auth.getSession();const res=await fetch(URL+"/functions/v1/inventario-api?household_id="+encodeURIComponent(householdId),{headers:{apikey:KEY,Authorization:"Bearer "+session.access_token}});const data=await res.json();if(!res.ok)throw new Error(data.error||w("error"));medicines=data.medicines||[];render();}
+function render(){const active=medicines.filter(m=>m.active);$("count").textContent=active.length;$("low").textContent=active.filter(m=>Number(m.stock_quantity)<=Number(m.minimum_threshold)).length;const rows=$("rows");rows.replaceChildren();for(const m of active){const tr=document.createElement("tr");for(const value of [m.name,m.dose||"—",m.stock_quantity,m.minimum_threshold,m.unit]){const td=document.createElement("td");td.textContent=value;tr.append(td);}rows.append(tr);}if(!active.length){const tr=document.createElement("tr"),td=document.createElement("td");td.colSpan=5;td.textContent=w("none");tr.append(td);rows.append(tr);}document.querySelectorAll("select[name=medicine_id]").forEach(select=>{const old=select.value;select.replaceChildren();const blank=document.createElement("option");blank.value="";blank.textContent=w("select");select.append(blank);for(const m of active){const o=document.createElement("option");o.value=m.id;o.textContent=m.name+" · "+m.dose;select.append(o);}if(active.some(m=>m.id===old))select.value=old;});}
+async function submit(form,action,build){form.addEventListener("submit",async e=>{e.preventDefault();setBusy(form,true);try{const data=new FormData(form);await api({action,...build(data)});msg(w("ok"));form.reset();await load();}catch(err){msg(err.message||w("error"),true);}finally{setBusy(form,false);}});}
+$("language").onclick=()=>{lang=lang==="en"?"es":"en";paint();render();};
+$("refresh").onclick=()=>load().catch(e=>msg(e.message,true));
+$("signout").onclick=async()=>{await client.auth.signOut();location.href="/portal.html";};
+$("newForm").addEventListener("submit",async e=>{e.preventDefault();const form=e.currentTarget;setBusy(form,true);const d=new FormData(form);try{await api({action:"create_medicine",name:d.get("name"),dose:d.get("dose"),brand:d.get("brand"),stock_quantity:Number(d.get("stock_quantity")),minimum_threshold:Number(d.get("minimum_threshold")),daily_dose:Number(d.get("daily_dose")),unit:d.get("unit"),unit_cost:Number(d.get("unit_cost"))});msg(w("ok"));form.reset();await load();}catch(err){msg(err.message||w("error"),true);}finally{setBusy(form,false);}});
+submit($("dispenseForm"),"dispense",d=>({medicine_id:d.get("medicine_id"),quantity:Number(d.get("quantity")),caregiver_label:d.get("caregiver_label")}));
+submit($("purchaseForm"),"record_purchase",d=>({items:[{medicine_id:d.get("medicine_id"),name:medicines.find(m=>m.id===d.get("medicine_id"))?.name||"",quantity:Number(d.get("quantity")),subtotal:Number(d.get("subtotal"))}],pharmacy:d.get("pharmacy"),receipt_reference:d.get("receipt_reference"),total:Number(d.get("total")),saved:Number(d.get("saved")),stock_applied:d.get("stock_applied")==="on"}));
+submit($("fillForm"),"weekly_fill",d=>({items:[{medicine_id:d.get("medicine_id"),quantity:Number(d.get("quantity"))}],caregiver_label:d.get("caregiver_label"),stock_applied:d.get("stock_applied")==="on"}));
+submit($("countForm"),"stock_count",d=>({items:[{medicine_id:d.get("medicine_id"),quantity_after:Number(d.get("quantity_after"))}],caregiver_label:d.get("caregiver_label")}));
+(async()=>{paint();const {data:{session}}=await client.auth.getSession();if(!session){msg(w("auth"),true);return;}const {data:membership,error}=await client.from("household_members").select("household_id").eq("user_id",session.user.id).limit(1).maybeSingle();if(error||!membership){msg(w("access"),true);return;}householdId=membership.household_id;try{await load();$("app").classList.remove("hidden");}catch(err){msg(err.message||w("error"),true);}})();
+})();
+</script></body></html>
