@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f8f5ee">
 <title>Register | Cuidar a Distancia</title>
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 <style>
 :root{--bg:#f8f5ee;--paper:#fff;--ink:#2c2924;--muted:#71695d;--green:#40583d;--line:#e7dece;--soft:#edf0e8;--serif:Georgia,"Times New Roman",serif;--sans:Arial,Helvetica,sans-serif}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 var(--sans)}.wrap{max-width:850px;margin:auto;padding:28px 22px 70px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:46px}.brand,.kicker{font:700 13px/1.4 ui-monospace,monospace;letter-spacing:.14em;color:var(--green)}.brand{text-decoration:none}.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:4px;background:#fff}.lang button{border:0;background:transparent;padding:8px 13px;border-radius:999px;font-weight:700;color:var(--muted);cursor:pointer}.lang button[aria-pressed=true]{background:var(--green);color:#fff}h1,h2,legend{font-family:var(--serif);line-height:1.12}h1{font-size:clamp(38px,7vw,62px);margin:12px 0 16px;letter-spacing:-.035em}h1 em{color:var(--green)}.intro{color:var(--muted);font-size:19px;max-width:650px}.progress{display:flex;gap:8px;margin:34px 0 28px}.progress span{height:5px;border-radius:10px;background:var(--line);flex:1}.progress span.active{background:var(--green)}.step-label{font:700 12px ui-monospace,monospace;letter-spacing:.12em;color:var(--green);text-transform:uppercase}.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 26px #51452a0a}h2{font-size:27px;margin:0 0 8px}.hint{color:var(--muted);font-size:14px;margin:0 0 20px}label.field{display:block;font-weight:700;font-size:14px;margin:15px 0 7px}input[type=text],input[type=email],input[type=tel],select,textarea{width:100%;font:inherit;font-size:16px;padding:13px 14px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink)}textarea{min-height:100px;resize:vertical}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.choice{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:13px;background:#fff;cursor:pointer;min-height:52px}.choice:has(input:checked){border-color:var(--green);background:var(--soft)}.choice input{accent-color:var(--green);width:18px;height:18px;flex:0 0 auto}.plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.plan{border:1px solid var(--line);border-radius:14px;padding:18px;cursor:pointer;background:#fff}.plan:has(input:checked){border:2px solid var(--green);background:var(--soft);padding:17px}.plan input{accent-color:var(--green)}.price{font:700 29px var(--serif);margin:9px 0 3px}.muted{color:var(--muted);font-size:14px}.actions{display:flex;justify-content:space-between;gap:12px;margin-top:24px;flex-wrap:wrap}.btn{border:1px solid var(--green);border-radius:10px;padding:13px 21px;font:700 16px var(--sans);cursor:pointer}.primary{background:var(--green);color:white}.secondary{background:transparent;color:var(--green)}.btn:disabled{opacity:.45;cursor:not-allowed}.hidden{display:none!important}.notice{background:#f2eee4;border-radius:12px;padding:14px 16px;color:#655d51;font-size:13px;margin-top:20px}.success{text-align:center;padding:35px 12px}.success .mark{font-size:40px;color:var(--green)}.required{color:#a44832}.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:28px}.error{color:#a44832;font-size:13px;margin-top:8px;min-height:18px}
@@ -63,7 +63,7 @@
 <label class="field" for="current" data-en="How do you organize care today?" data-es="¿Cómo organiza actualmente el cuidado?">How do you organize care today?</label><select id="current" name="current"><option value="" data-en="Choose one" data-es="Seleccione">Choose one</option><option value="Spreadsheets">Excel / spreadsheets</option><option value="Messaging apps">WhatsApp / messaging apps</option><option value="Paper records">Paper records / Registros en papel</option><option value="Several tools">Several different tools / Varias herramientas</option><option value="No system">No organized system / Sin sistema organizado</option></select>
 <label class="field" for="startWhen" data-en="When would you like to get started?" data-es="¿Cuándo le gustaría comenzar?">When would you like to get started?</label><select id="startWhen" name="startWhen"><option value="">—</option><option value="Immediately">Immediately / Inmediatamente</option><option value="Within 7 days">Within 7 days / En 7 días</option><option value="Within 30 days">Within 30 days / En 30 días</option><option value="Exploring">Just exploring / Solo estoy explorando</option></select>
 <label class="field" for="notes" data-en="Anything else you'd like us to know? (Please don't include medical records or sensitive health details.)" data-es="¿Hay algo más que quisiera compartir? (No incluya historias clínicas ni datos médicos sensibles.)">Anything else you'd like us to know? (Please don't include medical records or sensitive health details.)</label><textarea id="notes" name="notes"></textarea></div>
-<div class="card"><h2 data-en="Security check" data-es="Verificación de seguridad">Security check</h2><p class="hint" data-en="Please complete this quick check before sending your inquiry." data-es="Complete esta verificación antes de enviar su consulta.">Please complete this quick check before sending your inquiry.</p><div class="cf-turnstile" data-sitekey="0x4AAAAAAF24Sp6J0GsxSbUn" data-action="customer_registration"></div></div>
+<div class="card"><h2 data-en="Security check" data-es="Verificación de seguridad">Security check</h2><p class="hint" data-en="Please complete this quick check before sending your inquiry." data-es="Complete esta verificación antes de enviar su consulta.">Please complete this quick check before sending your inquiry.</p><div id="turnstile-container"></div></div>
 <div class="card"><label class="choice"><input type="checkbox" id="consent" required><span data-en="I agree to be contacted about my inquiry. *" data-es="Acepto que se comuniquen conmigo sobre mi consulta. *">I agree to be contacted about my inquiry and acknowledge the Privacy Policy. *</span></label><p class="muted" data-en="This inquiry form is not an emergency service and should not be used to share medical records or highly sensitive information." data-es="Este formulario no es un servicio de emergencia ni debe utilizarse para compartir historias clínicas o información altamente sensible.">This inquiry form is not an emergency service and should not be used to share medical records or highly sensitive information.</p></div>
 <div class="error" id="err2" role="alert"></div><div class="actions"><button class="btn secondary" type="button" id="back" data-en="← Back" data-es="← Regresar">← Back</button><button class="btn primary" type="submit" data-en="Submit inquiry" data-es="Enviar consulta">Submit inquiry</button></div>
 </section>
@@ -75,10 +75,20 @@
 </main>
 <script>
 (function(){
-var lang='en',form=document.getElementById('registration');
+var lang='en',form=document.getElementById('registration'),turnstileWidgetId=null,turnstileToken='';
 function setLang(next){lang=next;document.documentElement.lang=next;document.querySelectorAll('[data-en]').forEach(function(n){var v=n.getAttribute('data-'+next);if(v!==null){if(n.tagName==='H1'||n.id==='successMessage')n.innerHTML=v;else n.textContent=v;}});document.getElementById('en').setAttribute('aria-pressed',String(next==='en'));document.getElementById('es').setAttribute('aria-pressed',String(next==='es'));document.title=next==='en'?'Register | Cuidar a Distancia':'Registro | Cuidar a Distancia';}
 document.getElementById('en').addEventListener('click',function(){setLang('en')});document.getElementById('es').addEventListener('click',function(){setLang('es')});
-function showStep(n){document.getElementById('step1').classList.toggle('hidden',n!==1);document.getElementById('step2').classList.toggle('hidden',n!==2);document.getElementById('p1').classList.toggle('active',n===1);document.getElementById('p2').classList.toggle('active',n===2);window.scrollTo({top:0,behavior:'smooth'});}
+function renderTurnstile(){
+ if(turnstileWidgetId!==null||!window.turnstile)return;
+ turnstileWidgetId=window.turnstile.render('#turnstile-container',{
+  sitekey:'0x4AAAAAAF24Sp6J0GsxSbUn',
+  action:'customer_registration',
+  callback:function(token){turnstileToken=token;},
+  'expired-callback':function(){turnstileToken='';},
+  'error-callback':function(){turnstileToken='';}
+ });
+}
+function showStep(n){document.getElementById('step1').classList.toggle('hidden',n!==1);document.getElementById('step2').classList.toggle('hidden',n!==2);document.getElementById('p1').classList.toggle('active',n===1);document.getElementById('p2').classList.toggle('active',n===2);if(n===2){if(window.turnstile)renderTurnstile();else{var wait=setInterval(function(){if(window.turnstile){clearInterval(wait);renderTurnstile();}},150);setTimeout(function(){clearInterval(wait);},10000);}}window.scrollTo({top:0,behavior:'smooth'});}
 document.getElementById('next').addEventListener('click',function(){var required=['name','email','country'];var valid=true;required.forEach(function(id){var el=document.getElementById(id);if(!el.value.trim()||!el.checkValidity()){el.reportValidity();valid=false;}});if(!form.querySelector('input[name="person"]:checked')){document.getElementById('err1').textContent=lang==='en'?'Please select who you are coordinating care for.':'Seleccione para quién coordina el cuidado.';valid=false;}else{document.getElementById('err1').textContent='';}if(valid)showStep(2);});
 document.getElementById('back').addEventListener('click',function(){showStep(1)});
 form.addEventListener('submit',async function(e){
@@ -95,7 +105,7 @@ form.addEventListener('submit',async function(e){
  var currentMap={'Spreadsheets':'Spreadsheets','Messaging apps':'Messaging apps','Paper records':'Paper records','Several tools':'Several tools','No system':'No system'};
  var startMap={'Immediately':'Immediately','Within 7 days':'Within 7 days','Within 30 days':'Within 30 days','Just exploring':'Just exploring'};
  var planValue=fd.get('plan')||'';
- var captchaToken=fd.get('cf-turnstile-response');
+ var captchaToken=turnstileToken;
  if(!captchaToken){errorBox.textContent=lang==='en'?'Please complete the security check.':'Complete la verificación de seguridad.';submitButton.disabled=false;submitButton.textContent=lang==='en'?'Submit inquiry':'Enviar consulta';return;}
  var payload={
   turnstile_token:captchaToken,
@@ -125,7 +135,7 @@ form.addEventListener('submit',async function(e){
  }catch(err){
   errorBox.textContent=lang==='en'?'We could not send your inquiry. Please check your connection and try again.':'No pudimos enviar su consulta. Revise su conexión e inténtelo nuevamente.';
   submitButton.disabled=false;submitButton.textContent=lang==='en'?'Submit inquiry':'Enviar consulta';
-  if(window.turnstile)window.turnstile.reset();
+  if(window.turnstile&&turnstileWidgetId!==null){turnstileToken='';window.turnstile.reset(turnstileWidgetId);}
  }
 });
 setLang('en');
