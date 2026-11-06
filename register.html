@@ -86,22 +86,22 @@ form.addEventListener('submit',async function(e){
  var submitButton=form.querySelector('button[type="submit"]');
  submitButton.disabled=true;submitButton.textContent=lang==='en'?'Sending…':'Enviando…';errorBox.textContent='';
  var fd=new FormData(form);
- var relationshipMap={'Mother / Father':'parent','Grandparent':'grandparent','Spouse / Partner':'spouse_partner','Other relative':'other_relative'};
- var distanceMap={'Same household':'same_household','Same city':'same_city','Different city':'different_city','Different country':'different_country'};
- var teamMap={'Family members':'family','Professional caregivers':'professional','Both':'both','Other':'other'};
- var needMap={'Caregiver schedules':'caregiver_schedules','Daily care reports':'daily_reports','Medication inventory':'medication_inventory','Expenses and payments':'expenses_payments','Family coordination':'family_coordination','Medical visit records':'medical_visit_records','Care activities':'care_activities','All seven applications':'all_seven'};
- var currentMap={'Spreadsheets':'spreadsheets','Messaging apps':'messaging_apps','Paper records':'paper_records','Several tools':'several_tools','No system':'no_system'};
- var startMap={'Immediately':'immediately','Within 7 days':'within_7_days','Within 30 days':'within_30_days','Just exploring':'exploring'};
+ var relationshipMap={'Mother / Father':'Mother / Father','Grandparent':'Grandparent','Spouse / Partner':'Spouse / Partner','Other relative':'Other relative'};
+ var distanceMap={'Same household':'Same household','Same city':'Same city','Different city':'Different city','Different country':'Different country'};
+ var teamMap={'Family members':'Family members','Professional caregivers':'Professional caregivers','Both':'Both','Other':'Other'};
+ var needMap={'Caregiver schedules':'Caregiver schedules','Daily care reports':'Daily care reports','Medication inventory':'Medication inventory','Expenses and payments':'Expenses and payments','Family coordination':'Family coordination','Medical visit records':'Medical visit records','Care activities':'Care activities','All seven applications':'All seven applications'};
+ var currentMap={'Spreadsheets':'Spreadsheets','Messaging apps':'Messaging apps','Paper records':'Paper records','Several tools':'Several tools','No system':'No system'};
+ var startMap={'Immediately':'Immediately','Within 7 days':'Within 7 days','Within 30 days':'Within 30 days','Just exploring':'Just exploring'};
  var planValue=fd.get('plan')||'';
  var payload={
   full_name:fd.get('name'),email:fd.get('email'),country:fd.get('country'),phone:fd.get('phone')||null,
   preferred_language:fd.get('language')==='Español'?'es':'en',
   care_relationship:relationshipMap[fd.get('person')],
   loved_one_location:fd.get('careLocation')||null,
-  distance_from_loved_one:distanceMap[fd.get('distance')]||null,
+  care_distance:distanceMap[fd.get('distance')]||null,
   care_team:fd.getAll('careTeam').map(v=>teamMap[v]).filter(Boolean),
   caregiver_count:fd.get('caregivers')||null,
-  requested_plan:planValue.indexOf('Family Plan')===0?'family':planValue.indexOf('Full Setup')===0?'full_setup':'undecided',
+  selected_plan:planValue||null,
   needs:fd.getAll('needs').map(v=>needMap[v]).filter(Boolean),
   current_organization:currentMap[fd.get('current')]||null,
   desired_start:startMap[fd.get('startWhen')]||null,
