@@ -70,7 +70,7 @@ Deno.serve(async (req: Request) => {
         p_unit: boundedText(payload.unit, 40) || "unidad",
         p_unit_cost: nonNegativeNumber(payload.unit_cost),
       };
-      if (Object.values(args).some((v) => v === null || v === "\\u0000")) return json({ error: "Invalid medicine values" }, 400);
+      if (Object.values(args).some((v) => v === null || v === "\u0000")) return json({ error: "Invalid medicine values" }, 400);
       const { data, error } = await admin.rpc("create_customer_medicine", args);
       if (error) {
         console.error("Create medicine failed", error);
@@ -83,7 +83,7 @@ Deno.serve(async (req: Request) => {
       const medicineId = typeof payload.medicine_id === "string" ? payload.medicine_id : "";
       const quantity = positiveNumber(payload.quantity);
       const caregiverLabel = boundedText(payload.caregiver_label, 120);
-      if (!isUuid(medicineId) || quantity === null || caregiverLabel === "\\u0000") {
+      if (!isUuid(medicineId) || quantity === null || caregiverLabel === "\u0000") {
         return json({ error: "Invalid medicine, quantity, or caregiver label" }, 400);
       }
       const { data, error } = await admin.rpc("record_customer_dispensing", {
@@ -108,7 +108,7 @@ Deno.serve(async (req: Request) => {
       const pharmacy = boundedText(payload.pharmacy, 160);
       const receipt = boundedText(payload.receipt_reference, 240);
       const stockApplied = payload.stock_applied === true;
-      if (!items || total === null || saved === null || pharmacy === "\\u0000" || receipt === "\\u0000") {
+      if (!items || total === null || saved === null || pharmacy === "\u0000" || receipt === "\u0000") {
         return json({ error: "Invalid purchase information" }, 400);
       }
       if (stockApplied && items.some((item) => !item.medicine_id)) {
@@ -134,7 +134,7 @@ Deno.serve(async (req: Request) => {
     if (payload.action === "weekly_fill") {
       const items = normalizeItems(payload.items, "fill");
       const caregiver = boundedText(payload.caregiver_label, 120);
-      if (!items || caregiver === "\\u0000") return json({ error: "Invalid weekly fill information" }, 400);
+      if (!items || caregiver === "\u0000") return json({ error: "Invalid weekly fill information" }, 400);
       const { data, error } = await admin.rpc("record_customer_weekly_fill", {
         p_household_id: householdId,
         p_event_date: typeof payload.event_date === "string" ? payload.event_date : new Date().toISOString(),
@@ -152,7 +152,7 @@ Deno.serve(async (req: Request) => {
     if (payload.action === "stock_count") {
       const items = normalizeItems(payload.items, "count");
       const caregiver = boundedText(payload.caregiver_label, 120);
-      if (!items || caregiver === "\\u0000") return json({ error: "Invalid stock count information" }, 400);
+      if (!items || caregiver === "\u0000") return json({ error: "Invalid stock count information" }, 400);
       const { data, error } = await admin.rpc("record_customer_stock_count", {
         p_household_id: householdId,
         p_caregiver_label: caregiver,
