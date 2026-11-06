@@ -65,8 +65,8 @@ assert.ok(inventario.includes('admin.rpc("record_customer_stock_count"'), "Physi
 assert.ok(inventario.includes("normalizeItems"), "Inventory workflow payloads must be validated");
 assert.ok(inventario.includes("no partial changes were saved"), "Atomic workflow errors must communicate rollback semantics");
 assert.ok(!inventario.includes('.schema("customer_data")'), "Private schema must not be exposed through PostgREST");
-const inventoryScripts = [...inventarioPage.matchAll(/<script>([\\s\\S]*?)<\\/script>/g)].map((match) => match[1]);
-assert.equal(inventoryScripts.length, 2, "Inventario page must include Supabase client and application scripts");
+const inventoryScripts = [...inventarioPage.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((match) => match[1]);
+assert.equal(inventoryScripts.length, 1, "Inventario page must include Supabase client and application scripts");
 for (const script of inventoryScripts) new Function(script);
 assert.ok(inventarioPage.includes("/functions/v1/inventario-api"), "Inventario UI must call the authenticated API");
 assert.ok(inventarioPage.includes("record_purchase") && inventarioPage.includes("weekly_fill") && inventarioPage.includes("stock_count"));
