@@ -58,5 +58,8 @@ assert.ok(inventario.includes('["active", "trialing"].includes(subscription.stat
 assert.ok(inventario.includes('admin.rpc("list_customer_medicines"'), "Inventario reads must use the private server-only RPC");
 assert.ok(inventario.includes('admin.rpc("create_customer_medicine"'), "Medicine creation must use the server-only RPC");
 assert.ok(inventario.includes('admin.rpc("record_customer_dispensing"'), "Dispensing must use the atomic server-only RPC");
+assert.ok(inventario.includes('admin.rpc("record_customer_purchase"'), "Purchases must use the atomic server-only RPC");
+assert.ok(inventario.includes('admin.rpc("record_customer_weekly_fill"'), "Weekly fills must use the atomic server-only RPC");
+assert.ok(inventario.includes('admin.rpc("record_customer_stock_count"'), "Physical counts must use the atomic server-only RPC");
 assert.ok(!inventario.includes('.schema("customer_data")'), "Private schema must not be exposed through PostgREST");
 console.log("Customer portal checks passed.");
