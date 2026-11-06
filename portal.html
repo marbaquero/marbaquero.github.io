@@ -99,13 +99,15 @@ input,select{width:100%;padding:13px;border:1px solid #ccd4dc;border-radius:10px
     if(result.error)throw result.error;
     if(!result.data.session){notice("authNotice",w("verify"));return;}
     await ensureOnboarding(result.data.user);
-    await client.auth.updateUser({data:{onboarding_pending:false}});
+    const {error:updateError}=await client.auth.updateUser({data:{onboarding_pending:false}});
+    if(updateError)throw updateError;
    }else{
     result=await client.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});
     if(result.error)throw result.error;
     if(result.data.user.user_metadata?.onboarding_pending===true){
      await ensureOnboarding(result.data.user);
-     await client.auth.updateUser({data:{onboarding_pending:false}});
+     const {error:updateError}=await client.auth.updateUser({data:{onboarding_pending:false}});
+    if(updateError)throw updateError;
     }
    }
    await showPortal(result.data.user);
