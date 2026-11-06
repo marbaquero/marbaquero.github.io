@@ -16,6 +16,9 @@ Deno.serve(async (req: Request) => {
     const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const stripeKey = Deno.env.get("STRIPE_SECRET_KEY")!;
     const portalUrl = Deno.env.get("PORTAL_RETURN_URL") || "https://marbaquero.github.io/portal.html";
+    if (!url || !anonKey || !serviceKey || !stripeKey) {
+      return json({ error: "Billing service is not configured" }, 503);
+    }
     const authorization = req.headers.get("Authorization");
     if (!authorization?.startsWith("Bearer ")) return json({ error: "Authentication required" }, 401);
     const authClient = createClient(url, anonKey, { global: { headers: { Authorization: authorization } } });
@@ -23,11 +26,19 @@ Deno.serve(async (req: Request) => {
     if (authError || !user) return json({ error: "Invalid session" }, 401);
 
     const admin = createClient(url, serviceKey, { auth: { persistSession: false } });
-    const { data: membership } = await admin.from("household_members")
+    const { data: membership, error: memberError } = await admin.from("household_members")
       .select("household_id").eq("user_id", user.id).eq("role", "owner").limit(1).maybeSingle();
+    if (memberError) {
+      console.error("Billing membership lookup failed", memberError);
+      return json({ error: "Unable to verify household ownership" }, 500);
+    }
     if (!membership) return json({ error: "Household owner account required" }, 403);
-    const { data: subscription } = await admin.from("subscriptions")
+    const { data: subscription, error: subscriptionError } = await admin.from("subscriptions")
       .select("provider_customer_id").eq("household_id", membership.household_id).maybeSingle();
+    if (subscriptionError) {
+      console.error("Billing subscription lookup failed", subscriptionError);
+      return json({ error: "Unable to retrieve billing account" }, 500);
+    }
     if (!subscription?.provider_customer_id) return json({ error: "No Stripe customer is linked to this household yet" }, 404);
 
     const form = new URLSearchParams();
