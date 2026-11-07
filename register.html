@@ -1,127 +1,143 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="robots" content="noindex,nofollow">
-  <meta name="theme-color" content="#0A6F6A">
-  <title>Registro privado | Cuidar a Distancia</title>
-  <style>
-    :root{color-scheme:light;--bg:#f5f7f4;--card:#fff;--ink:#172b35;--muted:#60717a;--line:#dfe7e2;--accent:#16776e;--error:#a83232}
-    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;display:grid;place-items:center;padding:24px}
-    main{width:min(100%,560px);background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(24px,5vw,42px);box-shadow:0 12px 36px #172b3510}
-    .brand{font-weight:800;letter-spacing:-.03em;font-size:1.15rem}.brand span{color:var(--accent)}
-    h1{font-size:clamp(1.7rem,5vw,2.25rem);line-height:1.12;letter-spacing:-.04em;margin:30px 0 12px}
-    p{color:var(--muted);margin:0 0 18px}.langs{display:flex;justify-content:flex-end;gap:8px}.langs button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;cursor:pointer}.langs button[aria-pressed=true]{background:var(--ink);color:#fff}
-    label{display:block;font-weight:650;margin:16px 0 6px}input,select{width:100%;font:inherit;padding:12px 13px;border:1px solid #cbd7d0;border-radius:9px;background:#fff;color:var(--ink)}input:focus,select:focus{outline:3px solid #16776e30;border-color:var(--accent)}
-    .hint{font-size:.88rem;color:var(--muted);margin-top:6px}.btn{width:100%;margin-top:22px;background:var(--accent);color:#fff;border:0;border-radius:9px;padding:14px 18px;font:700 1rem inherit;cursor:pointer}.btn:disabled{opacity:.6;cursor:wait}
-    #status{margin-top:18px;padding:12px 14px;border-radius:9px;background:#eef5f1;color:var(--ink);display:none;overflow-wrap:anywhere}#status.error{display:block;background:#fff0f0;color:var(--error)}#status.show{display:block}
-    .foot{font-size:.82rem;margin-top:24px;border-top:1px solid var(--line);padding-top:18px}
-    [hidden]{display:none!important}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f8f5ee">
+<title>Register | Cuidar a Distancia</title>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+<style>
+:root{--bg:#f8f5ee;--paper:#fff;--ink:#2c2924;--muted:#71695d;--green:#40583d;--line:#e7dece;--soft:#edf0e8;--serif:Georgia,"Times New Roman",serif;--sans:Arial,Helvetica,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 var(--sans)}.wrap{max-width:850px;margin:auto;padding:28px 22px 70px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:46px}.brand,.kicker{font:700 13px/1.4 ui-monospace,monospace;letter-spacing:.14em;color:var(--green)}.brand{text-decoration:none}.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:4px;background:#fff}.lang button{border:0;background:transparent;padding:8px 13px;border-radius:999px;font-weight:700;color:var(--muted);cursor:pointer}.lang button[aria-pressed=true]{background:var(--green);color:#fff}h1,h2,legend{font-family:var(--serif);line-height:1.12}h1{font-size:clamp(38px,7vw,62px);margin:12px 0 16px;letter-spacing:-.035em}h1 em{color:var(--green)}.intro{color:var(--muted);font-size:19px;max-width:650px}.progress{display:flex;gap:8px;margin:34px 0 28px}.progress span{height:5px;border-radius:10px;background:var(--line);flex:1}.progress span.active{background:var(--green)}.step-label{font:700 12px ui-monospace,monospace;letter-spacing:.12em;color:var(--green);text-transform:uppercase}.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0;box-shadow:0 8px 26px #51452a0a}h2{font-size:27px;margin:0 0 8px}.hint{color:var(--muted);font-size:14px;margin:0 0 20px}label.field{display:block;font-weight:700;font-size:14px;margin:15px 0 7px}input[type=text],input[type=email],input[type=tel],select,textarea{width:100%;font:inherit;font-size:16px;padding:13px 14px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink)}textarea{min-height:100px;resize:vertical}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.choice{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:13px;background:#fff;cursor:pointer;min-height:52px}.choice:has(input:checked){border-color:var(--green);background:var(--soft)}.choice input{accent-color:var(--green);width:18px;height:18px;flex:0 0 auto}.plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.plan{border:1px solid var(--line);border-radius:14px;padding:18px;cursor:pointer;background:#fff}.plan:has(input:checked){border:2px solid var(--green);background:var(--soft);padding:17px}.plan input{accent-color:var(--green)}.price{font:700 29px var(--serif);margin:9px 0 3px}.muted{color:var(--muted);font-size:14px}.actions{display:flex;justify-content:space-between;gap:12px;margin-top:24px;flex-wrap:wrap}.btn{border:1px solid var(--green);border-radius:10px;padding:13px 21px;font:700 16px var(--sans);cursor:pointer}.primary{background:var(--green);color:white}.secondary{background:transparent;color:var(--green)}.btn:disabled{opacity:.45;cursor:not-allowed}.hidden{display:none!important}.notice{background:#f2eee4;border-radius:12px;padding:14px 16px;color:#655d51;font-size:13px;margin-top:20px}.success{text-align:center;padding:35px 12px}.success .mark{font-size:40px;color:var(--green)}.required{color:#a44832}.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:28px}.error{color:#a44832;font-size:13px;margin-top:8px;min-height:18px}
+@media(max-width:620px){.wrap{padding:20px 15px 50px}.top{margin-bottom:34px}.card{padding:19px}.choices,.plans{grid-template-columns:1fr}.intro{font-size:17px}.actions .btn{flex:1}}
+</style>
 </head>
 <body>
-<main>
-  <div class="langs" aria-label="Language">
-    <button type="button" id="es" aria-pressed="true">ES</button>
-    <button type="button" id="en" aria-pressed="false">EN</button>
-  </div>
-  <div class="brand">Cuidar <span>a Distancia</span></div>
-  <h1 data-es="Su invitación privada" data-en="Your private invitation">Su invitación privada</h1>
-  <p data-es="Esta página es solo para personas que recibieron una invitación por correo electrónico. Complete sus datos para preparar su cuenta familiar." data-en="This page is only for people who received an email invitation. Complete your details to set up your family account.">Esta página es solo para personas que recibieron una invitación por correo electrónico. Complete sus datos para preparar su cuenta familiar.</p>
-
-  <form id="registration" hidden>
-    <label for="password" data-es="Cree una contraseña" data-en="Create a password">Cree una contraseña</label>
-    <input id="password" type="password" minlength="10" autocomplete="new-password" required>
-    <div class="hint" data-es="Use al menos 10 caracteres." data-en="Use at least 10 characters.">Use al menos 10 caracteres.</div>
-
-    <label for="name" data-es="Nombre de la familia o del hogar" data-en="Family or household name">Nombre de la familia o del hogar</label>
-    <input id="name" maxlength="100" autocomplete="organization" required>
-
-    <label data-es="Plan aprobado" data-en="Approved plan">Plan aprobado</label>
-    <div id="approved-plan" style="padding:12px 13px;border:1px solid #cbd7d0;border-radius:9px;background:#f5f7f4;font-weight:650">Verificando invitación…</div>
-
-    <button class="btn" id="submit" type="submit" data-es="Preparar mi cuenta y continuar al pago" data-en="Set up my account and continue to payment">Preparar mi cuenta y continuar al pago</button>
-  </form>
-
-  <div id="status" role="status" aria-live="polite"></div>
-  <p class="foot" data-es="¿Necesita ayuda? Responda al correo de invitación. No comparta su contraseña con nadie." data-en="Need help? Reply to your invitation email. Never share your password.">¿Necesita ayuda? Responda al correo de invitación. No comparta su contraseña con nadie.</p>
+<main class="wrap">
+<header class="top"><a class="brand" href="/">● CUIDAR A DISTANCIA</a><nav class="lang" aria-label="Language"><button type="button" id="en" aria-pressed="true">EN</button><button type="button" id="es" aria-pressed="false">ES</button></nav></header>
+<div id="formArea">
+<div class="kicker" data-en="FAMILY CARE REGISTRATION" data-es="REGISTRO FAMILIAR">FAMILY CARE REGISTRATION</div>
+<h1 data-en="Let's get to know <em>your family</em>" data-es="Conozcamos a <em>su familia</em>">Let's get to know <em>your family</em></h1>
+<p class="intro" data-en="A few thoughtful questions to understand what your family needs and how Cuidar a Distancia can help." data-es="Unas pocas preguntas para comprender las necesidades de su familia y cómo Cuidar a Distancia puede ayudarles.">A few thoughtful questions to understand what your family needs and how Cuidar a Distancia can help.</p>
+<div class="progress" aria-label="Registration progress"><span id="p1" class="active"></span><span id="p2"></span></div>
+<form id="registration" novalidate>
+<input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px">
+<section id="step1">
+<div class="step-label" data-en="STEP 1 OF 2 · INTRODUCTION" data-es="PASO 1 DE 2 · PRESENTACIÓN">STEP 1 OF 2 · INTRODUCTION</div>
+<div class="card"><h2 data-en="About you" data-es="Sobre usted">About you</h2><p class="hint" data-en="How can we reach you?" data-es="¿Cómo podemos comunicarnos con usted?">How can we reach you?</p>
+<label class="field" for="name" data-en="Full name *" data-es="Nombre completo *">Full name *</label><input id="name" name="name" type="text" autocomplete="name" required>
+<label class="field" for="email" data-en="Email address *" data-es="Correo electrónico *">Email address *</label><input id="email" name="email" type="email" autocomplete="email" required>
+<label class="field" for="country" data-en="Country of residence *" data-es="País de residencia *">Country of residence *</label><input id="country" name="country" type="text" autocomplete="country-name" required>
+<label class="field" for="phone" data-en="Phone / WhatsApp (optional)" data-es="Teléfono / WhatsApp (opcional)">Phone / WhatsApp (optional)</label><input id="phone" name="phone" type="tel" autocomplete="tel">
+<label class="field" data-en="Preferred language" data-es="Idioma preferido">Preferred language</label><div class="choices"><label class="choice"><input type="radio" name="language" value="English" checked> English</label><label class="choice"><input type="radio" name="language" value="Español"> Español</label></div></div>
+<div class="card"><h2 data-en="Who are you coordinating care for?" data-es="¿Para quién coordina el cuidado?">Who are you coordinating care for?</h2><p class="hint" data-en="Choose the relationship that best describes your situation." data-es="Seleccione la relación que mejor describa su situación.">Choose the relationship that best describes your situation.</p><div class="choices">
+<label class="choice"><input type="radio" name="person" value="Mother / Father" required><span data-en="Mother / Father" data-es="Madre / Padre">Mother / Father</span></label>
+<label class="choice"><input type="radio" name="person" value="Grandparent"><span data-en="Grandparent" data-es="Abuelo(a)">Grandparent</span></label>
+<label class="choice"><input type="radio" name="person" value="Spouse / Partner"><span data-en="Spouse / Partner" data-es="Cónyuge / Pareja">Spouse / Partner</span></label>
+<label class="choice"><input type="radio" name="person" value="Other relative"><span data-en="Other relative" data-es="Otro familiar">Other relative</span></label></div>
+<label class="field" for="careLocation" data-en="Where does your loved one live? (city and country)" data-es="¿Dónde vive su familiar? (ciudad y país)">Where does your loved one live? (city and country)</label><input id="careLocation" name="careLocation" type="text">
+</div>
+<div class="card"><h2 data-en="What would you like to explore?" data-es="¿Qué le gustaría conocer?">What would you like to explore?</h2><p class="hint" data-en="You can change your mind later." data-es="Puede cambiar de opinión más adelante.">You can change your mind later.</p><div class="plans">
+<label class="plan"><input type="radio" name="plan" value="Family Plan $29/month"><div class="price">$29 <span class="muted">/ month</span></div><strong data-en="Family Plan" data-es="Plan Familia">Family Plan</strong><p class="muted" data-en="All seven applications. Self-service setup." data-es="Las siete aplicaciones. Configuración autónoma.">All seven applications. Self-service setup.</p></label>
+<label class="plan"><input type="radio" name="plan" value="Full Setup $49/month + $99 setup"><div class="price">$49 <span class="muted">/ month</span></div><strong data-en="Full Setup" data-es="Configuración completa">Full Setup</strong><p class="muted" data-en="Personalized setup. $99 one-time setup fee." data-es="Configuración personalizada. Cargo único de $99.">Personalized setup. $99 one-time setup fee.</p></label>
+</div></div>
+<div class="error" id="err1" role="alert"></div><div class="actions"><span></span><button class="btn primary" type="button" id="next" data-en="Continue to care assessment →" data-es="Continuar a la evaluación →">Continue to care assessment →</button></div>
+</section>
+<section id="step2" class="hidden">
+<div class="step-label" data-en="STEP 2 OF 2 · FAMILY CARE ASSESSMENT" data-es="PASO 2 DE 2 · EVALUACIÓN DEL CUIDADO">STEP 2 OF 2 · FAMILY CARE ASSESSMENT</div>
+<div class="card"><h2 data-en="Your family's care arrangement" data-es="La organización del cuidado familiar">Your family's care arrangement</h2><p class="hint" data-en="A little context helps us understand your needs." data-es="Un poco de contexto nos ayuda a comprender sus necesidades.">A little context helps us understand your needs.</p>
+<label class="field" data-en="Where do you live compared with your loved one?" data-es="¿Dónde vive usted en relación con su familiar?">Where do you live compared with your loved one?</label><div class="choices">
+<label class="choice"><input type="radio" name="distance" value="Same household"><span data-en="Same household" data-es="En el mismo hogar">Same household</span></label><label class="choice"><input type="radio" name="distance" value="Same city"><span data-en="Same city" data-es="En la misma ciudad">Same city</span></label><label class="choice"><input type="radio" name="distance" value="Different city"><span data-en="Different city" data-es="En otra ciudad">Different city</span></label><label class="choice"><input type="radio" name="distance" value="Different country"><span data-en="Different country" data-es="En otro país">Different country</span></label></div>
+<label class="field" data-en="Who participates in caregiving?" data-es="¿Quiénes participan en el cuidado?">Who participates in caregiving?</label><div class="choices">
+<label class="choice"><input type="checkbox" name="careTeam" value="Family members"><span data-en="Family members" data-es="Familiares">Family members</span></label><label class="choice"><input type="checkbox" name="careTeam" value="Professional caregivers"><span data-en="Professional caregivers" data-es="Cuidadores profesionales">Professional caregivers</span></label><label class="choice"><input type="checkbox" name="careTeam" value="Both"><span data-en="Both" data-es="Ambos">Both</span></label><label class="choice"><input type="checkbox" name="careTeam" value="Other"><span data-en="Other" data-es="Otros">Other</span></label></div>
+<label class="field" for="caregivers" data-en="How many caregivers are involved?" data-es="¿Cuántos cuidadores participan?">How many caregivers are involved?</label><select id="caregivers" name="caregivers"><option value="" data-en="Choose one" data-es="Seleccione">Choose one</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4+</option></select></div>
+<div class="card"><h2 data-en="What would you like help organizing?" data-es="¿Qué le gustaría organizar mejor?">What would you like help organizing?</h2><p class="hint" data-en="Select all that apply." data-es="Seleccione todas las opciones que correspondan.">Select all that apply.</p><div class="choices">
+<label class="choice"><input type="checkbox" name="needs" value="Caregiver schedules"><span data-en="Caregiver schedules" data-es="Horarios de cuidadores">Caregiver schedules</span></label>
+<label class="choice"><input type="checkbox" name="needs" value="Daily care reports"><span data-en="Daily care reports" data-es="Reportes diarios">Daily care reports</span></label>
+<label class="choice"><input type="checkbox" name="needs" value="Medication inventory"><span data-en="Medication inventory" data-es="Inventario de medicinas">Medication inventory</span></label>
+<label class="choice"><input type="checkbox" name="needs" value="Expenses and payments"><span data-en="Expenses and payments" data-es="Gastos y pagos">Expenses and payments</span></label>
+<label class="choice"><input type="checkbox" name="needs" value="Family coordination"><span data-en="Family coordination" data-es="Coordinación familiar">Family coordination</span></label>
+<label class="choice"><input type="checkbox" name="needs" value="Medical visit records"><span data-en="Medical visit records" data-es="Registros de consultas médicas">Medical visit records</span></label>
+<label class="choice"><input type="checkbox" name="needs" value="Care activities"><span data-en="Care activities" data-es="Actividades de cuidado">Care activities</span></label>
+<label class="choice"><input type="checkbox" name="needs" value="All seven applications"><span data-en="All seven applications" data-es="Las siete aplicaciones">All seven applications</span></label></div>
+<label class="field" for="current" data-en="How do you organize care today?" data-es="¿Cómo organiza actualmente el cuidado?">How do you organize care today?</label><select id="current" name="current"><option value="" data-en="Choose one" data-es="Seleccione">Choose one</option><option value="Spreadsheets">Excel / spreadsheets</option><option value="Messaging apps">WhatsApp / messaging apps</option><option value="Paper records">Paper records / Registros en papel</option><option value="Several tools">Several different tools / Varias herramientas</option><option value="No system">No organized system / Sin sistema organizado</option></select>
+<label class="field" for="startWhen" data-en="When would you like to get started?" data-es="¿Cuándo le gustaría comenzar?">When would you like to get started?</label><select id="startWhen" name="startWhen"><option value="">—</option><option value="Immediately">Immediately / Inmediatamente</option><option value="Within 7 days">Within 7 days / En 7 días</option><option value="Within 30 days">Within 30 days / En 30 días</option><option value="Exploring">Just exploring / Solo estoy explorando</option></select>
+<label class="field" for="notes" data-en="Anything else you'd like us to know? (Please don't include medical records or sensitive health details.)" data-es="¿Hay algo más que quisiera compartir? (No incluya historias clínicas ni datos médicos sensibles.)">Anything else you'd like us to know? (Please don't include medical records or sensitive health details.)</label><textarea id="notes" name="notes"></textarea></div>
+<div class="card"><h2 data-en="Security check" data-es="Verificación de seguridad">Security check</h2><p class="hint" data-en="Please complete this quick check before sending your inquiry." data-es="Complete esta verificación antes de enviar su consulta.">Please complete this quick check before sending your inquiry.</p><div id="turnstile-container"></div></div>
+<div class="card"><label class="choice"><input type="checkbox" id="consent" required><span data-en="I agree to be contacted about my inquiry. *" data-es="Acepto que se comuniquen conmigo sobre mi consulta. *">I agree to be contacted about my inquiry and acknowledge the Privacy Policy. *</span></label><p class="muted" data-en="This inquiry form is not an emergency service and should not be used to share medical records or highly sensitive information." data-es="Este formulario no es un servicio de emergencia ni debe utilizarse para compartir historias clínicas o información altamente sensible.">This inquiry form is not an emergency service and should not be used to share medical records or highly sensitive information.</p></div>
+<div class="error" id="err2" role="alert"></div><div class="actions"><button class="btn secondary" type="button" id="back" data-en="← Back" data-es="← Regresar">← Back</button><button class="btn primary" type="submit" data-en="Submit inquiry" data-es="Enviar consulta">Submit inquiry</button></div>
+</section>
+</form>
+</div>
+<div id="done" class="card success hidden"><div class="mark">✓</div><h2 data-en="Thank you for telling us about your family." data-es="Gracias por contarnos sobre su familia.">Thank you for telling us about your family.</h2><p id="successMessage" class="muted"><span id="successIntro" data-en="Your inquiry has been received." data-es="Hemos recibido su consulta.">Your inquiry has been received.</span> <span id="referenceLabel" data-en="Reference number:" data-es="Número de referencia:">Reference number:</span> <strong id="leadReference"></strong>. <span id="successOutro" data-en="We will review your information and contact you soon." data-es="Revisaremos su información y nos comunicaremos con usted pronto.">We will review your information and contact you soon.</span></p><p style="margin-top:18px"><a href="/" data-en="Return to Cuidar a Distancia" data-es="Volver a Cuidar a Distancia">Return to Cuidar a Distancia</a></p></div>
+<div class="notice" data-en="Privacy first: this form asks about care coordination needs only. Please do not enter diagnoses, medication details, medical records, or other sensitive health information." data-es="Primero la privacidad: este formulario pregunta únicamente sobre necesidades de coordinación del cuidado. No ingrese diagnósticos, detalles de medicamentos, historias clínicas ni otra información médica sensible.">Privacy first: this form asks about care coordination needs only. Please do not enter diagnoses, medication details, medical records, or other sensitive health information.</div>
+<div class="footer">© 2026 Cuidar a Distancia · <span data-en="Family care, wherever you are." data-es="Cuidado familiar, desde cualquier lugar.">Family care, wherever you are.</span></div>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function(){
-  const SUPABASE_URL = "https://fftnffmttuzfftntzzhu.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_f5py08cOv3Bdo0Yvm6lmbA_VBxnbEsP";
-  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-    auth: { autoRefreshToken:true, persistSession:true, detectSessionInUrl:true }
+var lang='en',form=document.getElementById('registration'),turnstileWidgetId=null,turnstileToken='';
+function setLang(next){lang=next;document.documentElement.lang=next;var languageChoice=form.querySelector('input[name="language"][value="'+(next==='es'?'Español':'English')+'"]');if(languageChoice)languageChoice.checked=true;document.querySelectorAll('[data-en]').forEach(function(n){var v=n.getAttribute('data-'+next);if(v!==null){if(n.tagName==='H1')n.innerHTML=v;else n.textContent=v;}});document.getElementById('en').setAttribute('aria-pressed',String(next==='en'));document.getElementById('es').setAttribute('aria-pressed',String(next==='es'));document.title=next==='en'?'Register | Cuidar a Distancia':'Registro | Cuidar a Distancia';}
+document.getElementById('en').addEventListener('click',function(){setLang('en')});document.getElementById('es').addEventListener('click',function(){setLang('es')});
+function renderTurnstile(){
+ if(turnstileWidgetId!==null||!window.turnstile)return;
+ turnstileWidgetId=window.turnstile.render('#turnstile-container',{
+  sitekey:'0x4AAAAAAF24Sp6JOGsxSbUn',
+  action:'customer_registration',
+  callback:function(token){turnstileToken=token;},
+  'expired-callback':function(){turnstileToken='';},
+  'error-callback':function(){turnstileToken='';}
+ });
+}
+function showStep(n){document.getElementById('step1').classList.toggle('hidden',n!==1);document.getElementById('step2').classList.toggle('hidden',n!==2);document.getElementById('p1').classList.toggle('active',n===1);document.getElementById('p2').classList.toggle('active',n===2);if(n===2){if(window.turnstile)renderTurnstile();else{var wait=setInterval(function(){if(window.turnstile){clearInterval(wait);renderTurnstile();}},150);setTimeout(function(){clearInterval(wait);},10000);}}window.scrollTo({top:0,behavior:'smooth'});}
+document.getElementById('next').addEventListener('click',function(){var required=['name','email','country'];var valid=true;required.forEach(function(id){var el=document.getElementById(id);if(!el.value.trim()||!el.checkValidity()){el.reportValidity();valid=false;}});if(!form.querySelector('input[name="person"]:checked')){document.getElementById('err1').textContent=lang==='en'?'Please select who you are coordinating care for.':'Seleccione para quién coordina el cuidado.';valid=false;}else{document.getElementById('err1').textContent='';}if(valid)showStep(2);});
+document.getElementById('back').addEventListener('click',function(){showStep(1)});
+form.addEventListener('submit',async function(e){
+ e.preventDefault();
+ var errorBox=document.getElementById('err2');
+ if(!document.getElementById('consent').checked){errorBox.textContent=lang==='en'?'Please confirm consent before submitting.':'Confirme su autorización antes de enviar.';return;}
+ var submitButton=form.querySelector('button[type="submit"]');
+ submitButton.disabled=true;submitButton.textContent=lang==='en'?'Sending…':'Enviando…';errorBox.textContent='';
+ var fd=new FormData(form);
+ var relationshipMap={'Mother / Father':'Mother / Father','Grandparent':'Grandparent','Spouse / Partner':'Spouse / Partner','Other relative':'Other relative'};
+ var distanceMap={'Same household':'Same household','Same city':'Same city','Different city':'Different city','Different country':'Different country'};
+ var teamMap={'Family members':'Family members','Professional caregivers':'Professional caregivers','Both':'Both','Other':'Other'};
+ var needMap={'Caregiver schedules':'Caregiver schedules','Daily care reports':'Daily care reports','Medication inventory':'Medication inventory','Expenses and payments':'Expenses and payments','Family coordination':'Family coordination','Medical visit records':'Medical visit records','Care activities':'Care activities','All seven applications':'All seven applications'};
+ var currentMap={'Spreadsheets':'Spreadsheets','Messaging apps':'Messaging apps','Paper records':'Paper records','Several tools':'Several tools','No system':'No system'};
+ var startMap={'Immediately':'Immediately','Within 7 days':'Within 7 days','Within 30 days':'Within 30 days','Exploring':'Just exploring'};
+ var planValue=fd.get('plan')||'';
+ var captchaToken=turnstileToken;
+ if(!captchaToken){errorBox.textContent=lang==='en'?'Please complete the security check.':'Complete la verificación de seguridad.';submitButton.disabled=false;submitButton.textContent=lang==='en'?'Submit inquiry':'Enviar consulta';return;}
+ var payload={
+  turnstile_token:captchaToken,
+  full_name:fd.get('name'),email:fd.get('email'),country:fd.get('country'),phone:fd.get('phone')||null,
+  preferred_language:fd.get('language')==='Español'?'es':'en',
+  care_relationship:relationshipMap[fd.get('person')],
+  loved_one_location:fd.get('careLocation')||null,
+  care_distance:distanceMap[fd.get('distance')]||null,
+  care_team:fd.getAll('careTeam').map(v=>teamMap[v]).filter(Boolean),
+  caregiver_count:fd.get('caregivers')||null,
+  selected_plan:planValue||null,
+  needs:fd.getAll('needs').map(v=>needMap[v]).filter(Boolean),
+  current_organization:currentMap[fd.get('current')]||null,
+  desired_start:startMap[fd.get('startWhen')]||null,
+  additional_notes:fd.get('notes')||null,
+  contact_consent:true,website:fd.get('website')||''
+ };
+ try{
+  var response=await fetch('https://fftnffmttuzfftntzzhu.supabase.co/functions/v1/submit-customer-lead',{
+   method:'POST',headers:{'Content-Type':'application/json','apikey':'sb_publishable_f5py08cOv3Bdo0Yvm6lmbA_VBxnbEsP'},body:JSON.stringify(payload)
   });
-  const form=document.getElementById("registration"), status=document.getElementById("status"), submit=document.getElementById("submit");
-  let locale="es", currentUser=null, approvedPlan=null;
-  const words={
-    noInvite:{es:"No encontramos una invitación activa. Abra el enlace incluido en el correo que recibió o solicite una nueva invitación.",en:"We couldn't find an active invitation. Open the link in your invitation email or request a new invitation."},
-    ready:{es:"Invitación verificada. Complete los campos para continuar.",en:"Invitation verified. Complete the fields to continue."},
-    working:{es:"Estamos preparando su cuenta…",en:"Setting up your account…"},
-    checkout:{es:"Cuenta preparada. Abriendo el pago seguro de Stripe…",en:"Account prepared. Opening secure Stripe checkout…"},
-    error:{es:"No fue posible completar el registro. ",en:"We couldn't complete registration. "},
-    password:{es:"La contraseña debe tener al menos 10 caracteres.",en:"Your password must contain at least 10 characters."}
-  };
-  function say(key,extra){status.className="show";status.textContent=words[key][locale]+(extra||"");}
-  function setLanguage(lang){
-    locale=lang;document.documentElement.lang=lang;
-    document.querySelectorAll("[data-es][data-en]").forEach(el=>{el.textContent=el.dataset[lang]});
-    document.getElementById("es").setAttribute("aria-pressed",String(lang==="es"));
-    document.getElementById("en").setAttribute("aria-pressed",String(lang==="en"));
-    if(approvedPlan){document.getElementById("approved-plan").textContent=approvedPlan==="family"?(lang==="es"?"Plan Familia — $29 al mes":"Family Plan — $29/month"):(lang==="es"?"Full Setup — $49 al mes + $99 de instalación":"Full Setup — $49/month + $99 setup fee");}
-    if(status.dataset.key)say(status.dataset.key,status.dataset.extra||"");
-  }
-  document.getElementById("es").addEventListener("click",()=>setLanguage("es"));
-  document.getElementById("en").addEventListener("click",()=>setLanguage("en"));
-  function showError(message){status.className="show error";status.textContent=words.error[locale]+message;}
-  async function initialize(){
-    try{
-      const {data:{session},error}=await client.auth.getSession();
-      if(error)throw error;
-      if(!session){say("noInvite");return;}
-      const {data:{user},error:userError}=await client.auth.getUser();
-      if(userError||!user)throw userError||new Error("No authenticated user");
-      currentUser=user;
-      approvedPlan=user.user_metadata && user.app_metadata.approved_plan;
-      if(!["family","full_setup"].includes(approvedPlan)){say("noInvite");return;}
-      document.getElementById("approved-plan").textContent=approvedPlan==="family"?"Plan Familia — $29 al mes":"Full Setup — $49 al mes + $99 de instalación";
-      form.hidden=false;say("ready");
-      if(user.email)document.getElementById("name").placeholder=user.email;
-    }catch(e){showError(e.message||"");}
-  }
-  form.addEventListener("submit",async function(event){
-    event.preventDefault();
-    if(!currentUser)return;
-    const password=document.getElementById("password").value;
-    const name=document.getElementById("name").value.trim();
-    const plan=approvedPlan;
-    if(!["family","full_setup"].includes(plan)){say("noInvite");return;}
-    if(password.length<10){showError(words.password[locale]);return;}
-    submit.disabled=true;say("working");
-    try{
-      const {error:passwordError}=await client.auth.updateUser({password});
-      if(passwordError)throw passwordError;
-      const {data:onboarding,error:onboardingError}=await client.functions.invoke("complete-onboarding",{
-        body:{name,plan_key:plan,locale,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone}
-      });
-      if(onboardingError)throw onboardingError;
-      if(!onboarding||!onboarding.success)throw new Error("Onboarding was not confirmed");
-      onboardingDone=true;
-      say("checkout");
-      const {data:checkout,error:checkoutError}=await client.functions.invoke("create-checkout-session",{body:{plan_key:plan}});
-      if(checkoutError)throw checkoutError;
-      if(!checkout||!checkout.url)throw new Error("Checkout link was not returned");
-      window.location.assign(checkout.url);
-    }catch(e){
-      showError(e.message||"Please contact support.");
-      submit.disabled=false;
-    }
-  });
-  initialize();
+  var result=await response.json();
+  if(!response.ok||!result.ok)throw new Error(result.error||'Submission failed');
+  document.getElementById('leadReference').textContent=result.reference||'—';
+  form.classList.add('hidden');document.getElementById('done').classList.remove('hidden');document.getElementById('formArea').classList.add('hidden');window.scrollTo({top:0,behavior:'smooth'});
+ }catch(err){
+  errorBox.textContent=lang==='en'?'We could not send your inquiry. Please check your connection and try again.':'No pudimos enviar su consulta. Revise su conexión e inténtelo nuevamente.';
+  submitButton.disabled=false;submitButton.textContent=lang==='en'?'Submit inquiry':'Enviar consulta';
+  if(window.turnstile&&turnstileWidgetId!==null){turnstileToken='';window.turnstile.reset(turnstileWidgetId);}
+ }
+});
+setLang('en');
 })();
 </script>
-</body>
-</html>
+</body></html>
