@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#0A6F6A">
+  <title>Admin invitations | Cuidar a Distancia</title>
+  <style>
+    :root{color-scheme:light;--bg:#f4f7f5;--card:#fff;--ink:#172b35;--muted:#60717a;--line:#dfe7e2;--accent:#16776e;--error:#a83232}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;display:grid;place-items:center;padding:24px}
+    main{width:min(100%,620px);background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(24px,5vw,42px);box-shadow:0 12px 36px #172b3510}
+    .brand{font-weight:800;letter-spacing:-.03em;font-size:1.15rem}.brand span{color:var(--accent)}
+    h1{font-size:clamp(1.7rem,5vw,2.2rem);line-height:1.12;letter-spacing:-.04em;margin:26px 0 10px}
+    p{color:var(--muted);margin:0 0 18px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px}.langs{display:flex;gap:8px}.langs button,.secondary{border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}.langs button[aria-pressed=true]{background:var(--ink);color:#fff}
+    label{display:block;font-weight:650;margin:16px 0 6px}input,select{width:100%;font:inherit;padding:12px 13px;border:1px solid #cbd7d0;border-radius:9px;background:#fff;color:var(--ink)}input:focus,select:focus{outline:3px solid #16776e30;border-color:var(--accent)}
+    .btn{width:100%;margin-top:22px;background:var(--accent);color:#fff;border:0;border-radius:9px;padding:14px 18px;font:700 1rem system-ui;cursor:pointer}.btn:disabled{opacity:.6;cursor:wait}
+    #status{margin-top:18px;padding:12px 14px;border-radius:9px;background:#eef5f1;color:var(--ink);display:none;overflow-wrap:anywhere}#status.show{display:block}#status.error{display:block;background:#fff0f0;color:var(--error)}
+    .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0;padding:12px;background:#f5f7f4;border:1px solid var(--line);border-radius:9px}.small{font-size:.88rem}.foot{font-size:.82rem;margin-top:24px;border-top:1px solid var(--line);padding-top:18px}[hidden]{display:none!important}
+  </style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <div class="brand">Cuidar <span>a Distancia</span></div>
+    <div class="langs"><button type="button" id="es" aria-pressed="false">ES</button><button type="button" id="en" aria-pressed="true">EN</button></div>
+  </div>
+  <h1 data-en="Customer invitations" data-es="Invitaciones de clientes">Customer invitations</h1>
+  <p data-en="Private administrator area. Sign in with the authorized administrator account to invite an approved customer." data-es="Área privada de administración. Inicie sesión con la cuenta autorizada para invitar a un cliente aprobado.">Private administrator area. Sign in with the authorized administrator account to invite an approved customer.</p>
+
+  <section id="login-panel">
+    <form id="login-form">
+      <label for="admin-email" data-en="Administrator email" data-es="Correo del administrador">Administrator email</label>
+      <input id="admin-email" type="email" autocomplete="username" required>
+      <label for="admin-password" data-en="Password" data-es="Contraseña">Password</label>
+      <input id="admin-password" type="password" autocomplete="current-password" required>
+      <button class="btn" id="login-button" type="submit" data-en="Sign in" data-es="Iniciar sesión">Sign in</button>
+    </form>
+  </section>
+
+  <section id="invite-panel" hidden>
+    <div class="bar"><span id="signed-in-as" class="small"></span><button class="secondary" id="logout" type="button" data-en="Sign out" data-es="Cerrar sesión">Sign out</button></div>
+    <form id="invite-form">
+      <label for="customer-email" data-en="Customer email" data-es="Correo del cliente">Customer email</label>
+      <input id="customer-email" type="email" autocomplete="off" required>
+      <label for="plan" data-en="Approved subscription plan" data-es="Plan de suscripción aprobado">Approved subscription plan</label>
+      <select id="plan" required>
+        <option value="family" data-en="Family Plan — $29/month" data-es="Plan Familia — $29 al mes">Family Plan — $29/month</option>
+        <option value="full_setup" data-en="Full Setup — $49/month + $99 setup fee" data-es="Full Setup — $49 al mes + $99 de instalación">Full Setup — $49/month + $99 setup fee</option>
+      </select>
+      <label for="language" data-en="Invitation language" data-es="Idioma de la invitación">Invitation language</label>
+      <select id="language"><option value="en" data-en="English" data-es="Inglés">English</option><option value="es" data-en="Spanish" data-es="Español">Spanish</option></select>
+      <button class="btn" id="invite-button" type="submit" data-en="Send customer invitation" data-es="Enviar invitación al cliente">Send customer invitation</button>
+    </form>
+    <p class="small" data-en="Only send invitations after reviewing and approving the customer's inquiry. The customer will receive an email with a private registration link." data-es="Envíe invitaciones únicamente después de revisar y aprobar la solicitud del cliente. El cliente recibirá un correo con un enlace privado de registro.">Only send invitations after reviewing and approving the customer's inquiry. The customer will receive an email with a private registration link.</p>
+  </section>
+
+  <div id="status" role="status" aria-live="polite"></div>
+  <p class="foot" data-en="This page is not linked from the public website. Keep the administrator password private." data-es="Esta página no está enlazada desde el sitio público. Mantenga privada la contraseña del administrador.">This page is not linked from the public website. Keep the administrator password private.</p>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  const SUPABASE_URL="https://fftnffmttuzfftntzzhu.supabase.co";
+  const SUPABASE_KEY="sb_publishable_f5py08cOv3Bdo0Yvm6lmbA_VBxnbEsP";
+  const ADMIN_EMAIL="marbaquero@gmail.com";
+  const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{autoRefreshToken:true,persistSession:true,detectSessionInUrl:false}});
+  const $=id=>document.getElementById(id);
+  let locale="en";
+  function setLanguage(lang){
+    locale=lang;document.documentElement.lang=lang;
+    document.querySelectorAll("[data-en][data-es]").forEach(el=>{el.textContent=el.dataset[lang]});
+    $("es").setAttribute("aria-pressed",String(lang==="es"));$("en").setAttribute("aria-pressed",String(lang==="en"));
+  }
+  $("es").addEventListener("click",()=>setLanguage("es"));$("en").addEventListener("click",()=>setLanguage("en"));
+  function message(text,isError=false){$("status").textContent=text;$("status").className=isError?"show error":"show";}
+  function clearMessage(){$("status").textContent="";$("status").className="";}
+  function showSignedIn(user){
+    if(!user||!user.email||user.email.toLowerCase()!==ADMIN_EMAIL){$("login-panel").hidden=false;$("invite-panel").hidden=true;message("This account is not authorized to send invitations.",true);return;}
+    $("login-panel").hidden=true;$("invite-panel").hidden=false;$("signed-in-as").textContent=user.email;clearMessage();
+  }
+  async function refresh(){
+    const {data:{session},error}=await client.auth.getSession();
+    if(error){message(error.message,true);return;}
+    if(session)showSignedIn(session.user);else{$("login-panel").hidden=false;$("invite-panel").hidden=true;}
+  }
+  $("login-form").addEventListener("submit",async e=>{
+    e.preventDefault();clearMessage();$("login-button").disabled=true;
+    try{
+      const email=$("admin-email").value.trim().toLowerCase();
+      if(email!==ADMIN_EMAIL)throw new Error("Use the authorized administrator email.");
+      const {data,error}=await client.auth.signInWithPassword({email,password:$("admin-password").value});
+      if(error)throw error;showSignedIn(data.user);
+    }catch(err){message(err.message||"Sign-in failed.",true);}
+    finally{$("login-button").disabled=false;}
+  });
+  $("logout").addEventListener("click",async()=>{
+    const {error}=await client.auth.signOut();if(error)message(error.message,true);else{ $("invite-panel").hidden=true;$("login-panel").hidden=false;clearMessage();}
+  });
+  $("invite-form").addEventListener("submit",async e=>{
+    e.preventDefault();clearMessage();$("invite-button").disabled=true;
+    try{
+      const {data:{session}}=await client.auth.getSession();
+      if(!session)throw new Error("Your session has expired. Please sign in again.");
+      if(!session.user.email||session.user.email.toLowerCase()!==ADMIN_EMAIL)throw new Error("This account is not authorized.");
+      const {data,error}=await client.functions.invoke("invite-customer",{body:{email:$("customer-email").value.trim(),plan_key:$("plan").value,locale:$("language").value}});
+      if(error)throw error;
+      if(!data||!data.success)throw new Error(data&&data.error?data.error:"The invitation was not confirmed.");
+      message(locale==="es"?"Invitación enviada a "+data.email+". Plan aprobado: "+data.approved_plan+".":"Invitation sent to "+data.email+". Approved plan: "+data.approved_plan+".");
+      $("customer-email").value="";
+    }catch(err){message((locale==="es"?"No se pudo enviar la invitación: ":"Invitation could not be sent: ")+(err.message||"Please try again."),true);}
+    finally{$("invite-button").disabled=false;}
+  });
+  client.auth.onAuthStateChange((_event,session)=>{if(session)showSignedIn(session.user);else{$("invite-panel").hidden=true;$("login-panel").hidden=false;}});
+  refresh();
+})();
+</script>
+</body>
+</html>
