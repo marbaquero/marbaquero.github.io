@@ -85,7 +85,7 @@
       const {data:{user},error:userError}=await client.auth.getUser();
       if(userError||!user)throw userError||new Error("No authenticated user");
       currentUser=user;
-      approvedPlan=user.user_metadata && user.user_metadata.approved_plan;
+      approvedPlan=user.user_metadata && user.app_metadata.approved_plan;
       if(!["family","full_setup"].includes(approvedPlan)){say("noInvite");return;}
       document.getElementById("approved-plan").textContent=approvedPlan==="family"?"Plan Familia — $29 al mes":"Full Setup — $49 al mes + $99 de instalación";
       form.hidden=false;say("ready");
