@@ -103,7 +103,13 @@
     submit.disabled=true;say("working");
     try{
       const {error:passwordError}=await client.auth.updateUser({password});
-      if(passwordError)throw passwordError;
+      // A previous attempt may already have saved this password. In that case,
+      // continue onboarding instead of forcing the customer to invent another one.
+      if(passwordError){
+        const alreadySet = passwordError.code === "same_password" ||
+          /new password should be different from the old password/i.test(passwordError.message || "");
+        if(!alreadySet)throw passwordError;
+      }
       const {data:onboarding,error:onboardingError}=await client.functions.invoke("complete-onboarding",{
         body:{name,plan_key:plan,locale,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone}
       });
