@@ -38,12 +38,8 @@
     <label for="name" data-es="Nombre de la familia o del hogar" data-en="Family or household name">Nombre de la familia o del hogar</label>
     <input id="name" maxlength="100" autocomplete="organization" required>
 
-    <label for="plan" data-es="Plan aprobado" data-en="Approved plan">Plan aprobado</label>
-    <select id="plan" required>
-      <option value="family" data-es="Plan Familia — $29 al mes" data-en="Family Plan — $29/month">Plan Familia — $29 al mes</option>
-      <option value="full_setup" data-es="Full Setup — $49 al mes + $99 de instalación" data-en="Full Setup — $49/month + $99 setup fee">Full Setup — $49 al mes + $99 de instalación</option>
-    </select>
-    <div class="hint" data-es="Seleccione únicamente el plan que se le confirmó en el correo de invitación." data-en="Select only the plan confirmed in your invitation email.">Seleccione únicamente el plan que se le confirmó en el correo de invitación.</div>
+    <label data-es="Plan aprobado" data-en="Approved plan">Plan aprobado</label>
+    <div id="approved-plan" style="padding:12px 13px;border:1px solid #cbd7d0;border-radius:9px;background:#f5f7f4;font-weight:650">Verificando invitación…</div>
 
     <button class="btn" id="submit" type="submit" data-es="Preparar mi cuenta y continuar al pago" data-en="Set up my account and continue to payment">Preparar mi cuenta y continuar al pago</button>
   </form>
@@ -60,7 +56,7 @@
     auth: { autoRefreshToken:true, persistSession:true, detectSessionInUrl:true }
   });
   const form=document.getElementById("registration"), status=document.getElementById("status"), submit=document.getElementById("submit");
-  let locale="es", currentUser=null, onboardingDone=false;
+  let locale="es", currentUser=null, approvedPlan=null;
   const words={
     noInvite:{es:"No encontramos una invitación activa. Abra el enlace incluido en el correo que recibió o solicite una nueva invitación.",en:"We couldn't find an active invitation. Open the link in your invitation email or request a new invitation."},
     ready:{es:"Invitación verificada. Complete los campos para continuar.",en:"Invitation verified. Complete the fields to continue."},
@@ -75,7 +71,7 @@
     document.querySelectorAll("[data-es][data-en]").forEach(el=>{el.textContent=el.dataset[lang]});
     document.getElementById("es").setAttribute("aria-pressed",String(lang==="es"));
     document.getElementById("en").setAttribute("aria-pressed",String(lang==="en"));
-    Array.from(document.querySelectorAll("#plan option")).forEach(o=>o.textContent=o.dataset[lang]);
+    if(approvedPlan){document.getElementById("approved-plan").textContent=approvedPlan==="family"?(lang==="es"?"Plan Familia — $29 al mes":"Family Plan — $29/month"):(lang==="es"?"Full Setup — $49 al mes + $99 de instalación":"Full Setup — $49/month + $99 setup fee");}
     if(status.dataset.key)say(status.dataset.key,status.dataset.extra||"");
   }
   document.getElementById("es").addEventListener("click",()=>setLanguage("es"));
@@ -89,6 +85,9 @@
       const {data:{user},error:userError}=await client.auth.getUser();
       if(userError||!user)throw userError||new Error("No authenticated user");
       currentUser=user;
+      approvedPlan=user.user_metadata && user.user_metadata.approved_plan;
+      if(!["family","full_setup"].includes(approvedPlan)){say("noInvite");return;}
+      document.getElementById("approved-plan").textContent=approvedPlan==="family"?"Plan Familia — $29 al mes":"Full Setup — $49 al mes + $99 de instalación";
       form.hidden=false;say("ready");
       if(user.email)document.getElementById("name").placeholder=user.email;
     }catch(e){showError(e.message||"");}
@@ -98,7 +97,8 @@
     if(!currentUser)return;
     const password=document.getElementById("password").value;
     const name=document.getElementById("name").value.trim();
-    const plan=document.getElementById("plan").value;
+    const plan=approvedPlan;
+    if(!["family","full_setup"].includes(plan)){say("noInvite");return;}
     if(password.length<10){showError(words.password[locale]);return;}
     submit.disabled=true;say("working");
     try{
