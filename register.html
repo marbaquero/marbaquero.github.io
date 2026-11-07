@@ -69,14 +69,14 @@
 </section>
 </form>
 </div>
-<div id="done" class="card success hidden"><div class="mark">✓</div><h2 data-en="Thank you for telling us about your family." data-es="Gracias por contarnos sobre su familia.">Thank you for telling us about your family.</h2><p id="successMessage" class="muted" data-en="Your inquiry has been received. Reference number: <strong id="leadRef"></strong>. We will review your information and contact you soon." data-es="Hemos recibido su consulta. Número de referencia: <strong id="leadRefEs"></strong>. Revisaremos su información y nos comunicaremos con usted pronto.">Your inquiry has been received. Reference number: <strong id="leadRef"></strong>. We will review your information and contact you soon.</p><p style="margin-top:18px"><a href="/" data-en="Return to Cuidar a Distancia" data-es="Volver a Cuidar a Distancia">Return to Cuidar a Distancia</a></p></div>
+<div id="done" class="card success hidden"><div class="mark">✓</div><h2 data-en="Thank you for telling us about your family." data-es="Gracias por contarnos sobre su familia.">Thank you for telling us about your family.</h2><p id="successMessage" class="muted"><span id="successIntro" data-en="Your inquiry has been received." data-es="Hemos recibido su consulta.">Your inquiry has been received.</span> <span id="referenceLabel" data-en="Reference number:" data-es="Número de referencia:">Reference number:</span> <strong id="leadReference"></strong>. <span id="successOutro" data-en="We will review your information and contact you soon." data-es="Revisaremos su información y nos comunicaremos con usted pronto.">We will review your information and contact you soon.</span></p><p style="margin-top:18px"><a href="/" data-en="Return to Cuidar a Distancia" data-es="Volver a Cuidar a Distancia">Return to Cuidar a Distancia</a></p></div>
 <div class="notice" data-en="Privacy first: this form asks about care coordination needs only. Please do not enter diagnoses, medication details, medical records, or other sensitive health information." data-es="Primero la privacidad: este formulario pregunta únicamente sobre necesidades de coordinación del cuidado. No ingrese diagnósticos, detalles de medicamentos, historias clínicas ni otra información médica sensible.">Privacy first: this form asks about care coordination needs only. Please do not enter diagnoses, medication details, medical records, or other sensitive health information.</div>
 <div class="footer">© 2026 Cuidar a Distancia · <span data-en="Family care, wherever you are." data-es="Cuidado familiar, desde cualquier lugar.">Family care, wherever you are.</span></div>
 </main>
 <script>
 (function(){
 var lang='en',form=document.getElementById('registration'),turnstileWidgetId=null,turnstileToken='';
-function setLang(next){lang=next;document.documentElement.lang=next;var languageChoice=form.querySelector('input[name="language"][value="'+(next==='es'?'Español':'English')+'"]');if(languageChoice)languageChoice.checked=true;document.querySelectorAll('[data-en]').forEach(function(n){var v=n.getAttribute('data-'+next);if(v!==null){if(n.tagName==='H1'||n.id==='successMessage')n.innerHTML=v;else n.textContent=v;}});document.getElementById('en').setAttribute('aria-pressed',String(next==='en'));document.getElementById('es').setAttribute('aria-pressed',String(next==='es'));document.title=next==='en'?'Register | Cuidar a Distancia':'Registro | Cuidar a Distancia';}
+function setLang(next){lang=next;document.documentElement.lang=next;var languageChoice=form.querySelector('input[name="language"][value="'+(next==='es'?'Español':'English')+'"]');if(languageChoice)languageChoice.checked=true;document.querySelectorAll('[data-en]').forEach(function(n){var v=n.getAttribute('data-'+next);if(v!==null){if(n.tagName==='H1')n.innerHTML=v;else n.textContent=v;}});document.getElementById('en').setAttribute('aria-pressed',String(next==='en'));document.getElementById('es').setAttribute('aria-pressed',String(next==='es'));document.title=next==='en'?'Register | Cuidar a Distancia':'Registro | Cuidar a Distancia';}
 document.getElementById('en').addEventListener('click',function(){setLang('en')});document.getElementById('es').addEventListener('click',function(){setLang('es')});
 function renderTurnstile(){
  if(turnstileWidgetId!==null||!window.turnstile)return;
@@ -129,8 +129,7 @@ form.addEventListener('submit',async function(e){
   });
   var result=await response.json();
   if(!response.ok||!result.ok)throw new Error(result.error||'Submission failed');
-  var referenceNode=document.getElementById(lang==='es'?'leadRefEs':'leadRef');
-  if(referenceNode)referenceNode.textContent=result.reference;
+  document.getElementById('leadReference').textContent=result.reference||'—';
   form.classList.add('hidden');document.getElementById('done').classList.remove('hidden');document.getElementById('formArea').classList.add('hidden');window.scrollTo({top:0,behavior:'smooth'});
  }catch(err){
   errorBox.textContent=lang==='en'?'We could not send your inquiry. Please check your connection and try again.':'No pudimos enviar su consulta. Revise su conexión e inténtelo nuevamente.';
