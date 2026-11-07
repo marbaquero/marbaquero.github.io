@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#0A6F6A">
+  <title>Registro privado | Cuidar a Distancia</title>
+  <style>
+    :root{color-scheme:light;--bg:#f5f7f4;--card:#fff;--ink:#172b35;--muted:#60717a;--line:#dfe7e2;--accent:#16776e;--error:#a83232}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;display:grid;place-items:center;padding:24px}
+    main{width:min(100%,560px);background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(24px,5vw,42px);box-shadow:0 12px 36px #172b3510}
+    .brand{font-weight:800;letter-spacing:-.03em;font-size:1.15rem}.brand span{color:var(--accent)}
+    h1{font-size:clamp(1.7rem,5vw,2.25rem);line-height:1.12;letter-spacing:-.04em;margin:30px 0 12px}
+    p{color:var(--muted);margin:0 0 18px}.langs{display:flex;justify-content:flex-end;gap:8px}.langs button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;cursor:pointer}.langs button[aria-pressed=true]{background:var(--ink);color:#fff}
+    label{display:block;font-weight:650;margin:16px 0 6px}input,select{width:100%;font:inherit;padding:12px 13px;border:1px solid #cbd7d0;border-radius:9px;background:#fff;color:var(--ink)}input:focus,select:focus{outline:3px solid #16776e30;border-color:var(--accent)}
+    .hint{font-size:.88rem;color:var(--muted);margin-top:6px}.btn{width:100%;margin-top:22px;background:var(--accent);color:#fff;border:0;border-radius:9px;padding:14px 18px;font:700 1rem inherit;cursor:pointer}.btn:disabled{opacity:.6;cursor:wait}
+    #status{margin-top:18px;padding:12px 14px;border-radius:9px;background:#eef5f1;color:var(--ink);display:none;overflow-wrap:anywhere}#status.error{display:block;background:#fff0f0;color:var(--error)}#status.show{display:block}
+    .foot{font-size:.82rem;margin-top:24px;border-top:1px solid var(--line);padding-top:18px}
+    [hidden]{display:none!important}
+  </style>
+</head>
+<body>
+<main>
+  <div class="langs" aria-label="Language">
+    <button type="button" id="es" aria-pressed="true">ES</button>
+    <button type="button" id="en" aria-pressed="false">EN</button>
+  </div>
+  <div class="brand">Cuidar <span>a Distancia</span></div>
+  <h1 data-es="Su invitación privada" data-en="Your private invitation">Su invitación privada</h1>
+  <p data-es="Esta página es solo para personas que recibieron una invitación por correo electrónico. Complete sus datos para preparar su cuenta familiar." data-en="This page is only for people who received an email invitation. Complete your details to set up your family account.">Esta página es solo para personas que recibieron una invitación por correo electrónico. Complete sus datos para preparar su cuenta familiar.</p>
+
+  <form id="registration" hidden>
+    <label for="password" data-es="Cree una contraseña" data-en="Create a password">Cree una contraseña</label>
+    <input id="password" type="password" minlength="10" autocomplete="new-password" required>
+    <div class="hint" data-es="Use al menos 10 caracteres." data-en="Use at least 10 characters.">Use al menos 10 caracteres.</div>
+
+    <label for="name" data-es="Nombre de la familia o del hogar" data-en="Family or household name">Nombre de la familia o del hogar</label>
+    <input id="name" maxlength="100" autocomplete="organization" required>
+
+    <label data-es="Plan aprobado" data-en="Approved plan">Plan aprobado</label>
+    <div id="approved-plan" style="padding:12px 13px;border:1px solid #cbd7d0;border-radius:9px;background:#f5f7f4;font-weight:650">Verificando invitación…</div>
+
+    <button class="btn" id="submit" type="submit" data-es="Preparar mi cuenta y continuar al pago" data-en="Set up my account and continue to payment">Preparar mi cuenta y continuar al pago</button>
+  </form>
+
+  <div id="status" role="status" aria-live="polite"></div>
+  <p class="foot" data-es="¿Necesita ayuda? Responda al correo de invitación. No comparta su contraseña con nadie." data-en="Need help? Reply to your invitation email. Never share your password.">¿Necesita ayuda? Responda al correo de invitación. No comparta su contraseña con nadie.</p>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function(){
+  const SUPABASE_URL = "https://fftnffmttuzfftntzzhu.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_f5py08cOv3Bdo0Yvm6lmbA_VBxnbEsP";
+  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+    auth: { autoRefreshToken:true, persistSession:true, detectSessionInUrl:true }
+  });
+  const form=document.getElementById("registration"), status=document.getElementById("status"), submit=document.getElementById("submit");
+  let locale="es", currentUser=null, approvedPlan=null;
+  const words={
+    noInvite:{es:"No encontramos una invitación activa. Abra el enlace incluido en el correo que recibió o solicite una nueva invitación.",en:"We couldn't find an active invitation. Open the link in your invitation email or request a new invitation."},
+    ready:{es:"Invitación verificada. Complete los campos para continuar.",en:"Invitation verified. Complete the fields to continue."},
+    working:{es:"Estamos preparando su cuenta…",en:"Setting up your account…"},
+    checkout:{es:"Cuenta preparada. Abriendo el pago seguro de Stripe…",en:"Account prepared. Opening secure Stripe checkout…"},
+    error:{es:"No fue posible completar el registro. ",en:"We couldn't complete registration. "},
+    password:{es:"La contraseña debe tener al menos 10 caracteres.",en:"Your password must contain at least 10 characters."}
+  };
+  function say(key,extra){status.className="show";status.textContent=words[key][locale]+(extra||"");}
+  function setLanguage(lang){
+    locale=lang;document.documentElement.lang=lang;
+    document.querySelectorAll("[data-es][data-en]").forEach(el=>{el.textContent=el.dataset[lang]});
+    document.getElementById("es").setAttribute("aria-pressed",String(lang==="es"));
+    document.getElementById("en").setAttribute("aria-pressed",String(lang==="en"));
+    if(approvedPlan){document.getElementById("approved-plan").textContent=approvedPlan==="family"?(lang==="es"?"Plan Familia — $29 al mes":"Family Plan — $29/month"):(lang==="es"?"Full Setup — $49 al mes + $99 de instalación":"Full Setup — $49/month + $99 setup fee");}
+    if(status.dataset.key)say(status.dataset.key,status.dataset.extra||"");
+  }
+  document.getElementById("es").addEventListener("click",()=>setLanguage("es"));
+  document.getElementById("en").addEventListener("click",()=>setLanguage("en"));
+  function showError(message){status.className="show error";status.textContent=words.error[locale]+message;}
+  async function initialize(){
+    try{
+      const {data:{session},error}=await client.auth.getSession();
+      if(error)throw error;
+      if(!session){say("noInvite");return;}
+      const {data:{user},error:userError}=await client.auth.getUser();
+      if(userError||!user)throw userError||new Error("No authenticated user");
+      currentUser=user;
+      approvedPlan=user.user_metadata && user.app_metadata.approved_plan;
+      if(!["family","full_setup"].includes(approvedPlan)){say("noInvite");return;}
+      document.getElementById("approved-plan").textContent=approvedPlan==="family"?"Plan Familia — $29 al mes":"Full Setup — $49 al mes + $99 de instalación";
+      form.hidden=false;say("ready");
+      if(user.email)document.getElementById("name").placeholder=user.email;
+    }catch(e){showError(e.message||"");}
+  }
+  form.addEventListener("submit",async function(event){
+    event.preventDefault();
+    if(!currentUser)return;
+    const password=document.getElementById("password").value;
+    const name=document.getElementById("name").value.trim();
+    const plan=approvedPlan;
+    if(!["family","full_setup"].includes(plan)){say("noInvite");return;}
+    if(password.length<10){showError(words.password[locale]);return;}
+    submit.disabled=true;say("working");
+    try{
+      const {error:passwordError}=await client.auth.updateUser({password});
+      if(passwordError)throw passwordError;
+      const {data:onboarding,error:onboardingError}=await client.functions.invoke("complete-onboarding",{
+        body:{name,plan_key:plan,locale,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone}
+      });
+      if(onboardingError)throw onboardingError;
+      if(!onboarding||!onboarding.success)throw new Error("Onboarding was not confirmed");
+      onboardingDone=true;
+      say("checkout");
+      const {data:checkout,error:checkoutError}=await client.functions.invoke("create-checkout-session",{body:{plan_key:plan}});
+      if(checkoutError)throw checkoutError;
+      if(!checkout||!checkout.url)throw new Error("Checkout link was not returned");
+      window.location.assign(checkout.url);
+    }catch(e){
+      showError(e.message||"Please contact support.");
+      submit.disabled=false;
+    }
+  });
+  initialize();
+})();
+</script>
+</body>
+</html>
