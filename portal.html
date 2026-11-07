@@ -265,6 +265,7 @@
       enabled: "Enabled",
       disabled: "Not enabled",
       open: "Open",
+      manageLinks: "Caregiver links",
       linkPending: "Link pending",
       noPlan: "No plan yet",
       startPlan: "Start Family Plan",
@@ -337,6 +338,7 @@
       enabled: "Activa",
       disabled: "No activa",
       open: "Abrir",
+      manageLinks: "Enlaces de cuidadoras",
       linkPending: "Enlace pendiente",
       noPlan: "Aún no hay plan",
       startPlan: "Comenzar Plan Familia",
@@ -571,12 +573,14 @@
       const key = slug(app.app_key);
       const enabled = accessMap.get(app.app_key) === true;
       const url = APP_URLS[key] || "";
+      const caregiverApp = key === "rosita" || key === "gastos_mama";
+      const actionHref = caregiverApp ? "cuidadores.html" : url;
       const icon = APP_ICONS[key] || String(app.display_name || app.app_key || "•").slice(0, 1).toUpperCase();
       const label = enabled ? t("enabled") : t("disabled");
       const tone = enabled ? "ok" : "neutral";
-      const action = enabled && url
-        ? `<a class="btn primary" href="${escapeAttr(url)}" target="_blank" rel="noopener">${t("open")}</a>`
-        : enabled && !url
+      const action = enabled && actionHref
+        ? `<a class="btn primary" href="${escapeAttr(actionHref)}"${caregiverApp ? "" : ' target="_blank" rel="noopener"'}>${caregiverApp ? t("manageLinks") : t("open")}</a>`
+        : enabled && !actionHref
           ? `<span class="muted small">${t("linkPending")}</span>`
           : `<span class="muted small">${t("disabled")}</span>`;
 
