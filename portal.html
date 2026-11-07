@@ -1,0 +1,864 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#f8f5ee">
+<title>Your account — Cuidar a Distancia</title>
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#f8f5ee; --paper:#fff; --ink:#2c2924; --muted:#71695d;
+    --green:#40583d; --green-dark:#30422e; --soft:#edf0e8;
+    --line:#e7dece; --amber:#8a5a12; --amber-bg:#fff6e5;
+    --red:#a83232; --red-bg:#fff0f0; --blue:#28546b; --blue-bg:#eef5f8;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:Arial,Helvetica,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--sans)}
+  a{color:var(--green)}
+  [hidden]{display:none!important}
+  .top{max-width:1080px;margin:0 auto;padding:22px 22px 0;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{font:700 13px/1.4 ui-monospace,monospace;letter-spacing:.14em;color:var(--green);text-decoration:none}
+  .top-actions{display:flex;align-items:center;gap:10px}
+  .lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--paper)}
+  .lang button{border:0;background:transparent;padding:6px 10px;border-radius:999px;font:700 12px var(--sans);color:var(--muted);cursor:pointer}
+  .lang button[aria-pressed="true"]{background:var(--green);color:#fff}
+  .ghost{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:8px 14px;font:600 13px var(--sans);color:var(--ink);cursor:pointer}
+  main{max-width:1080px;margin:0 auto;padding:38px 22px 70px}
+  .kicker{font:700 12px/1.4 ui-monospace,monospace;letter-spacing:.13em;color:var(--green);text-transform:uppercase}
+  h1,h2,h3{font-family:var(--serif);line-height:1.15;letter-spacing:-.02em}
+  h1{font-size:clamp(34px,5vw,52px);margin:12px 0 8px}
+  h2{font-size:24px;margin:0 0 8px}
+  h3{font-size:18px;margin:0 0 4px}
+  p{margin:0 0 14px}
+  .muted{color:var(--muted)}
+  .small{font-size:13px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 8px 26px #51452a0a}
+  .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-top:22px}
+  .card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+  .badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 11px;font:700 12px var(--sans);white-space:nowrap}
+  .badge.ok{background:var(--soft);color:var(--green)}
+  .badge.warn{background:var(--amber-bg);color:var(--amber)}
+  .badge.bad{background:var(--red-bg);color:var(--red)}
+  .badge.neutral{background:#f1eee8;color:var(--muted)}
+  .badge.info{background:var(--blue-bg);color:var(--blue)}
+  .plan-name{font:700 26px/1.2 var(--serif);margin:0 0 2px}
+  .plan-price{font:600 16px var(--sans);color:var(--muted);margin-bottom:12px}
+  .meta{display:flex;justify-content:space-between;gap:16px;border-top:1px solid var(--line);padding-top:14px;margin-top:14px;font-size:14px}
+  .meta strong{font-weight:700}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:10px;padding:12px 16px;font:700 14px var(--sans);cursor:pointer;text-decoration:none;min-height:44px}
+  .btn.primary{background:var(--green);color:#fff}
+  .btn.primary:hover{background:var(--green-dark)}
+  .btn.secondary{background:var(--paper);border:1px solid var(--line);color:var(--ink)}
+  .btn[disabled],.btn[aria-disabled="true"]{opacity:.55;cursor:not-allowed}
+  .details{display:grid;gap:12px;margin:14px 0 0}
+  .details div{display:flex;justify-content:space-between;gap:18px;border-bottom:1px solid var(--line);padding-bottom:10px}
+  .details dt{color:var(--muted);font-size:14px}
+  .details dd{margin:0;font-weight:600;text-align:right;overflow-wrap:anywhere}
+  .banner{border-radius:14px;padding:14px 16px;margin-top:20px;font-size:14px;border:1px solid}
+  .banner.info{background:var(--blue-bg);border-color:#cfe3eb;color:var(--blue)}
+  .banner.warn{background:var(--amber-bg);border-color:#f0dfbd;color:var(--amber)}
+  .banner.bad{background:var(--red-bg);border-color:#f0cccc;color:var(--red)}
+  .banner.ok{background:var(--soft);border-color:#d9e4d3;color:var(--green)}
+  .apps-section{margin-top:34px}
+  .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:16px}
+  .section-head h2{margin:0 0 4px}
+  .apps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .app{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px;min-height:190px}
+  .app.off{background:#fbf9f4}
+  .app-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .app-icon{width:38px;height:38px;border-radius:11px;background:var(--soft);color:var(--green);display:grid;place-items:center;font:700 16px var(--serif)}
+  .app.off .app-icon{background:#f1eee8;color:var(--muted)}
+  .app p{font-size:13px;color:var(--muted);margin:0;flex:1}
+  .app .btn{padding:9px 12px;font-size:13px;min-height:38px}
+  .app a.btn{width:100%}
+  .login-wrap{min-height:70vh;display:grid;place-items:center}
+  .login-card{width:min(440px,100%);background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:30px;box-shadow:0 12px 40px #51452a12}
+  .login-card h1{font-size:34px;margin:10px 0 8px}
+  label{display:block;font-weight:700;font-size:14px;margin:16px 0 6px}
+  input{width:100%;font:inherit;padding:13px 14px;border:1px solid #cbd7d0;border-radius:10px;background:#fff;color:var(--ink)}
+  input:focus{outline:3px solid #40583d22;border-color:var(--green)}
+  .login-card .btn{width:100%;margin-top:20px}
+  .error{color:var(--red);font-size:14px;min-height:20px;margin-top:10px}
+  .spinner{width:34px;height:34px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--green);animation:spin .9s linear infinite;margin:0 auto 14px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  #loading{text-align:center;padding:80px 0;color:var(--muted)}
+  footer{max-width:1080px;margin:0 auto;padding:0 22px 40px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  @media(max-width:840px){.grid{grid-template-columns:1fr}.apps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:560px){.top{padding:16px 15px 0}main{padding:26px 15px 50px}.card{padding:19px}.apps{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column;gap:6px}.details div{flex-direction:column;gap:2px}.details dd{text-align:left}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="/">● CUIDAR A DISTANCIA</a>
+  <div class="top-actions">
+    <div class="lang" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="es" aria-pressed="false">ES</button>
+    </div>
+    <button class="ghost" id="signout" type="button" hidden>Sign out</button>
+  </div>
+</header>
+
+<main>
+  <section id="loading">
+    <div class="spinner"></div>
+    <p data-i18n="loading">Loading your account…</p>
+  </section>
+
+  <section id="login" class="login-wrap" hidden>
+    <div class="login-card">
+      <div class="kicker">CUIDAR A DISTANCIA</div>
+      <h1 data-i18n="loginTitle">Your family account</h1>
+      <p class="muted" data-i18n="loginIntro">Sign in to manage your plan and open your seven apps.</p>
+      <form id="login-form" novalidate>
+        <label for="email" data-i18n="emailLabel">Email</label>
+        <input id="email" type="email" autocomplete="email" required>
+        <label for="password" data-i18n="passwordLabel">Password</label>
+        <input id="password" type="password" autocomplete="current-password" required>
+        <button class="btn primary" type="submit" id="login-button" data-i18n="signIn">Sign in</button>
+        <p class="error" id="login-error" role="alert"></p>
+      </form>
+      <p class="muted small" style="margin-top:18px">
+        <span data-i18n="invited">Invited to Cuidar a Distancia?</span>
+        <a href="accept-invitation.html" data-i18n="startHere">Start here</a>.
+      </p>
+    </div>
+  </section>
+
+  <section id="fatal" hidden>
+    <div class="card" style="max-width:640px;margin:40px auto">
+      <div class="kicker">CUIDAR A DISTANCIA</div>
+      <h1 style="font-size:34px" data-i18n="oops">Something needs attention</h1>
+      <p class="muted" id="fatal-message"></p>
+      <div class="actions">
+        <button class="btn primary" type="button" onclick="location.reload()" data-i18n="reload">Reload</button>
+        <a class="btn secondary" href="https://wa.me/18323359906" target="_blank" rel="noopener" data-i18n="contactSupport">Contact support</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="account" hidden>
+    <div class="kicker" data-i18n="accountKicker">YOUR FAMILY ACCOUNT</div>
+    <h1 id="welcome">Hola</h1>
+    <p class="muted" id="household-line"></p>
+
+    <div id="checkout-banner" class="banner info" hidden></div>
+    <div id="account-banner" class="banner" hidden></div>
+
+    <div class="grid">
+      <section class="card">
+        <div class="card-head">
+          <div>
+            <h2 data-i18n="plan">Plan</h2>
+            <div class="plan-name" id="plan-name">—</div>
+            <div class="plan-price" id="plan-price"></div>
+          </div>
+          <span class="badge neutral" id="status-badge">—</span>
+        </div>
+        <p class="muted" id="status-detail"></p>
+        <div class="meta" id="renewal-row" hidden>
+          <span id="renewal-label" data-i18n="renews">Renews</span>
+          <strong id="renewal-date"></strong>
+        </div>
+        <div class="actions">
+          <button class="btn primary" id="billing" type="button" hidden data-i18n="manageBilling">Manage billing</button>
+          <button class="btn primary" id="reactivate" type="button" hidden data-i18n="reactivate">Reactivate</button>
+          <button class="btn secondary" id="refresh" type="button" data-i18n="refresh">Refresh</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 data-i18n="account">Account</h2>
+        <dl class="details">
+          <div><dt data-i18n="email">Email</dt><dd id="account-email">—</dd></div>
+          <div><dt data-i18n="household">Household</dt><dd id="account-household">—</dd></div>
+          <div><dt data-i18n="memberSince">Member since</dt><dd id="account-since">—</dd></div>
+        </dl>
+        <p class="muted small" style="margin-top:16px" data-i18n="billingNote">
+          Billing is handled by Stripe. Cuidar a Distancia never sees or stores your card details.
+        </p>
+      </section>
+    </div>
+
+    <section class="apps-section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="apps">Your seven apps</h2>
+          <p class="muted" data-i18n="appsHint">Open the tools included in your family plan.</p>
+        </div>
+        <span class="muted small" id="apps-count"></span>
+      </div>
+      <div id="apps" class="apps"></div>
+    </section>
+  </section>
+</main>
+
+<footer>
+  <span>© 2026 Cuidar a Distancia</span>
+  <span>
+    <a href="https://wa.me/18323359906" target="_blank" rel="noopener" data-i18n="whatsapp">WhatsApp</a>
+    ·
+    <a href="mailto:marbaquero@yahoo.com" data-i18n="emailSupport">Email support</a>
+  </span>
+</footer>
+
+<script type="module">
+  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+  // Publishable key, already used by the public invitation page.
+  const SUPABASE_URL = "https://fftnffmttuzfftntzzhu.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_f5py08cOv3Bdo0Yvm6lmbA_VBxnbEsP";
+
+  // Verify these URLs before launch. The portal only renders a link when the
+  // matching key has a value. Keys are normalized to lower_snake_case.
+  const APP_URLS = {
+    rosita: "https://marbaquero.github.io/reporte-rosita/",
+    historial: "https://marbaquero.github.io/reporte-rosita/dashboard.html",
+    medico: "https://marbaquero.github.io/reporte-rosita/reporte-medico.html",
+    inventario: "https://marbaquero.github.io/inventario-medicinas/",
+    pagos: "https://marbaquero.github.io/Pago-Cuidadoras/",
+    gastos_mama: "https://marbaquero.github.io/Gastos-de-mama-original/",
+    gastos_admin: "https://marbaquero.github.io/Gastos-de-mama-admin/",
+  };
+
+  const APP_ICONS = {
+    rosita: "R",
+    historial: "H",
+    medico: "♥",
+    inventario: "+",
+    pagos: "$",
+    gastos_mama: "$",
+    gastos_admin: "$",
+  };
+
+  const I18N = {
+    en: {
+      loginTitle: "Your family account",
+      loginIntro: "Sign in to manage your plan and open your seven apps.",
+      emailLabel: "Email",
+      passwordLabel: "Password",
+      signIn: "Sign in",
+      invited: "Invited to Cuidar a Distancia?",
+      startHere: "Start here",
+      accountKicker: "YOUR FAMILY ACCOUNT",
+      welcome: "Hello",
+      plan: "Plan",
+      account: "Account",
+      email: "Email",
+      household: "Household",
+      memberSince: "Member since",
+      billingNote: "Billing is handled by Stripe. Cuidar a Distancia never sees or stores your card details.",
+      apps: "Your seven apps",
+      appsHint: "Open the tools included in your family plan.",
+      manageBilling: "Manage billing",
+      reactivate: "Reactivate",
+      refresh: "Refresh",
+      renews: "Renews",
+      accessUntil: "Access until",
+      signOut: "Sign out",
+      enabled: "Enabled",
+      disabled: "Not enabled",
+      open: "Open",
+      linkPending: "Link pending",
+      noPlan: "No plan yet",
+      startPlan: "Start Family Plan",
+      completePayment: "Complete payment",
+      updatePayment: "Update payment method",
+      contactSupport: "Contact support",
+      reload: "Reload",
+      whatsapp: "WhatsApp",
+      emailSupport: "Email support",
+      loading: "Loading your account…",
+      noHousehold: "We could not find a household for this account. Please contact support.",
+      genericError: "Something went wrong. Please try again or contact support.",
+      loginError: "We could not sign you in. Check your email and password.",
+      checkoutSuccess: "Payment received. We are activating your apps…",
+      checkoutCancel: "Checkout was canceled. You can try again whenever you are ready.",
+      activationPending: "Your payment was received, but activation is taking longer than expected. Refresh in a moment or contact support.",
+      statusActive: "Active",
+      statusTrialing: "Trialing",
+      statusPastDue: "Payment failed",
+      statusUnpaid: "Unpaid",
+      statusCanceled: "Canceled",
+      statusReview: "Under review",
+      statusIncomplete: "Payment pending",
+      statusPaused: "Paused",
+      detailActive: "Your subscription is active and all included apps are available.",
+      detailTrialing: "Your trial is active. All included apps are available.",
+      detailPastDue: "We could not charge your card. Access remains open during the grace period. Update your payment method to keep it.",
+      detailUnpaid: "Access is paused because the subscription is unpaid. Update your payment method or reactivate.",
+      detailCanceled: "Your subscription is canceled. Your data is retained. Reactivate whenever you are ready.",
+      detailReview: "Your account is under review because of a payment dispute or refund. Contact support.",
+      detailIncomplete: "Your payment has not been completed. Finish checkout to activate your apps.",
+      detailPaused: "Your subscription is paused. Contact support if you need help.",
+      detailNoPlan: "Choose a plan to activate your seven apps.",
+      planFamily: "Family Plan",
+      planFull: "Full Setup",
+      perMonth: "/ month",
+      setupFee: "+ $99 one-time setup",
+      appsReady: "apps available",
+      graceUntil: "Access remains open until",
+      cancelsOn: "Cancels at period end on",
+      support: "Support",
+      errorBilling: "We could not open the billing portal. Please try again.",
+      errorCheckout: "We could not open checkout. Please try again.",
+      underReview: "Your account is under review. Please contact support before making a payment.",
+    },
+    es: {
+      loginTitle: "La cuenta de su familia",
+      loginIntro: "Inicie sesión para administrar su plan y abrir sus siete aplicaciones.",
+      emailLabel: "Correo",
+      passwordLabel: "Contraseña",
+      signIn: "Iniciar sesión",
+      invited: "¿Recibió una invitación de Cuidar a Distancia?",
+      startHere: "Empiece aquí",
+      accountKicker: "LA CUENTA DE SU FAMILIA",
+      welcome: "Hola",
+      plan: "Plan",
+      account: "Cuenta",
+      email: "Correo",
+      household: "Hogar",
+      memberSince: "Miembro desde",
+      billingNote: "Stripe procesa los pagos. Cuidar a Distancia nunca ve ni guarda los datos de su tarjeta.",
+      apps: "Sus siete aplicaciones",
+      appsHint: "Abra las herramientas incluidas en su plan familiar.",
+      manageBilling: "Administrar facturación",
+      reactivate: "Reactivar",
+      refresh: "Actualizar",
+      renews: "Se renueva",
+      accessUntil: "Acceso hasta",
+      signOut: "Cerrar sesión",
+      enabled: "Activa",
+      disabled: "No activa",
+      open: "Abrir",
+      linkPending: "Enlace pendiente",
+      noPlan: "Aún no hay plan",
+      startPlan: "Comenzar Plan Familia",
+      completePayment: "Completar pago",
+      updatePayment: "Actualizar método de pago",
+      contactSupport: "Contactar soporte",
+      reload: "Recargar",
+      whatsapp: "WhatsApp",
+      emailSupport: "Correo de soporte",
+      loading: "Cargando su cuenta…",
+      noHousehold: "No encontramos un hogar para esta cuenta. Contacte a soporte.",
+      genericError: "Algo salió mal. Intente de nuevo o contacte a soporte.",
+      loginError: "No pudimos iniciar sesión. Revise su correo y contraseña.",
+      checkoutSuccess: "Pago recibido. Estamos activando sus aplicaciones…",
+      checkoutCancel: "El pago fue cancelado. Puede intentarlo de nuevo cuando quiera.",
+      activationPending: "Recibimos su pago, pero la activación está tardando más de lo esperado. Actualice en un momento o contacte a soporte.",
+      statusActive: "Activa",
+      statusTrialing: "En prueba",
+      statusPastDue: "Pago fallido",
+      statusUnpaid: "Sin pagar",
+      statusCanceled: "Cancelada",
+      statusReview: "En revisión",
+      statusIncomplete: "Pago pendiente",
+      statusPaused: "Pausada",
+      detailActive: "Su suscripción está activa y todas las aplicaciones incluidas están disponibles.",
+      detailTrialing: "Su período de prueba está activo. Todas las aplicaciones incluidas están disponibles.",
+      detailPastDue: "No pudimos cobrar su tarjeta. El acceso sigue abierto durante el período de gracia. Actualice su método de pago para conservarlo.",
+      detailUnpaid: "El acceso está pausado porque la suscripción no está pagada. Actualice su método de pago o reactive.",
+      detailCanceled: "Su suscripción está cancelada. Sus datos se conservan. Reactive cuando quiera.",
+      detailReview: "Su cuenta está en revisión por un contracargo o reembolso. Contacte a soporte.",
+      detailIncomplete: "Su pago no se ha completado. Termine el pago para activar sus aplicaciones.",
+      detailPaused: "Su suscripción está pausada. Contacte a soporte si necesita ayuda.",
+      detailNoPlan: "Elija un plan para activar sus siete aplicaciones.",
+      planFamily: "Plan Familia",
+      planFull: "Instalación completa",
+      perMonth: "/ mes",
+      setupFee: "+ $99 de instalación única",
+      appsReady: "aplicaciones disponibles",
+      graceUntil: "El acceso sigue abierto hasta",
+      cancelsOn: "Se cancela al final del período el",
+      support: "Soporte",
+      errorBilling: "No pudimos abrir el portal de facturación. Intente de nuevo.",
+      errorCheckout: "No pudimos abrir el pago. Intente de nuevo.",
+      underReview: "Su cuenta está en revisión. Contacte a soporte antes de hacer un pago.",
+    },
+  };
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+  });
+
+  const $ = (id) => document.getElementById(id);
+  const state = {
+    user: null,
+    profile: null,
+    membership: null,
+    household: null,
+    subscription: null,
+    onboarding: null,
+    apps: [],
+    access: [],
+    plans: [],
+    locale: "en",
+    polling: null,
+    pollCount: 0,
+  };
+
+  const params = new URLSearchParams(location.search);
+  const checkoutState = params.get("checkout");
+
+  boot();
+
+  async function boot() {
+    show("loading");
+    try {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      if (error) throw error;
+
+      if (!session) {
+        state.user = null;
+        $("signout").hidden = true;
+        applyLanguage();
+        show("login");
+        return;
+      }
+
+      state.user = session.user;
+      $("signout").hidden = false;
+      await loadAccount();
+    } catch (error) {
+      console.error(error);
+      fail(t("genericError"));
+    }
+  }
+
+  async function loadAccount(options = {}) {
+    if (!state.user) return;
+    if (!options.silent) show("loading");
+
+    const userId = state.user.id;
+
+    const [profileResult, membershipResult] = await Promise.all([
+      supabase.from("customer_profiles").select("*").eq("id", userId).maybeSingle(),
+      supabase.from("household_members").select("household_id, role, created_at").eq("user_id", userId).order("created_at").limit(1).maybeSingle(),
+    ]);
+
+    if (profileResult.error) console.warn("profile", profileResult.error);
+    if (membershipResult.error) console.warn("membership", membershipResult.error);
+
+    state.profile = profileResult.data ?? null;
+    state.membership = membershipResult.data ?? null;
+
+    if (!state.membership?.household_id) {
+      fail(t("noHousehold"));
+      return;
+    }
+
+    const householdId = state.membership.household_id;
+
+    const [householdResult, subscriptionResult, onboardingResult, accessResult, appsResult, plansResult] = await Promise.all([
+      supabase.from("households").select("id, name, created_at").eq("id", householdId).maybeSingle(),
+      supabase.from("subscriptions").select("*").eq("household_id", householdId).maybeSingle(),
+      supabase.from("customer_onboarding").select("status, completed_at").eq("household_id", householdId).maybeSingle(),
+      supabase.from("household_app_access").select("app_key, is_enabled").eq("household_id", householdId),
+      supabase.from("app_catalog").select("app_key, display_name, description, is_active").eq("is_active", true),
+      supabase.from("subscription_plans").select("plan_key, display_name, description, monthly_price_cents, currency, billing_interval, personalized_setup").eq("is_active", true),
+    ]);
+
+    for (const result of [householdResult, subscriptionResult, onboardingResult, accessResult, appsResult, plansResult]) {
+      if (result.error) console.warn("account query", result.error);
+    }
+
+    state.household = householdResult.data ?? null;
+    state.subscription = subscriptionResult.data ?? null;
+    state.onboarding = onboardingResult.data ?? null;
+    state.access = accessResult.data ?? [];
+    state.apps = appsResult.data ?? [];
+    state.plans = plansResult.data ?? [];
+
+    const savedLocale = localStorage.getItem("cad-portal-lang");
+    if (savedLocale === "es" || savedLocale === "en") {
+      state.locale = savedLocale;
+    } else if (state.profile?.locale === "es" || state.profile?.locale === "en") {
+      state.locale = state.profile.locale;
+    } else {
+      state.locale = (navigator.language || "en").toLowerCase().startsWith("es") ? "es" : "en";
+    }
+
+    applyLanguage();
+    renderAccount();
+    show("account");
+
+    if (checkoutState === "success") {
+      if (isEntitled(state.subscription)) {
+        showBanner("checkout-banner", t("checkoutSuccess"), "ok");
+      } else {
+        startCheckoutPolling();
+      }
+    }
+    if (checkoutState === "cancel") showBanner("checkout-banner", t("checkoutCancel"), "warn");
+  }
+
+  function renderAccount() {
+    const user = state.user;
+    const profile = state.profile;
+    const sub = state.subscription;
+    const plan = findPlan(sub?.plan_key);
+    const status = sub?.status ?? "incomplete";
+    const statusInfo = getStatusInfo(status, sub);
+
+    $("welcome").textContent = `${t("welcome")}${profile?.display_name ? `, ${firstName(profile.display_name)}` : ""}`;
+    $("household-line").textContent = state.household?.name ? `${t("household")}: ${state.household.name}` : "";
+    $("account-email").textContent = user?.email ?? "—";
+    $("account-household").textContent = state.household?.name ?? "—";
+    $("account-since").textContent = state.household?.created_at ? formatDate(state.household.created_at) : "—";
+
+    $("plan-name").textContent = plan?.display_name || (sub?.plan_key === "full_setup" ? t("planFull") : t("planFamily"));
+    $("plan-price").textContent = plan ? `${formatMoney(plan.monthly_price_cents)} ${t("perMonth")}${sub?.plan_key === "full_setup" ? ` · ${t("setupFee")}` : ""}` : t("noPlan");
+
+    const badge = $("status-badge");
+    badge.textContent = statusInfo.label;
+    badge.className = `badge ${statusInfo.tone}`;
+
+    $("status-detail").textContent = statusInfo.detail;
+
+    const renewalRow = $("renewal-row");
+    if (sub?.current_period_end) {
+      renewalRow.hidden = false;
+      $("renewal-label").textContent = ["canceled", "unpaid"].includes(status) ? t("accessUntil") : t("renews");
+      $("renewal-date").textContent = formatDate(sub.current_period_end);
+    } else {
+      renewalRow.hidden = true;
+    }
+
+    const billing = $("billing");
+    const reactivate = $("reactivate");
+    const isOwner = state.membership?.role === "owner";
+
+    billing.hidden = !isOwner || !sub?.provider_customer_id || status === "review";
+    billing.textContent = status === "past_due" || status === "unpaid" ? t("updatePayment") : t("manageBilling");
+    billing.disabled = false;
+
+    const canReactivate = !sub || ["canceled", "unpaid", "incomplete", "paused"].includes(status);
+    reactivate.hidden = !isOwner || !canReactivate || status === "review";
+    reactivate.textContent = !sub ? t("startPlan") : status === "incomplete" ? t("completePayment") : t("reactivate");
+    reactivate.disabled = status === "review";
+
+    if (status === "review") {
+      showBanner("account-banner", t("underReview"), "bad");
+    } else if (status === "past_due" && sub?.grace_until) {
+      showBanner("account-banner", `${t("detailPastDue")} ${t("graceUntil")} ${formatDate(sub.grace_until)}.`, "warn");
+    } else if (sub?.cancel_at_period_end && ["active", "trialing"].includes(status)) {
+      showBanner("account-banner", `${t("cancelsOn")} ${formatDate(sub.current_period_end)}.`, "info");
+    } else if (status === "incomplete" && state.onboarding?.status === "completed") {
+      showBanner("account-banner", t("detailIncomplete"), "warn");
+    } else {
+      $("account-banner").hidden = true;
+    }
+
+    renderApps();
+  }
+
+  function renderApps() {
+    const accessMap = new Map(state.access.map((row) => [row.app_key, row.is_enabled]));
+    const entitled = isEntitled(state.subscription);
+    const apps = state.apps.slice().sort((a, b) => String(a.display_name).localeCompare(String(b.display_name)));
+
+    const enabledCount = apps.filter((app) => accessMap.get(app.app_key) === true).length;
+    $("apps-count").textContent = `${enabledCount} / ${apps.length} ${t("appsReady")}`;
+
+    $("apps").innerHTML = apps.map((app) => {
+      const key = slug(app.app_key);
+      const enabled = accessMap.get(app.app_key) === true;
+      const url = APP_URLS[key] || "";
+      const icon = APP_ICONS[key] || String(app.display_name || app.app_key || "•").slice(0, 1).toUpperCase();
+      const label = enabled ? t("enabled") : t("disabled");
+      const tone = enabled ? "ok" : "neutral";
+      const action = enabled && url
+        ? `<a class="btn primary" href="${escapeAttr(url)}" target="_blank" rel="noopener">${t("open")}</a>`
+        : enabled && !url
+          ? `<span class="muted small">${t("linkPending")}</span>`
+          : `<span class="muted small">${t("disabled")}</span>`;
+
+      return `
+        <article class="app ${enabled ? "" : "off"}">
+          <div class="app-top">
+            <div class="app-icon">${escapeHtml(icon)}</div>
+            <span class="badge ${tone}">${label}</span>
+          </div>
+          <h3>${escapeHtml(app.display_name || app.app_key)}</h3>
+          <p>${escapeHtml(app.description || "")}</p>
+          ${action}
+        </article>
+      `;
+    }).join("") || `<div class="card"><p class="muted">${t("genericError")}</p></div>`;
+
+    if (!entitled && state.subscription && state.subscription.status === "past_due") {
+      // The grace message is already in the status card; no duplicate banner.
+    }
+  }
+
+  function getStatusInfo(status, sub) {
+    switch (status) {
+      case "active":
+        return { label: t("statusActive"), tone: "ok", detail: t("detailActive") };
+      case "trialing":
+        return { label: t("statusTrialing"), tone: "ok", detail: t("detailTrialing") };
+      case "past_due":
+        return {
+          label: t("statusPastDue"),
+          tone: "warn",
+          detail: sub?.grace_until
+            ? `${t("detailPastDue")} ${t("graceUntil")} ${formatDate(sub.grace_until)}.`
+            : t("detailPastDue"),
+        };
+      case "unpaid":
+        return { label: t("statusUnpaid"), tone: "bad", detail: t("detailUnpaid") };
+      case "canceled":
+        return { label: t("statusCanceled"), tone: "bad", detail: t("detailCanceled") };
+      case "review":
+        return { label: t("statusReview"), tone: "bad", detail: t("detailReview") };
+      case "paused":
+        return { label: t("statusPaused"), tone: "neutral", detail: t("detailPaused") };
+      case "incomplete":
+      default:
+        return { label: t("statusIncomplete"), tone: "warn", detail: t("detailIncomplete") };
+    }
+  }
+
+  function isEntitled(sub) {
+    if (!sub || sub.review_hold) return false;
+    if (["active", "trialing"].includes(sub.status)) return true;
+    if (sub.status === "past_due" && sub.grace_until) {
+      return new Date(sub.grace_until).getTime() > Date.now();
+    }
+    return false;
+  }
+
+  function findPlan(planKey) {
+    return state.plans.find((plan) => plan.plan_key === planKey) ?? null;
+  }
+
+  async function manageBilling() {
+    const button = $("billing");
+    button.disabled = true;
+    try {
+      const { data, error } = await supabase.functions.invoke("create-billing-portal-session", { body: {} });
+      if (error) throw error;
+      if (!data?.url) throw new Error(data?.error || "No portal URL");
+      location.href = data.url;
+    } catch (error) {
+      console.error(error);
+      showBanner("account-banner", t("errorBilling"), "bad");
+      button.disabled = false;
+    }
+  }
+
+  async function reactivate() {
+    const button = $("reactivate");
+    button.disabled = true;
+    try {
+      const planKey = state.subscription?.plan_key === "full_setup" ? "full_setup" : "family";
+      const { data, error } = await supabase.functions.invoke("create-checkout-session", {
+        body: { plan_key: planKey },
+      });
+      if (error) throw error;
+      if (!data?.url) throw new Error(data?.error || "No checkout URL");
+      location.href = data.url;
+    } catch (error) {
+      console.error(error);
+      showBanner("account-banner", t("errorCheckout"), "bad");
+      button.disabled = false;
+    }
+  }
+
+  async function refresh() {
+    const button = $("refresh");
+    button.disabled = true;
+    await loadAccount({ silent: true });
+    button.disabled = false;
+  }
+
+  function startCheckoutPolling() {
+    showBanner("checkout-banner", t("checkoutSuccess"), "info");
+    if (state.polling) return;
+    state.pollCount = 0;
+    state.polling = setInterval(async () => {
+      state.pollCount += 1;
+      await loadAccount({ silent: true });
+
+      if (isEntitled(state.subscription)) {
+        clearInterval(state.polling);
+        state.polling = null;
+        showBanner("checkout-banner", t("checkoutSuccess"), "ok");
+        return;
+      }
+
+      if (state.pollCount >= 20) {
+        clearInterval(state.polling);
+        state.polling = null;
+        showBanner("checkout-banner", t("activationPending"), "warn");
+      }
+    }, 3000);
+  }
+
+  async function signIn(event) {
+    event.preventDefault();
+    const button = $("login-button");
+    const errorBox = $("login-error");
+    errorBox.textContent = "";
+    button.disabled = true;
+
+    try {
+      const email = $("email").value.trim();
+      const password = $("password").value;
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      await boot();
+    } catch (error) {
+      console.error(error);
+      errorBox.textContent = t("loginError");
+    } finally {
+      button.disabled = false;
+    }
+  }
+
+  async function signOut() {
+    if (state.polling) {
+      clearInterval(state.polling);
+      state.polling = null;
+    }
+    await supabase.auth.signOut();
+    state.user = null;
+    state.profile = null;
+    state.membership = null;
+    state.household = null;
+    state.subscription = null;
+    state.onboarding = null;
+    state.apps = [];
+    state.access = [];
+    state.plans = [];
+    $("checkout-banner").hidden = true;
+    $("account-banner").hidden = true;
+    $("signout").hidden = true;
+    show("login");
+  }
+
+  function show(view) {
+    for (const id of ["loading", "login", "account", "fatal"]) {
+      $(id).hidden = id !== view;
+    }
+  }
+
+  function fail(message) {
+    $("fatal-message").textContent = message;
+    show("fatal");
+  }
+
+  function showBanner(id, message, tone) {
+    const el = $(id);
+    el.textContent = message;
+    el.className = `banner ${tone}`;
+    el.hidden = false;
+  }
+
+  function t(key) {
+    return I18N[state.locale]?.[key] ?? I18N.en[key] ?? key;
+  }
+
+  function applyLanguage() {
+    document.documentElement.lang = state.locale;
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
+      if (key) el.textContent = t(key);
+    });
+    document.querySelectorAll("[data-lang]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.lang === state.locale));
+    });
+    $("signout").textContent = t("signOut");
+
+    if (state.user) {
+      renderAccount();
+    }
+  }
+
+  function setLanguage(lang) {
+    state.locale = lang === "es" ? "es" : "en";
+    localStorage.setItem("cad-portal-lang", state.locale);
+    applyLanguage();
+  }
+
+  function firstName(name) {
+    return String(name || "").trim().split(/\s+/)[0] || "";
+  }
+
+  function formatMoney(cents) {
+    const amount = Number(cents || 0) / 100;
+    return new Intl.NumberFormat(state.locale === "es" ? "es-EC" : "en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: amount % 1 === 0 ? 0 : 2,
+    }).format(amount);
+  }
+
+  function formatDate(value) {
+    if (!value) return "—";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "—";
+    return date.toLocaleDateString(state.locale === "es" ? "es-EC" : "en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  }
+
+  function slug(value) {
+    return String(value || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "_")
+      .replace(/^_|_$/g, "");
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    }[char]));
+  }
+
+  function escapeAttr(value) {
+    return escapeHtml(value);
+  }
+
+  document.querySelectorAll("[data-lang]").forEach((button) => {
+    button.addEventListener("click", () => setLanguage(button.dataset.lang));
+  });
+
+  $("login-form").addEventListener("submit", signIn);
+  $("signout").addEventListener("click", signOut);
+  $("billing").addEventListener("click", manageBilling);
+  $("reactivate").addEventListener("click", reactivate);
+  $("refresh").addEventListener("click", refresh);
+
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === "SIGNED_OUT") {
+      state.user = null;
+      $("signout").hidden = true;
+      show("login");
+    } else if (session?.user && !state.user) {
+      state.user = session.user;
+      $("signout").hidden = false;
+      loadAccount().catch((error) => {
+        console.error(error);
+        fail(t("genericError"));
+      });
+    }
+  });
+</script>
+</body>
+</html>
