@@ -81,7 +81,7 @@ document.getElementById('en').addEventListener('click',function(){setLang('en')}
 function renderTurnstile(){
  if(turnstileWidgetId!==null||!window.turnstile)return;
  turnstileWidgetId=window.turnstile.render('#turnstile-container',{
-  sitekey:'0x4AAAAAAF24Sp6J0GsxSbUn',
+  sitekey:'0x4AAAAAAF24Sp6JOGsxSbUn',
   action:'customer_registration',
   callback:function(token){turnstileToken=token;},
   'expired-callback':function(){turnstileToken='';},
