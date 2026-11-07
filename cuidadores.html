@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#f8f5ee">
+<title>Caregivers — Cuidar a Distancia</title>
+<style>
+  :root{
+    color-scheme:light;
+    --bg:#f8f5ee; --paper:#fff; --ink:#2c2924; --muted:#71695d;
+    --green:#40583d; --green-dark:#30422e; --soft:#edf0e8;
+    --line:#e7dece; --amber:#8a5a12; --amber-bg:#fff6e5;
+    --red:#a83232; --red-bg:#fff0f0;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:Arial,Helvetica,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--sans)}
+  a{color:var(--green)}
+  [hidden]{display:none!important}
+  .top{max-width:980px;margin:0 auto;padding:22px 22px 0;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{font:700 13px/1.4 ui-monospace,monospace;letter-spacing:.14em;color:var(--green);text-decoration:none}
+  .top-actions{display:flex;align-items:center;gap:10px}
+  .lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--paper)}
+  .lang button{border:0;background:transparent;padding:6px 10px;border-radius:999px;font:700 12px var(--sans);color:var(--muted);cursor:pointer}
+  .lang button[aria-pressed="true"]{background:var(--green);color:#fff}
+  .ghost{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:8px 14px;font:600 13px var(--sans);color:var(--ink);cursor:pointer}
+  main{max-width:980px;margin:0 auto;padding:38px 22px 70px}
+  .kicker{font:700 12px/1.4 ui-monospace,monospace;letter-spacing:.13em;color:var(--green);text-transform:uppercase}
+  h1,h2,h3{font-family:var(--serif);line-height:1.15;letter-spacing:-.02em}
+  h1{font-size:clamp(34px,5vw,50px);margin:12px 0 8px}
+  h2{font-size:24px;margin:0 0 8px}
+  h3{font-size:18px;margin:0 0 4px}
+  p{margin:0 0 14px}
+  .muted{color:var(--muted)} .small{font-size:13px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 8px 26px #51452a0a}
+  .banner{border-radius:14px;padding:14px 16px;margin:18px 0;font-size:14px;border:1px solid}
+  .banner.info{background:#eef5f8;border-color:#cfe3eb;color:#28546b}
+  .banner.warn{background:var(--amber-bg);border-color:#f0dfbd;color:var(--amber)}
+  .banner.bad{background:var(--red-bg);border-color:#f0cccc;color:var(--red)}
+  .banner.ok{background:var(--soft);border-color:#d9e4d3;color:var(--green)}
+  .badge{display:inline-flex;align-items:center;border-radius:999px;padding:5px 10px;font:700 11px var(--sans);white-space:nowrap}
+  .badge.ok{background:var(--soft);color:var(--green)}
+  .badge.warn{background:var(--amber-bg);color:var(--amber)}
+  .badge.bad{background:var(--red-bg);color:var(--red)}
+  .badge.neutral{background:#f1eee8;color:var(--muted)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:10px;padding:12px 16px;font:700 14px var(--sans);cursor:pointer;text-decoration:none;min-height:42px}
+  .btn.primary{background:var(--green);color:#fff}
+  .btn.primary:hover{background:var(--green-dark)}
+  .btn.secondary{background:var(--paper);border:1px solid var(--line);color:var(--ink)}
+  .btn.danger{background:var(--red-bg);border:1px solid #f0cccc;color:var(--red)}
+  .btn[disabled]{opacity:.55;cursor:not-allowed}
+  label{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
+  input{width:100%;font:inherit;padding:12px 13px;border:1px solid #cbd7d0;border-radius:10px;background:#fff;color:var(--ink)}
+  input:focus{outline:3px solid #40583d22;border-color:var(--green)}
+  .form-row{display:grid;grid-template-columns:1.4fr 1fr;gap:12px}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+  .list{display:grid;gap:12px;margin-top:16px}
+  .person{display:grid;grid-template-columns:1.2fr 1fr auto;gap:14px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--paper)}
+  .person .name{font-weight:700;font-size:17px}
+  .person .meta{font-size:13px;color:var(--muted)}
+  .person .buttons{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+  .person .buttons .btn{padding:9px 12px;font-size:13px;min-height:38px}
+  .links{margin-top:18px}
+  .links .card{border-color:#cfe3eb;background:#fbfdfe}
+  .link-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border:1px solid #d9e7ee;border-radius:10px;padding:10px 12px;background:#fff;margin-top:10px}
+  .link-row code{font:12px/1.5 ui-monospace,monospace;overflow-wrap:anywhere;color:#28546b}
+  .link-row .btn{padding:9px 12px;font-size:12px;min-height:36px}
+  .spinner{width:34px;height:34px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--green);animation:spin .9s linear infinite;margin:0 auto 14px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  #loading{text-align:center;padding:70px 0;color:var(--muted)}
+  footer{max-width:980px;margin:0 auto;padding:0 22px 40px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  @media(max-width:720px){.person{grid-template-columns:1fr}.person .buttons{justify-content:flex-start}.form-row{grid-template-columns:1fr}.link-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="/">● CUIDAR A DISTANCIA</a>
+  <div class="top-actions">
+    <div class="lang" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="es" aria-pressed="false">ES</button>
+    </div>
+    <a class="ghost" href="portal.html" data-i18n="back">Back to account</a>
+    <button class="ghost" id="signout" type="button" data-i18n="signOut">Sign out</button>
+  </div>
+</header>
+
+<main>
+  <div class="kicker" data-i18n="kicker">CAREGIVER ACCESS</div>
+  <h1 data-i18n="title">Caregivers</h1>
+  <p class="muted" data-i18n="intro">
+    Each caregiver gets a private link for Rosita and Gastos Mamá. Do not share these links publicly.
+  </p>
+
+  <div class="banner warn" data-i18n="cutoverWarning">
+    Do not send the new links until the new app versions are published. Until then, the old public apps are still live.
+  </div>
+
+  <section id="loading"><div class="spinner"></div><p data-i18n="loading">Loading caregivers…</p></section>
+  <section id="fatal" hidden><div class="card"><h2 data-i18n="errorTitle">Something needs attention</h2><p class="muted" id="fatal-message"></p></div></section>
+
+  <section id="app" hidden>
+    <div class="card">
+      <h2 data-i18n="addTitle">Add a caregiver</h2>
+      <p class="muted small" data-i18n="addHint">Up to three active caregivers. To replace one, revoke first.</p>
+      <form id="create-form">
+        <div class="form-row">
+          <div>
+            <label for="name" data-i18n="name">Full name</label>
+            <input id="name" maxlength="120" required autocomplete="off">
+          </div>
+          <div>
+            <label for="phone" data-i18n="phone">Phone (optional)</label>
+            <input id="phone" maxlength="30" autocomplete="tel" placeholder="+593...">
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" id="create-button" type="submit" data-i18n="create">Create caregiver</button>
+        </div>
+        <p class="muted small" id="create-error" role="alert"></p>
+      </form>
+    </div>
+
+    <div id="links-panel" class="links" hidden></div>
+
+    <h2 style="margin-top:30px" data-i18n="listTitle">Current caregivers</h2>
+    <div id="list" class="list"></div>
+  </section>
+</main>
+
+<footer>
+  <span>© 2026 Cuidar a Distancia</span>
+  <span><a href="https://wa.me/18323359906" target="_blank" rel="noopener" data-i18n="support">Support</a></span>
+</footer>
+
+<script type="module">
+  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+  const SUPABASE_URL = "https://fftnffmttuzfftntzzhu.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_f5py08cOv3Bdo0Yvm6lmbA_VBxnbEsP";
+  const ROSITA_URL = "https://marbaquero.github.io/reporte-rosita/";
+  const GASTOS_URL = "https://marbaquero.github.io/Gastos-de-mama-original/";
+
+  const I18N = {
+    en: {
+      kicker: "CAREGIVER ACCESS",
+      title: "Caregivers",
+      intro: "Each caregiver gets a private link for Rosita and Gastos Mamá. Do not share these links publicly.",
+      cutoverWarning: "Do not send the new links until the new app versions are published. Until then, the old public apps are still live.",
+      back: "Back to account",
+      signOut: "Sign out",
+      loading: "Loading caregivers…",
+      errorTitle: "Something needs attention",
+      addTitle: "Add a caregiver",
+      addHint: "Up to three active caregivers. To replace one, revoke first.",
+      name: "Full name",
+      phone: "Phone (optional)",
+      create: "Create caregiver",
+      listTitle: "Current caregivers",
+      active: "Active",
+      revoked: "Revoked",
+      hasLink: "Link generated",
+      noLink: "No link yet",
+      generate: "Generate link",
+      newLink: "New link",
+      revoke: "Revoke",
+      revokeConfirm: "Revoke this caregiver? Their current links will stop working.",
+      linkTitle: "Links for",
+      linkHint: "These links are shown only once. If you lose them, generate a new link; the old one stops working.",
+      rosita: "Rosita — daily report",
+      gastos: "Gastos Mamá — expenses",
+      copy: "Copy",
+      copied: "Copied",
+      whatsapp: "WhatsApp",
+      lastUsed: "Last used",
+      never: "never",
+      noCaregivers: "No caregivers yet.",
+      createError: "Could not create the caregiver.",
+      linkError: "Could not generate the link.",
+      revokeError: "Could not revoke the caregiver.",
+      ownerOnly: "Only the household owner can manage caregivers.",
+      noSession: "Please sign in from the account portal.",
+      support: "Support",
+    },
+    es: {
+      kicker: "ACCESO DE CUIDADORAS",
+      title: "Cuidadores",
+      intro: "Cada cuidadora recibe un enlace privado para Rosita y Gastos Mamá. No comparta estos enlaces públicamente.",
+      cutoverWarning: "No envíe los enlaces nuevos hasta que las nuevas versiones de las apps estén publicadas. Mientras tanto, las apps públicas antiguas siguen activas.",
+      back: "Volver a la cuenta",
+      signOut: "Cerrar sesión",
+      loading: "Cargando cuidadoras…",
+      errorTitle: "Algo necesita atención",
+      addTitle: "Agregar una cuidadora",
+      addHint: "Hasta tres cuidadoras activas. Para reemplazar una, revoque primero.",
+      name: "Nombre completo",
+      phone: "Teléfono (opcional)",
+      create: "Crear cuidadora",
+      listTitle: "Cuidadoras actuales",
+      active: "Activa",
+      revoked: "Revocada",
+      hasLink: "Enlace generado",
+      noLink: "Sin enlace",
+      generate: "Generar enlace",
+      newLink: "Nuevo enlace",
+      revoke: "Revocar",
+      revokeConfirm: "¿Revocar esta cuidadora? Sus enlaces actuales dejarán de funcionar.",
+      linkTitle: "Enlaces para",
+      linkHint: "Estos enlaces se muestran una sola vez. Si los pierde, genere uno nuevo; el anterior deja de funcionar.",
+      rosita: "Rosita — reporte diario",
+      gastos: "Gastos Mamá — gastos",
+      copy: "Copiar",
+      copied: "Copiado",
+      whatsapp: "WhatsApp",
+      lastUsed: "Último uso",
+      never: "nunca",
+      noCaregivers: "Aún no hay cuidadoras.",
+      createError: "No se pudo crear la cuidadora.",
+      linkError: "No se pudo generar el enlace.",
+      revokeError: "No se pudo revocar la cuidadora.",
+      ownerOnly: "Solo el dueño del hogar puede administrar cuidadoras.",
+      noSession: "Inicie sesión desde el portal de la cuenta.",
+      support: "Soporte",
+    },
+  };
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+  });
+
+  const $ = (id) => document.getElementById(id);
+  const state = { user: null, caregivers: [], locale: "en", generated: null };
+
+  boot();
+
+  async function boot() {
+    show("loading");
+    const saved = localStorage.getItem("cad-cuidadores-lang");
+    if (saved === "es" || saved === "en") state.locale = saved;
+    else state.locale = (navigator.language || "en").toLowerCase().startsWith("es") ? "es" : "en";
+
+    const { data: { session }, error } = await supabase.auth.getSession();
+    if (error || !session) {
+      $("fatal-message").textContent = t("noSession");
+      show("fatal");
+      return;
+    }
+
+    state.user = session.user;
+    applyLanguage();
+    await loadCaregivers();
+  }
+
+  async function loadCaregivers() {
+    const { data, error } = await supabase.rpc("list_caregivers");
+    if (error) {
+      console.error(error);
+      $("fatal-message").textContent = error.message || t("ownerOnly");
+      show("fatal");
+      return;
+    }
+    state.caregivers = data || [];
+    render();
+    show("app");
+  }
+
+  function render() {
+    const list = $("list");
+    if (!state.caregivers.length) {
+      list.innerHTML = `<div class="card"><p class="muted">${t("noCaregivers")}</p></div>`;
+      return;
+    }
+
+    list.innerHTML = state.caregivers.map((c) => {
+      const revoked = c.status === "revoked";
+      const tone = revoked ? "bad" : "ok";
+      const statusLabel = revoked ? t("revoked") : t("active");
+      const linkLabel = c.has_token ? t("newLink") : t("generate");
+      const lastUsed = c.last_used_at ? formatDate(c.last_used_at) : t("never");
+      return `
+        <article class="person">
+          <div>
+            <div class="name">${escapeHtml(c.full_name)}</div>
+            <div class="meta">${c.phone ? escapeHtml(c.phone) + " · " : ""}${c.has_token ? t("hasLink") : t("noLink")}</div>
+          </div>
+          <div>
+            <span class="badge ${tone}">${statusLabel}</span>
+            <div class="meta" style="margin-top:6px">${t("lastUsed")}: ${lastUsed}</div>
+          </div>
+          <div class="buttons">
+            ${revoked ? "" : `<button class="btn primary" data-action="link" data-id="${c.id}" data-name="${escapeAttr(c.full_name)}">${linkLabel}</button>`}
+            ${revoked ? "" : `<button class="btn danger" data-action="revoke" data-id="${c.id}" data-name="${escapeAttr(c.full_name)}">${t("revoke")}</button>`}
+          </div>
+        </article>
+      `;
+    }).join("");
+
+    list.querySelectorAll("button[data-action]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const action = button.dataset.action;
+        const id = button.dataset.id;
+        const name = button.dataset.name;
+        if (action === "link") generateLink(id, name);
+        if (action === "revoke") revokeCaregiver(id, name);
+      });
+    });
+  }
+
+  async function createCaregiver(event) {
+    event.preventDefault();
+    const button = $("create-button");
+    const errorBox = $("create-error");
+    button.disabled = true;
+    errorBox.textContent = "";
+
+    try {
+      const name = $("name").value.trim();
+      const phone = $("phone").value.trim();
+      const { data, error } = await supabase.rpc("create_caregiver", {
+        p_full_name: name,
+        p_phone: phone || null,
+      });
+      if (error) throw error;
+      if (!data?.token) throw new Error("No token returned");
+
+      $("name").value = "";
+      $("phone").value = "";
+      showLinks(data.token, data.caregiver_id, name, phone);
+      await loadCaregivers();
+    } catch (error) {
+      console.error(error);
+      errorBox.textContent = error.message || t("createError");
+    } finally {
+      button.disabled = false;
+    }
+  }
+
+  async function generateLink(caregiverId, name) {
+    try {
+      const { data, error } = await supabase.rpc("issue_caregiver_token", {
+        p_caregiver_id: caregiverId,
+      });
+      if (error) throw error;
+      if (!data) throw new Error("No token returned");
+      showLinks(data, caregiverId, name);
+      await loadCaregivers();
+    } catch (error) {
+      console.error(error);
+      showBanner(error.message || t("linkError"), "bad");
+    }
+  }
+
+  async function revokeCaregiver(caregiverId, name) {
+    if (!confirm(`${t("revokeConfirm")}\n\n${name}`)) return;
+    try {
+      const { error } = await supabase.rpc("revoke_caregiver", {
+        p_caregiver_id: caregiverId,
+      });
+      if (error) throw error;
+      if (state.generated?.caregiverId === caregiverId) state.generated = null;
+      $("links-panel").hidden = true;
+      await loadCaregivers();
+    } catch (error) {
+      console.error(error);
+      showBanner(error.message || t("revokeError"), "bad");
+    }
+  }
+
+  function showLinks(token, caregiverId, fallbackName = "", fallbackPhone = "") {
+    const caregiver = state.caregivers.find((c) => c.id === caregiverId);
+    const name = caregiver?.full_name || fallbackName;
+    const phone = caregiver?.phone || fallbackPhone;
+    const rosita = `${ROSITA_URL}?t=${encodeURIComponent(token)}`;
+    const gastos = `${GASTOS_URL}?t=${encodeURIComponent(token)}`;
+    state.generated = { token, caregiverId, name, phone };
+
+    $("links-panel").innerHTML = `
+      <div class="card">
+        <h2>${t("linkTitle")} ${escapeHtml(name)}</h2>
+        <p class="muted small">${t("linkHint")}</p>
+        <div class="link-row">
+          <div>
+            <div class="small" style="font-weight:700">${t("rosita")}</div>
+            <code>${escapeHtml(rosita)}</code>
+          </div>
+          <button class="btn secondary" data-copy="${escapeAttr(rosita)}">${t("copy")}</button>
+        </div>
+        <div class="link-row">
+          <div>
+            <div class="small" style="font-weight:700">${t("gastos")}</div>
+            <code>${escapeHtml(gastos)}</code>
+          </div>
+          <button class="btn secondary" data-copy="${escapeAttr(gastos)}">${t("copy")}</button>
+        </div>
+        <div class="actions">
+          ${phone ? `<a class="btn primary" target="_blank" rel="noopener" href="${escapeAttr(whatsappUrl(phone, rosita, gastos))}">${t("whatsapp")}</a>` : ""}
+        </div>
+      </div>
+    `;
+    $("links-panel").hidden = false;
+
+    $("links-panel").querySelectorAll("button[data-copy]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const text = button.dataset.copy;
+        try {
+          await navigator.clipboard.writeText(text);
+          button.textContent = t("copied");
+          setTimeout(() => { button.textContent = t("copy"); }, 1500);
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    });
+  }
+
+  function showBanner(message, tone) {
+    let banner = document.getElementById("action-banner");
+    if (!banner) {
+      banner = document.createElement("div");
+      banner.id = "action-banner";
+      banner.className = "banner";
+      $("app").prepend(banner);
+    }
+    banner.textContent = message;
+    banner.className = `banner ${tone}`;
+    banner.hidden = false;
+  }
+
+  function show(view) {
+    for (const id of ["loading", "fatal", "app"]) $(id).hidden = id !== view;
+  }
+
+  function applyLanguage() {
+    document.documentElement.lang = state.locale;
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      el.textContent = t(el.getAttribute("data-i18n"));
+    });
+    document.querySelectorAll("[data-lang]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.lang === state.locale));
+    });
+    $("signout").textContent = t("signOut");
+    if (state.user) render();
+  }
+
+  function t(key) {
+    return I18N[state.locale]?.[key] ?? I18N.en[key] ?? key;
+  }
+
+  function formatDate(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return value;
+    return date.toLocaleDateString(state.locale === "es" ? "es-EC" : "en-US", {
+      year: "numeric", month: "short", day: "numeric",
+    });
+  }
+
+  function whatsappUrl(phone, rosita, gastos) {
+    const digits = String(phone || "").replace(/\D/g, "");
+    const message = `${t("linkTitle")} ${state.generated?.name || ""}\n\n${t("rosita")}:\n${rosita}\n\n${t("gastos")}:\n${gastos}`;
+    return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+    }[char]));
+  }
+
+  function escapeAttr(value) {
+    return escapeHtml(value);
+  }
+
+  document.querySelectorAll("[data-lang]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.locale = button.dataset.lang === "es" ? "es" : "en";
+      localStorage.setItem("cad-cuidadores-lang", state.locale);
+      applyLanguage();
+    });
+  });
+
+  $("create-form").addEventListener("submit", createCaregiver);
+  $("signout").addEventListener("click", async () => {
+    await supabase.auth.signOut();
+    location.href = "portal.html";
+  });
+</script>
+</body>
+</html>
