@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+  <meta http-equiv="Cache-Control" content="no-store, max-age=0">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#f8f5ee">
@@ -217,14 +218,39 @@
 
   // Verify these URLs before launch. The portal only renders a link when the
   // matching key has a value. Keys are normalized to lower_snake_case.
+  const CG_URL = "https://cuidar-portal.marbaquero.workers.dev/cuidadores.html";
+  const BUILD_TAG = "2026-11-17-session-4";
+  const APP_NAMES = {
+    rosita: { es: "Reporte diario", en: "Daily report" },
+    historial: { es: "Historial", en: "Dashboard" },
+    medico: { es: "Reporte médico", en: "Medical report" },
+    inventario: { es: "Inventario", en: "Inventory" },
+    pagos: { es: "Pagos", en: "Payments" },
+    gastos_mama: { es: "Gastos del hogar", en: "Household expenses" },
+    gastos_admin: { es: "Gastos admin", en: "Expenses admin" },
+  };
+  const APP_DESCRIPTIONS = {
+    rosita: { es: "Enlace privado para el reporte diario.", en: "Private link for the daily report." },
+    historial: { es: "Resumen visual del progreso.", en: "Visual summary of progress." },
+    medico: { es: "Historial clínico y recetas.", en: "Clinical history and prescriptions." },
+    inventario: { es: "Suministros y medicamentos.", en: "Supplies and medication management." },
+    pagos: { es: "Historial de pagos y facturación.", en: "Payment history and billing." },
+    gastos_mama: { es: "Enlace privado para los gastos del hogar.", en: "Private link for household expenses." },
+    gastos_admin: { es: "Administración del presupuesto.", en: "Budget administration." },
+  };
+  const PLAN_NAMES = {
+    family: { es: "Plan Familiar", en: "Family Plan" },
+    full_setup: { es: "Plan Completo", en: "Full Setup" },
+  };
   const APP_URLS = {
-    rosita: "https://marbaquero.github.io/reporte-rosita/",
-    historial: "https://marbaquero.github.io/reporte-rosita/dashboard.html",
-    medico: "https://marbaquero.github.io/reporte-rosita/reporte-medico.html",
-    inventario: "https://marbaquero.github.io/inventario-medicinas/",
-    pagos: "https://marbaquero.github.io/Pago-Cuidadoras/",
-    gastos_mama: "https://marbaquero.github.io/Gastos-de-mama-original/",
-    gastos_admin: "https://marbaquero.github.io/Gastos-de-mama-admin/",
+    // Caregiver apps are opened from Cuidadores, not directly.
+    rosita: CG_URL,
+    historial: "https://cuidar-dashboard.pages.dev",
+    medico: "https://reporte-medico.pages.dev",
+    inventario: "https://cuidar-inventario.marbaquero.workers.dev",
+    pagos: "https://cuidar-pagos.marbaquero.workers.dev",
+    gastos_mama: CG_URL,
+    gastos_admin: "https://cuidar-gastos-admin.pages.dev",
   };
 
   const APP_ICONS = {
@@ -515,7 +541,9 @@
     $("account-household").textContent = state.household?.name ?? "—";
     $("account-since").textContent = state.household?.created_at ? formatDate(state.household.created_at) : "—";
 
-    $("plan-name").textContent = plan?.display_name || (sub?.plan_key === "full_setup" ? t("planFull") : t("planFamily"));
+    $("plan-name").textContent = (plan && PLAN_NAMES[plan.plan_key] && PLAN_NAMES[plan.plan_key][state.locale])
+      || plan?.display_name
+      || (sub?.plan_key === "full_setup" ? t("planFull") : t("planFamily"));
     $("plan-price").textContent = plan ? `${formatMoney(plan.monthly_price_cents)} ${t("perMonth")}${sub?.plan_key === "full_setup" ? ` · ${t("setupFee")}` : ""}` : t("noPlan");
 
     const badge = $("status-badge");
@@ -561,10 +589,51 @@
     renderApps();
   }
 
+  function withLang(url) {
+    if (!url) return url;
+    const u = new URL(url);
+    u.searchParams.set("lang", state.locale);
+    u.searchParams.set("v", BUILD_TAG);
+    return u.toString();
+  }
+
+  // The commercial portal is on a different origin from the apps. The apps
+  // (and the Cuidadores page) adopt the session from the URL hash.
+  async function openExternalApp(event) {
+    const link = event.target.closest("a[data-app-key]");
+    if (!link) return;
+    event.preventDefault();
+    try {
+      let session = (await supabase.auth.getSession()).data.session;
+      if (!session) { location.reload(); return; }
+      const now = Math.floor(Date.now() / 1000);
+      if (!session.expires_at || session.expires_at - now < 120) {
+        const { data, error } = await supabase.auth.refreshSession();
+        if (error || !data.session) { location.reload(); return; }
+        session = data.session;
+      }
+      const u = new URL(link.href);
+      u.hash = new URLSearchParams({
+        access_token: session.access_token,
+        refresh_token: session.refresh_token,
+        expires_in: String(Math.max(60, (session.expires_at || now + 3600) - now)),
+        token_type: "bearer"
+      }).toString();
+      location.assign(u.toString());
+    } catch (error) {
+      console.error("Could not open app with the current session", error);
+      location.reload();
+    }
+  }
+
   function renderApps() {
     const accessMap = new Map(state.access.map((row) => [row.app_key, row.is_enabled]));
     const entitled = isEntitled(state.subscription);
-    const apps = state.apps.slice().sort((a, b) => String(a.display_name).localeCompare(String(b.display_name)));
+    const labelOf = (app) => {
+      const k = slug(app.app_key);
+      return (APP_NAMES[k] && APP_NAMES[k][state.locale]) || app.display_name || app.app_key;
+    };
+    const apps = state.apps.slice().sort((a, b) => String(labelOf(a)).localeCompare(String(labelOf(b))));
 
     const enabledCount = apps.filter((app) => accessMap.get(app.app_key) === true).length;
     $("apps-count").textContent = `${enabledCount} / ${apps.length} ${t("appsReady")}`;
@@ -574,12 +643,14 @@
       const enabled = accessMap.get(app.app_key) === true;
       const url = APP_URLS[key] || "";
       const caregiverApp = key === "rosita" || key === "gastos_mama";
-      const actionHref = caregiverApp ? "cuidadores.html" : url;
-      const icon = APP_ICONS[key] || String(app.display_name || app.app_key || "•").slice(0, 1).toUpperCase();
+      const actionHref = caregiverApp ? withLang(CG_URL) : withLang(url);
+      const appName = (APP_NAMES[key] && APP_NAMES[key][state.locale]) || app.display_name || app.app_key;
+      const appDesc = (APP_DESCRIPTIONS[key] && APP_DESCRIPTIONS[key][state.locale]) || app.description || "";
+      const icon = APP_ICONS[key] || String(appName || "•").slice(0, 1).toUpperCase();
       const label = enabled ? t("enabled") : t("disabled");
       const tone = enabled ? "ok" : "neutral";
       const action = enabled && actionHref
-        ? `<a class="btn primary" href="${escapeAttr(actionHref)}"${caregiverApp ? "" : ' target="_blank" rel="noopener"'}>${caregiverApp ? t("manageLinks") : t("open")}</a>`
+        ? `<a class="btn primary" href="${escapeAttr(actionHref)}" data-app-key="${key}" rel="noopener">${caregiverApp ? t("manageLinks") : t("open")}</a>`
         : enabled && !actionHref
           ? `<span class="muted small">${t("linkPending")}</span>`
           : `<span class="muted small">${t("disabled")}</span>`;
@@ -590,12 +661,14 @@
             <div class="app-icon">${escapeHtml(icon)}</div>
             <span class="badge ${tone}">${label}</span>
           </div>
-          <h3>${escapeHtml(app.display_name || app.app_key)}</h3>
-          <p>${escapeHtml(app.description || "")}</p>
+          <h3>${escapeHtml(appName)}</h3>
+          <p>${escapeHtml(appDesc)}</p>
           ${action}
         </article>
       `;
     }).join("") || `<div class="card"><p class="muted">${t("genericError")}</p></div>`;
+
+    $("apps").onclick = openExternalApp;
 
     if (!entitled && state.subscription && state.subscription.status === "past_due") {
       // The grace message is already in the status card; no duplicate banner.
