@@ -52,6 +52,17 @@
       <select id="language"><option value="en" data-en="English" data-es="Inglés">English</option><option value="es" data-en="Spanish" data-es="Español">Spanish</option></select>
       <button class="btn" id="invite-button" type="submit" data-en="Send customer invitation" data-es="Enviar invitación al cliente">Send customer invitation</button>
     </form>
+    <details id="change-password-box" style="margin-top:18px;border-top:1px solid #e2e8f0;padding-top:14px">
+      <summary data-en="Change password" data-es="Cambiar contraseña" style="cursor:pointer;font-weight:600">Change password</summary>
+      <form id="password-form" style="margin-top:12px">
+        <label for="new-password" data-en="New password" data-es="Nueva contraseña">New password</label>
+        <input id="new-password" type="password" autocomplete="new-password" minlength="10" required>
+        <label for="confirm-password" data-en="Confirm new password" data-es="Confirmar nueva contraseña">Confirm new password</label>
+        <input id="confirm-password" type="password" autocomplete="new-password" minlength="10" required>
+        <button class="btn" id="password-button" type="submit" data-en="Update password" data-es="Actualizar contraseña">Update password</button>
+      </form>
+      <p class="small" data-en="Use at least 10 characters. You will stay signed in." data-es="Use al menos 10 caracteres. La sesión seguirá activa.">Use at least 10 characters. You will stay signed in.</p>
+    </details>
     <p class="small" data-en="Only send invitations after reviewing and approving the customer's inquiry. The customer will receive an email with a private registration link." data-es="Envíe invitaciones únicamente después de revisar y aprobar la solicitud del cliente. El cliente recibirá un correo con un enlace privado de registro.">Only send invitations after reviewing and approving the customer's inquiry. The customer will receive an email with a private registration link.</p>
   </section>
 
@@ -96,6 +107,20 @@
   });
   $("logout").addEventListener("click",async()=>{
     const {error}=await client.auth.signOut();if(error)message(error.message,true);else{ $("invite-panel").hidden=true;$("login-panel").hidden=false;clearMessage();}
+  });
+  $("password-form").addEventListener("submit",async e=>{
+    e.preventDefault();clearMessage();
+    const p1=$("new-password").value, p2=$("confirm-password").value;
+    if(p1.length<10){message(locale==="es"?"Use al menos 10 caracteres.":"Use at least 10 characters.",true);return;}
+    if(p1!==p2){message(locale==="es"?"Las contraseñas no coinciden.":"Passwords do not match.",true);return;}
+    $("password-button").disabled=true;
+    try{
+      const {error}=await client.auth.updateUser({password:p1});
+      if(error)throw error;
+      $("new-password").value="";$("confirm-password").value="";
+      message(locale==="es"?"Contraseña actualizada. Use la nueva la próxima vez.":"Password updated. Use the new one next time.");
+    }catch(err){message((locale==="es"?"No se pudo actualizar: ":"Could not update: ")+(err.message||""),true);}
+    finally{$("password-button").disabled=false;}
   });
   $("invite-form").addEventListener("submit",async e=>{
     e.preventDefault();clearMessage();$("invite-button").disabled=true;
