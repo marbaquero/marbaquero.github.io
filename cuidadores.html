@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-store, max-age=0">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#f8f5ee">
@@ -84,7 +85,7 @@
       <button type="button" data-lang="en" aria-pressed="true">EN</button>
       <button type="button" data-lang="es" aria-pressed="false">ES</button>
     </div>
-    <a class="ghost" href="portal.html" data-i18n="back">Back to account</a>
+    <a class="ghost" href="./" data-i18n="back">Back to account</a>
     <button class="ghost" id="signout" type="button" data-i18n="signOut">Sign out</button>
   </div>
 </header>
@@ -135,13 +136,31 @@
   <span><a href="https://wa.me/18323359906" target="_blank" rel="noopener" data-i18n="support">Support</a></span>
 </footer>
 
+<script>
+// Drop this origin's cached session before adopting a handoff from the
+// commercial portal. If the handoff is invalid, the page fails closed.
+(function () {
+  try {
+    var raw = (location.hash || "").replace(/^#/, "");
+    if (!raw) return;
+    var p = new URLSearchParams(raw);
+    if (!p.get("access_token")) return;
+    var doomed = [];
+    for (var i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      if (k && (k.indexOf("sb-") === 0 || k === "cuidar-portal-auth")) doomed.push(k);
+    }
+    doomed.forEach(function (k) { localStorage.removeItem(k); });
+  } catch (e) { /* ignore */ }
+})();
+</script>
 <script type="module">
   import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
   const SUPABASE_URL = "https://fftnffmttuzfftntzzhu.supabase.co";
   const SUPABASE_KEY = "sb_publishable_f5py08cOv3Bdo0Yvm6lmbA_VBxnbEsP";
-  const ROSITA_URL = "https://marbaquero.github.io/reporte-rosita/";
-  const GASTOS_URL = "https://marbaquero.github.io/Gastos-de-mama-original/";
+  const ROSITA_URL = "https://cuidar-reportes-cuidadoras.pages.dev/";
+  const GASTOS_URL = "https://cuidar-gastos.marbaquero.workers.dev/";
 
   const I18N = {
     en: {
@@ -225,18 +244,31 @@
   };
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
-    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, storageKey: "cuidar-portal-auth" },
   });
 
   const $ = (id) => document.getElementById(id);
   const state = { user: null, caregivers: [], locale: "en", generated: null };
+  const from = new URLSearchParams(location.search).get("from");
+  const backLink = document.querySelector('a[data-i18n="back"]');
+  if (backLink) {
+    backLink.href = from === "family"
+      ? "https://marbaquero.github.io/portal.html"
+      : from === "admin"
+        ? "https://marbaquero.github.io/admin-invite.html"
+        : "./";
+  }
 
   boot();
 
   async function boot() {
     show("loading");
+    const urlLang = new URLSearchParams(location.search).get("lang");
     const saved = localStorage.getItem("cad-cuidadores-lang");
-    if (saved === "es" || saved === "en") state.locale = saved;
+    if (urlLang === "es" || urlLang === "en") {
+      state.locale = urlLang;
+      localStorage.setItem("cad-cuidadores-lang", urlLang);
+    } else if (saved === "es" || saved === "en") state.locale = saved;
     else state.locale = (navigator.language || "en").toLowerCase().startsWith("es") ? "es" : "en";
 
     const { data: { session }, error } = await supabase.auth.getSession();
@@ -370,8 +402,9 @@
     const caregiver = state.caregivers.find((c) => c.id === caregiverId);
     const name = caregiver?.full_name || fallbackName;
     const phone = caregiver?.phone || fallbackPhone;
-    const rosita = `${ROSITA_URL}?t=${encodeURIComponent(token)}`;
-    const gastos = `${GASTOS_URL}?t=${encodeURIComponent(token)}`;
+    const linkLang = state.locale === "es" ? "es" : "en";
+    const rosita = `${ROSITA_URL}?t=${encodeURIComponent(token)}&lang=${linkLang}`;
+    const gastos = `${GASTOS_URL}?t=${encodeURIComponent(token)}&lang=${linkLang}`;
     state.generated = { token, caregiverId, name, phone };
 
     $("links-panel").innerHTML = `
