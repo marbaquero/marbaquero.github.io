@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-  <meta http-equiv="Cache-Control" content="no-store, max-age=0">
+<meta http-equiv="Cache-Control" content="no-store, max-age=0">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#f8f5ee">
-<title>Your account — Cuidar a Distancia</title>
+<title>Caregivers — Cuidar a Distancia</title>
 <style>
   :root{
     color-scheme:light;
     --bg:#f8f5ee; --paper:#fff; --ink:#2c2924; --muted:#71695d;
     --green:#40583d; --green-dark:#30422e; --soft:#edf0e8;
     --line:#e7dece; --amber:#8a5a12; --amber-bg:#fff6e5;
-    --red:#a83232; --red-bg:#fff0f0; --blue:#28546b; --blue-bg:#eef5f8;
+    --red:#a83232; --red-bg:#fff0f0;
     --serif:Georgia,"Times New Roman",serif;
     --sans:Arial,Helvetica,sans-serif;
   }
@@ -21,76 +21,59 @@
   body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--sans)}
   a{color:var(--green)}
   [hidden]{display:none!important}
-  .top{max-width:1080px;margin:0 auto;padding:22px 22px 0;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .top{max-width:980px;margin:0 auto;padding:22px 22px 0;display:flex;align-items:center;justify-content:space-between;gap:16px}
   .brand{font:700 13px/1.4 ui-monospace,monospace;letter-spacing:.14em;color:var(--green);text-decoration:none}
   .top-actions{display:flex;align-items:center;gap:10px}
   .lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--paper)}
   .lang button{border:0;background:transparent;padding:6px 10px;border-radius:999px;font:700 12px var(--sans);color:var(--muted);cursor:pointer}
   .lang button[aria-pressed="true"]{background:var(--green);color:#fff}
   .ghost{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:8px 14px;font:600 13px var(--sans);color:var(--ink);cursor:pointer}
-  main{max-width:1080px;margin:0 auto;padding:38px 22px 70px}
+  main{max-width:980px;margin:0 auto;padding:38px 22px 70px}
   .kicker{font:700 12px/1.4 ui-monospace,monospace;letter-spacing:.13em;color:var(--green);text-transform:uppercase}
   h1,h2,h3{font-family:var(--serif);line-height:1.15;letter-spacing:-.02em}
-  h1{font-size:clamp(34px,5vw,52px);margin:12px 0 8px}
+  h1{font-size:clamp(34px,5vw,50px);margin:12px 0 8px}
   h2{font-size:24px;margin:0 0 8px}
   h3{font-size:18px;margin:0 0 4px}
   p{margin:0 0 14px}
-  .muted{color:var(--muted)}
-  .small{font-size:13px}
+  .muted{color:var(--muted)} .small{font-size:13px}
   .card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 8px 26px #51452a0a}
-  .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-top:22px}
-  .card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
-  .badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 11px;font:700 12px var(--sans);white-space:nowrap}
+  .banner{border-radius:14px;padding:14px 16px;margin:18px 0;font-size:14px;border:1px solid}
+  .banner.info{background:#eef5f8;border-color:#cfe3eb;color:#28546b}
+  .banner.warn{background:var(--amber-bg);border-color:#f0dfbd;color:var(--amber)}
+  .banner.bad{background:var(--red-bg);border-color:#f0cccc;color:var(--red)}
+  .banner.ok{background:var(--soft);border-color:#d9e4d3;color:var(--green)}
+  .badge{display:inline-flex;align-items:center;border-radius:999px;padding:5px 10px;font:700 11px var(--sans);white-space:nowrap}
   .badge.ok{background:var(--soft);color:var(--green)}
   .badge.warn{background:var(--amber-bg);color:var(--amber)}
   .badge.bad{background:var(--red-bg);color:var(--red)}
   .badge.neutral{background:#f1eee8;color:var(--muted)}
-  .badge.info{background:var(--blue-bg);color:var(--blue)}
-  .plan-name{font:700 26px/1.2 var(--serif);margin:0 0 2px}
-  .plan-price{font:600 16px var(--sans);color:var(--muted);margin-bottom:12px}
-  .meta{display:flex;justify-content:space-between;gap:16px;border-top:1px solid var(--line);padding-top:14px;margin-top:14px;font-size:14px}
-  .meta strong{font-weight:700}
-  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:10px;padding:12px 16px;font:700 14px var(--sans);cursor:pointer;text-decoration:none;min-height:44px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:10px;padding:12px 16px;font:700 14px var(--sans);cursor:pointer;text-decoration:none;min-height:42px}
   .btn.primary{background:var(--green);color:#fff}
   .btn.primary:hover{background:var(--green-dark)}
   .btn.secondary{background:var(--paper);border:1px solid var(--line);color:var(--ink)}
-  .btn[disabled],.btn[aria-disabled="true"]{opacity:.55;cursor:not-allowed}
-  .details{display:grid;gap:12px;margin:14px 0 0}
-  .details div{display:flex;justify-content:space-between;gap:18px;border-bottom:1px solid var(--line);padding-bottom:10px}
-  .details dt{color:var(--muted);font-size:14px}
-  .details dd{margin:0;font-weight:600;text-align:right;overflow-wrap:anywhere}
-  .banner{border-radius:14px;padding:14px 16px;margin-top:20px;font-size:14px;border:1px solid}
-  .banner.info{background:var(--blue-bg);border-color:#cfe3eb;color:var(--blue)}
-  .banner.warn{background:var(--amber-bg);border-color:#f0dfbd;color:var(--amber)}
-  .banner.bad{background:var(--red-bg);border-color:#f0cccc;color:var(--red)}
-  .banner.ok{background:var(--soft);border-color:#d9e4d3;color:var(--green)}
-  .apps-section{margin-top:34px}
-  .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:16px}
-  .section-head h2{margin:0 0 4px}
-  .apps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-  .app{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px;min-height:190px}
-  .app.off{background:#fbf9f4}
-  .app-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
-  .app-icon{width:38px;height:38px;border-radius:11px;background:var(--soft);color:var(--green);display:grid;place-items:center;font:700 16px var(--serif)}
-  .app.off .app-icon{background:#f1eee8;color:var(--muted)}
-  .app p{font-size:13px;color:var(--muted);margin:0;flex:1}
-  .app .btn{padding:9px 12px;font-size:13px;min-height:38px}
-  .app a.btn{width:100%}
-  .login-wrap{min-height:70vh;display:grid;place-items:center}
-  .login-card{width:min(440px,100%);background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:30px;box-shadow:0 12px 40px #51452a12}
-  .login-card h1{font-size:34px;margin:10px 0 8px}
-  label{display:block;font-weight:700;font-size:14px;margin:16px 0 6px}
-  input{width:100%;font:inherit;padding:13px 14px;border:1px solid #cbd7d0;border-radius:10px;background:#fff;color:var(--ink)}
+  .btn.danger{background:var(--red-bg);border:1px solid #f0cccc;color:var(--red)}
+  .btn[disabled]{opacity:.55;cursor:not-allowed}
+  label{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
+  input{width:100%;font:inherit;padding:12px 13px;border:1px solid #cbd7d0;border-radius:10px;background:#fff;color:var(--ink)}
   input:focus{outline:3px solid #40583d22;border-color:var(--green)}
-  .login-card .btn{width:100%;margin-top:20px}
-  .error{color:var(--red);font-size:14px;min-height:20px;margin-top:10px}
+  .form-row{display:grid;grid-template-columns:1.4fr 1fr;gap:12px}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+  .list{display:grid;gap:12px;margin-top:16px}
+  .person{display:grid;grid-template-columns:1.2fr 1fr auto;gap:14px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--paper)}
+  .person .name{font-weight:700;font-size:17px}
+  .person .meta{font-size:13px;color:var(--muted)}
+  .person .buttons{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+  .person .buttons .btn{padding:9px 12px;font-size:13px;min-height:38px}
+  .links{margin-top:18px}
+  .links .card{border-color:#cfe3eb;background:#fbfdfe}
+  .link-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border:1px solid #d9e7ee;border-radius:10px;padding:10px 12px;background:#fff;margin-top:10px}
+  .link-row code{font:12px/1.5 ui-monospace,monospace;overflow-wrap:anywhere;color:#28546b}
+  .link-row .btn{padding:9px 12px;font-size:12px;min-height:36px}
   .spinner{width:34px;height:34px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--green);animation:spin .9s linear infinite;margin:0 auto 14px}
   @keyframes spin{to{transform:rotate(360deg)}}
-  #loading{text-align:center;padding:80px 0;color:var(--muted)}
-  footer{max-width:1080px;margin:0 auto;padding:0 22px 40px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-  @media(max-width:840px){.grid{grid-template-columns:1fr}.apps{grid-template-columns:repeat(2,minmax(0,1fr))}}
-  @media(max-width:560px){.top{padding:16px 15px 0}main{padding:26px 15px 50px}.card{padding:19px}.apps{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column;gap:6px}.details div{flex-direction:column;gap:2px}.details dd{text-align:left}}
+  #loading{text-align:center;padding:70px 0;color:var(--muted)}
+  footer{max-width:980px;margin:0 auto;padding:0 22px 40px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  @media(max-width:720px){.person{grid-template-columns:1fr}.person .buttons{justify-content:flex-start}.form-row{grid-template-columns:1fr}.link-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -102,809 +85,417 @@
       <button type="button" data-lang="en" aria-pressed="true">EN</button>
       <button type="button" data-lang="es" aria-pressed="false">ES</button>
     </div>
-    <button class="ghost" id="signout" type="button" hidden>Sign out</button>
+    <a class="ghost" href="./" data-i18n="back">Back to account</a>
+    <button class="ghost" id="signout" type="button" data-i18n="signOut">Sign out</button>
   </div>
 </header>
 
 <main>
-  <section id="loading">
-    <div class="spinner"></div>
-    <p data-i18n="loading">Loading your account…</p>
-  </section>
+  <div class="kicker" data-i18n="kicker">CAREGIVER ACCESS</div>
+  <h1 data-i18n="title">Caregivers</h1>
+  <p class="muted" data-i18n="intro">
+    Each caregiver gets a private link for the daily report and household expenses. Do not share these links publicly.
+  </p>
 
-  <section id="login" class="login-wrap" hidden>
-    <div class="login-card">
-      <div class="kicker">CUIDAR A DISTANCIA</div>
-      <h1 data-i18n="loginTitle">Your family account</h1>
-      <p class="muted" data-i18n="loginIntro">Sign in to manage your plan and open your seven apps.</p>
-      <form id="login-form" novalidate>
-        <label for="email" data-i18n="emailLabel">Email</label>
-        <input id="email" type="email" autocomplete="email" required>
-        <label for="password" data-i18n="passwordLabel">Password</label>
-        <input id="password" type="password" autocomplete="current-password" required>
-        <button class="btn primary" type="submit" id="login-button" data-i18n="signIn">Sign in</button>
-        <p class="error" id="login-error" role="alert"></p>
-      </form>
-      <p class="muted small" style="margin-top:18px">
-        <span data-i18n="invited">Invited to Cuidar a Distancia?</span>
-        <a href="accept-invitation.html" data-i18n="startHere">Start here</a>.
-      </p>
-    </div>
-  </section>
 
-  <section id="fatal" hidden>
-    <div class="card" style="max-width:640px;margin:40px auto">
-      <div class="kicker">CUIDAR A DISTANCIA</div>
-      <h1 style="font-size:34px" data-i18n="oops">Something needs attention</h1>
-      <p class="muted" id="fatal-message"></p>
-      <div class="actions">
-        <button class="btn primary" type="button" onclick="location.reload()" data-i18n="reload">Reload</button>
-        <a class="btn secondary" href="https://wa.me/18323359906" target="_blank" rel="noopener" data-i18n="contactSupport">Contact support</a>
-      </div>
-    </div>
-  </section>
 
-  <section id="account" hidden>
-    <div class="kicker" data-i18n="accountKicker">YOUR FAMILY ACCOUNT</div>
-    <h1 id="welcome">Hola</h1>
-    <p class="muted" id="household-line"></p>
+  <section id="loading"><div class="spinner"></div><p data-i18n="loading">Loading caregivers…</p></section>
+  <section id="fatal" hidden><div class="card"><h2 data-i18n="errorTitle">Something needs attention</h2><p class="muted" id="fatal-message"></p></div></section>
 
-    <div id="checkout-banner" class="banner info" hidden></div>
-    <div id="account-banner" class="banner" hidden></div>
-
-    <div class="grid">
-      <section class="card">
-        <div class="card-head">
+  <section id="app" hidden>
+    <div class="card">
+      <h2 data-i18n="addTitle">Add a caregiver</h2>
+      <p class="muted small" data-i18n="addHint">Up to three active caregivers. To replace one, revoke first.</p>
+      <form id="create-form">
+        <div class="form-row">
           <div>
-            <h2 data-i18n="plan">Plan</h2>
-            <div class="plan-name" id="plan-name">—</div>
-            <div class="plan-price" id="plan-price"></div>
+            <label for="name" data-i18n="name">Full name</label>
+            <input id="name" maxlength="120" required autocomplete="off">
           </div>
-          <span class="badge neutral" id="status-badge">—</span>
-        </div>
-        <p class="muted" id="status-detail"></p>
-        <div class="meta" id="renewal-row" hidden>
-          <span id="renewal-label" data-i18n="renews">Renews</span>
-          <strong id="renewal-date"></strong>
+          <div>
+            <label for="phone" data-i18n="phone">Phone (optional)</label>
+            <input id="phone" maxlength="30" autocomplete="tel" placeholder="+593...">
+          </div>
         </div>
         <div class="actions">
-          <button class="btn primary" id="billing" type="button" hidden data-i18n="manageBilling">Manage billing</button>
-          <button class="btn primary" id="reactivate" type="button" hidden data-i18n="reactivate">Reactivate</button>
-          <button class="btn secondary" id="refresh" type="button" data-i18n="refresh">Refresh</button>
+          <button class="btn primary" id="create-button" type="submit" data-i18n="create">Create caregiver</button>
         </div>
-      </section>
-
-      <section class="card">
-        <h2 data-i18n="account">Account</h2>
-        <dl class="details">
-          <div><dt data-i18n="email">Email</dt><dd id="account-email">—</dd></div>
-          <div><dt data-i18n="household">Household</dt><dd id="account-household">—</dd></div>
-          <div><dt data-i18n="memberSince">Member since</dt><dd id="account-since">—</dd></div>
-        </dl>
-        <p class="muted small" style="margin-top:16px" data-i18n="billingNote">
-          Billing is handled by Stripe. Cuidar a Distancia never sees or stores your card details.
-        </p>
-      </section>
+        <p class="muted small" id="create-error" role="alert"></p>
+      </form>
     </div>
 
-    <section class="apps-section">
-      <div class="section-head">
-        <div>
-          <h2 data-i18n="apps">Your seven apps</h2>
-          <p class="muted" data-i18n="appsHint">Open the tools included in your family plan.</p>
-        </div>
-        <span class="muted small" id="apps-count"></span>
-      </div>
-      <div id="apps" class="apps"></div>
-    </section>
+    <div id="links-panel" class="links" hidden></div>
+
+    <h2 style="margin-top:30px" data-i18n="listTitle">Current caregivers</h2>
+    <div id="list" class="list"></div>
   </section>
 </main>
 
 <footer>
   <span>© 2026 Cuidar a Distancia</span>
-  <span>
-    <a href="https://wa.me/18323359906" target="_blank" rel="noopener" data-i18n="whatsapp">WhatsApp</a>
-    ·
-    <a href="mailto:marbaquero@yahoo.com" data-i18n="emailSupport">Email support</a>
-  </span>
+  <span><a href="https://wa.me/18323359906" target="_blank" rel="noopener" data-i18n="support">Support</a></span>
 </footer>
 
+<script>
+// Drop this origin's cached session before adopting a handoff from the
+// commercial portal. If the handoff is invalid, the page fails closed.
+(function () {
+  try {
+    var raw = (location.hash || "").replace(/^#/, "");
+    if (!raw) return;
+    var p = new URLSearchParams(raw);
+    if (!p.get("access_token")) return;
+    var doomed = [];
+    for (var i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      if (k && (k.indexOf("sb-") === 0 || k === "cuidar-portal-auth")) doomed.push(k);
+    }
+    doomed.forEach(function (k) { localStorage.removeItem(k); });
+  } catch (e) { /* ignore */ }
+})();
+</script>
 <script type="module">
   import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-  // Publishable key, already used by the public invitation page.
   const SUPABASE_URL = "https://fftnffmttuzfftntzzhu.supabase.co";
   const SUPABASE_KEY = "sb_publishable_f5py08cOv3Bdo0Yvm6lmbA_VBxnbEsP";
-
-  // Verify these URLs before launch. The portal only renders a link when the
-  // matching key has a value. Keys are normalized to lower_snake_case.
-  const CG_URL = "https://cuidar-portal.marbaquero.workers.dev/cuidadores.html";
-  const BUILD_TAG = "2026-11-17-session-4";
-  const APP_NAMES = {
-    rosita: { es: "Reporte diario", en: "Daily report" },
-    historial: { es: "Historial", en: "Dashboard" },
-    medico: { es: "Reporte médico", en: "Medical report" },
-    inventario: { es: "Inventario", en: "Inventory" },
-    pagos: { es: "Pagos", en: "Payments" },
-    gastos_mama: { es: "Gastos del hogar", en: "Household expenses" },
-    gastos_admin: { es: "Gastos admin", en: "Expenses admin" },
-  };
-  const APP_DESCRIPTIONS = {
-    rosita: { es: "Enlace privado para el reporte diario.", en: "Private link for the daily report." },
-    historial: { es: "Resumen visual del progreso.", en: "Visual summary of progress." },
-    medico: { es: "Historial clínico y recetas.", en: "Clinical history and prescriptions." },
-    inventario: { es: "Suministros y medicamentos.", en: "Supplies and medication management." },
-    pagos: { es: "Historial de pagos y facturación.", en: "Payment history and billing." },
-    gastos_mama: { es: "Enlace privado para los gastos del hogar.", en: "Private link for household expenses." },
-    gastos_admin: { es: "Administración del presupuesto.", en: "Budget administration." },
-  };
-  const PLAN_NAMES = {
-    family: { es: "Plan Familiar", en: "Family Plan" },
-    full_setup: { es: "Plan Completo", en: "Full Setup" },
-  };
-  const APP_URLS = {
-    // Caregiver apps are opened from Cuidadores, not directly.
-    rosita: CG_URL,
-    historial: "https://cuidar-dashboard.pages.dev",
-    medico: "https://reporte-medico.pages.dev",
-    inventario: "https://cuidar-inventario.marbaquero.workers.dev",
-    pagos: "https://cuidar-pagos.marbaquero.workers.dev",
-    gastos_mama: CG_URL,
-    gastos_admin: "https://cuidar-gastos-admin.pages.dev",
-  };
-
-  const APP_ICONS = {
-    rosita: "R",
-    historial: "H",
-    medico: "♥",
-    inventario: "+",
-    pagos: "$",
-    gastos_mama: "$",
-    gastos_admin: "$",
-  };
+  const ROSITA_URL = "https://cuidar-reportes-cuidadoras.pages.dev/";
+  const GASTOS_URL = "https://cuidar-gastos.marbaquero.workers.dev/";
 
   const I18N = {
     en: {
-      loginTitle: "Your family account",
-      loginIntro: "Sign in to manage your plan and open your seven apps.",
-      emailLabel: "Email",
-      passwordLabel: "Password",
-      signIn: "Sign in",
-      invited: "Invited to Cuidar a Distancia?",
-      startHere: "Start here",
-      accountKicker: "YOUR FAMILY ACCOUNT",
-      welcome: "Hello",
-      plan: "Plan",
-      account: "Account",
-      email: "Email",
-      household: "Household",
-      memberSince: "Member since",
-      billingNote: "Billing is handled by Stripe. Cuidar a Distancia never sees or stores your card details.",
-      apps: "Your seven apps",
-      appsHint: "Open the tools included in your family plan.",
-      manageBilling: "Manage billing",
-      reactivate: "Reactivate",
-      refresh: "Refresh",
-      renews: "Renews",
-      accessUntil: "Access until",
+      kicker: "CAREGIVER ACCESS",
+      title: "Caregivers",
+      intro: "Each caregiver gets a private link for the daily report and household expenses. Do not share these links publicly.",
+      back: "Back to account",
       signOut: "Sign out",
-      enabled: "Enabled",
-      disabled: "Not enabled",
-      open: "Open",
-      manageLinks: "Caregiver links",
-      linkPending: "Link pending",
-      noPlan: "No plan yet",
-      startPlan: "Start Family Plan",
-      completePayment: "Complete payment",
-      updatePayment: "Update payment method",
-      contactSupport: "Contact support",
-      reload: "Reload",
+      loading: "Loading caregivers…",
+      errorTitle: "Something needs attention",
+      addTitle: "Add a caregiver",
+      addHint: "Up to three active caregivers. To replace one, revoke first.",
+      name: "Full name",
+      phone: "Phone (optional)",
+      create: "Create caregiver",
+      listTitle: "Current caregivers",
+      active: "Active",
+      revoked: "Revoked",
+      hasLink: "Link generated",
+      noLink: "No link yet",
+      generate: "Generate link",
+      newLink: "New link",
+      revoke: "Revoke",
+      revokeConfirm: "Revoke this caregiver? Their current links will stop working.",
+      linkTitle: "Links for",
+      linkHint: "These links are shown only once. If you lose them, generate a new link; the old one stops working.",
+      rosita: "Daily report",
+      gastos: "Household expenses",
+      copy: "Copy",
+      copied: "Copied",
       whatsapp: "WhatsApp",
-      emailSupport: "Email support",
-      loading: "Loading your account…",
-      noHousehold: "We could not find a household for this account. Please contact support.",
-      genericError: "Something went wrong. Please try again or contact support.",
-      loginError: "We could not sign you in. Check your email and password.",
-      checkoutSuccess: "Payment received. We are activating your apps…",
-      checkoutCancel: "Checkout was canceled. You can try again whenever you are ready.",
-      activationPending: "Your payment was received, but activation is taking longer than expected. Refresh in a moment or contact support.",
-      statusActive: "Active",
-      statusTrialing: "Trialing",
-      statusPastDue: "Payment failed",
-      statusUnpaid: "Unpaid",
-      statusCanceled: "Canceled",
-      statusReview: "Under review",
-      statusIncomplete: "Payment pending",
-      statusPaused: "Paused",
-      detailActive: "Your subscription is active and all included apps are available.",
-      detailTrialing: "Your trial is active. All included apps are available.",
-      detailPastDue: "We could not charge your card. Access remains open during the grace period. Update your payment method to keep it.",
-      detailUnpaid: "Access is paused because the subscription is unpaid. Update your payment method or reactivate.",
-      detailCanceled: "Your subscription is canceled. Your data is retained. Reactivate whenever you are ready.",
-      detailReview: "Your account is under review because of a payment dispute or refund. Contact support.",
-      detailIncomplete: "Your payment has not been completed. Finish checkout to activate your apps.",
-      detailPaused: "Your subscription is paused. Contact support if you need help.",
-      detailNoPlan: "Choose a plan to activate your seven apps.",
-      planFamily: "Family Plan",
-      planFull: "Full Setup",
-      perMonth: "/ month",
-      setupFee: "+ $99 one-time setup",
-      appsReady: "apps available",
-      graceUntil: "Access remains open until",
-      cancelsOn: "Cancels at period end on",
+      lastUsed: "Last used",
+      never: "never",
+      noCaregivers: "No caregivers yet.",
+      createError: "Could not create the caregiver.",
+      linkError: "Could not generate the link.",
+      revokeError: "Could not revoke the caregiver.",
+      ownerOnly: "Only the household owner can manage caregivers.",
+      noSession: "Please sign in from the account portal.",
       support: "Support",
-      errorBilling: "We could not open the billing portal. Please try again.",
-      errorCheckout: "We could not open checkout. Please try again.",
-      underReview: "Your account is under review. Please contact support before making a payment.",
     },
     es: {
-      loginTitle: "La cuenta de su familia",
-      loginIntro: "Inicie sesión para administrar su plan y abrir sus siete aplicaciones.",
-      emailLabel: "Correo",
-      passwordLabel: "Contraseña",
-      signIn: "Iniciar sesión",
-      invited: "¿Recibió una invitación de Cuidar a Distancia?",
-      startHere: "Empiece aquí",
-      accountKicker: "LA CUENTA DE SU FAMILIA",
-      welcome: "Hola",
-      plan: "Plan",
-      account: "Cuenta",
-      email: "Correo",
-      household: "Hogar",
-      memberSince: "Miembro desde",
-      billingNote: "Stripe procesa los pagos. Cuidar a Distancia nunca ve ni guarda los datos de su tarjeta.",
-      apps: "Sus siete aplicaciones",
-      appsHint: "Abra las herramientas incluidas en su plan familiar.",
-      manageBilling: "Administrar facturación",
-      reactivate: "Reactivar",
-      refresh: "Actualizar",
-      renews: "Se renueva",
-      accessUntil: "Acceso hasta",
+      kicker: "ACCESO DE CUIDADORAS",
+      title: "Cuidadores",
+      intro: "Cada cuidadora recibe un enlace privado para el reporte diario y los gastos del hogar. No comparta estos enlaces públicamente.",
+      back: "Volver a la cuenta",
       signOut: "Cerrar sesión",
-      enabled: "Activa",
-      disabled: "No activa",
-      open: "Abrir",
-      manageLinks: "Enlaces de cuidadoras",
-      linkPending: "Enlace pendiente",
-      noPlan: "Aún no hay plan",
-      startPlan: "Comenzar Plan Familia",
-      completePayment: "Completar pago",
-      updatePayment: "Actualizar método de pago",
-      contactSupport: "Contactar soporte",
-      reload: "Recargar",
+      loading: "Cargando cuidadoras…",
+      errorTitle: "Algo necesita atención",
+      addTitle: "Agregar una cuidadora",
+      addHint: "Hasta tres cuidadoras activas. Para reemplazar una, revoque primero.",
+      name: "Nombre completo",
+      phone: "Teléfono (opcional)",
+      create: "Crear cuidadora",
+      listTitle: "Cuidadoras actuales",
+      active: "Activa",
+      revoked: "Revocada",
+      hasLink: "Enlace generado",
+      noLink: "Sin enlace",
+      generate: "Generar enlace",
+      newLink: "Nuevo enlace",
+      revoke: "Revocar",
+      revokeConfirm: "¿Revocar esta cuidadora? Sus enlaces actuales dejarán de funcionar.",
+      linkTitle: "Enlaces para",
+      linkHint: "Estos enlaces se muestran una sola vez. Si los pierde, genere uno nuevo; el anterior deja de funcionar.",
+      rosita: "Reporte diario",
+      gastos: "Gastos del hogar",
+      copy: "Copiar",
+      copied: "Copiado",
       whatsapp: "WhatsApp",
-      emailSupport: "Correo de soporte",
-      loading: "Cargando su cuenta…",
-      noHousehold: "No encontramos un hogar para esta cuenta. Contacte a soporte.",
-      genericError: "Algo salió mal. Intente de nuevo o contacte a soporte.",
-      loginError: "No pudimos iniciar sesión. Revise su correo y contraseña.",
-      checkoutSuccess: "Pago recibido. Estamos activando sus aplicaciones…",
-      checkoutCancel: "El pago fue cancelado. Puede intentarlo de nuevo cuando quiera.",
-      activationPending: "Recibimos su pago, pero la activación está tardando más de lo esperado. Actualice en un momento o contacte a soporte.",
-      statusActive: "Activa",
-      statusTrialing: "En prueba",
-      statusPastDue: "Pago fallido",
-      statusUnpaid: "Sin pagar",
-      statusCanceled: "Cancelada",
-      statusReview: "En revisión",
-      statusIncomplete: "Pago pendiente",
-      statusPaused: "Pausada",
-      detailActive: "Su suscripción está activa y todas las aplicaciones incluidas están disponibles.",
-      detailTrialing: "Su período de prueba está activo. Todas las aplicaciones incluidas están disponibles.",
-      detailPastDue: "No pudimos cobrar su tarjeta. El acceso sigue abierto durante el período de gracia. Actualice su método de pago para conservarlo.",
-      detailUnpaid: "El acceso está pausado porque la suscripción no está pagada. Actualice su método de pago o reactive.",
-      detailCanceled: "Su suscripción está cancelada. Sus datos se conservan. Reactive cuando quiera.",
-      detailReview: "Su cuenta está en revisión por un contracargo o reembolso. Contacte a soporte.",
-      detailIncomplete: "Su pago no se ha completado. Termine el pago para activar sus aplicaciones.",
-      detailPaused: "Su suscripción está pausada. Contacte a soporte si necesita ayuda.",
-      detailNoPlan: "Elija un plan para activar sus siete aplicaciones.",
-      planFamily: "Plan Familia",
-      planFull: "Instalación completa",
-      perMonth: "/ mes",
-      setupFee: "+ $99 de instalación única",
-      appsReady: "aplicaciones disponibles",
-      graceUntil: "El acceso sigue abierto hasta",
-      cancelsOn: "Se cancela al final del período el",
+      lastUsed: "Último uso",
+      never: "nunca",
+      noCaregivers: "Aún no hay cuidadoras.",
+      createError: "No se pudo crear la cuidadora.",
+      linkError: "No se pudo generar el enlace.",
+      revokeError: "No se pudo revocar la cuidadora.",
+      ownerOnly: "Solo el dueño del hogar puede administrar cuidadoras.",
+      noSession: "Inicie sesión desde el portal de la cuenta.",
       support: "Soporte",
-      errorBilling: "No pudimos abrir el portal de facturación. Intente de nuevo.",
-      errorCheckout: "No pudimos abrir el pago. Intente de nuevo.",
-      underReview: "Su cuenta está en revisión. Contacte a soporte antes de hacer un pago.",
     },
   };
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
-    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, storageKey: "cuidar-portal-auth" },
   });
 
   const $ = (id) => document.getElementById(id);
-  const state = {
-    user: null,
-    profile: null,
-    membership: null,
-    household: null,
-    subscription: null,
-    onboarding: null,
-    apps: [],
-    access: [],
-    plans: [],
-    locale: "en",
-    polling: null,
-    pollCount: 0,
-  };
-
-  const params = new URLSearchParams(location.search);
-  const checkoutState = params.get("checkout");
+  const state = { user: null, caregivers: [], locale: "en", generated: null };
+  const from = new URLSearchParams(location.search).get("from");
+  const backLink = document.querySelector('a[data-i18n="back"]');
+  if (backLink) {
+    backLink.href = from === "family"
+      ? "https://marbaquero.github.io/portal.html"
+      : from === "admin"
+        ? "https://marbaquero.github.io/admin-invite.html"
+        : "./";
+  }
 
   boot();
 
   async function boot() {
     show("loading");
-    try {
-      const { data: { session }, error } = await supabase.auth.getSession();
-      if (error) throw error;
+    const urlLang = new URLSearchParams(location.search).get("lang");
+    const saved = localStorage.getItem("cad-cuidadores-lang");
+    if (urlLang === "es" || urlLang === "en") {
+      state.locale = urlLang;
+      localStorage.setItem("cad-cuidadores-lang", urlLang);
+    } else if (saved === "es" || saved === "en") state.locale = saved;
+    else state.locale = (navigator.language || "en").toLowerCase().startsWith("es") ? "es" : "en";
 
-      if (!session) {
-        state.user = null;
-        $("signout").hidden = true;
-        applyLanguage();
-        show("login");
-        return;
-      }
-
-      state.user = session.user;
-      $("signout").hidden = false;
-      await loadAccount();
-    } catch (error) {
-      console.error(error);
-      fail(t("genericError"));
-    }
-  }
-
-  async function loadAccount(options = {}) {
-    if (!state.user) return;
-    if (!options.silent) show("loading");
-
-    const userId = state.user.id;
-
-    const [profileResult, membershipResult] = await Promise.all([
-      supabase.from("customer_profiles").select("*").eq("id", userId).maybeSingle(),
-      supabase.from("household_members").select("household_id, role, created_at").eq("user_id", userId).order("created_at").limit(1).maybeSingle(),
-    ]);
-
-    if (profileResult.error) console.warn("profile", profileResult.error);
-    if (membershipResult.error) console.warn("membership", membershipResult.error);
-
-    state.profile = profileResult.data ?? null;
-    state.membership = membershipResult.data ?? null;
-
-    if (!state.membership?.household_id) {
-      fail(t("noHousehold"));
+    const { data: { session }, error } = await supabase.auth.getSession();
+    if (error || !session) {
+      $("fatal-message").textContent = t("noSession");
+      show("fatal");
       return;
     }
 
-    const householdId = state.membership.household_id;
-
-    const [householdResult, subscriptionResult, onboardingResult, accessResult, appsResult, plansResult] = await Promise.all([
-      supabase.from("households").select("id, name, created_at").eq("id", householdId).maybeSingle(),
-      supabase.from("subscriptions").select("*").eq("household_id", householdId).maybeSingle(),
-      supabase.from("customer_onboarding").select("status, completed_at").eq("household_id", householdId).maybeSingle(),
-      supabase.from("household_app_access").select("app_key, is_enabled").eq("household_id", householdId),
-      supabase.from("app_catalog").select("app_key, display_name, description, is_active").eq("is_active", true),
-      supabase.from("subscription_plans").select("plan_key, display_name, description, monthly_price_cents, currency, billing_interval, personalized_setup").eq("is_active", true),
-    ]);
-
-    for (const result of [householdResult, subscriptionResult, onboardingResult, accessResult, appsResult, plansResult]) {
-      if (result.error) console.warn("account query", result.error);
-    }
-
-    state.household = householdResult.data ?? null;
-    state.subscription = subscriptionResult.data ?? null;
-    state.onboarding = onboardingResult.data ?? null;
-    state.access = accessResult.data ?? [];
-    state.apps = appsResult.data ?? [];
-    state.plans = plansResult.data ?? [];
-
-    const savedLocale = localStorage.getItem("cad-portal-lang");
-    if (savedLocale === "es" || savedLocale === "en") {
-      state.locale = savedLocale;
-    } else if (state.profile?.locale === "es" || state.profile?.locale === "en") {
-      state.locale = state.profile.locale;
-    } else {
-      state.locale = (navigator.language || "en").toLowerCase().startsWith("es") ? "es" : "en";
-    }
-
+    state.user = session.user;
     applyLanguage();
-    renderAccount();
-    show("account");
-
-    if (checkoutState === "success") {
-      if (isEntitled(state.subscription)) {
-        showBanner("checkout-banner", t("checkoutSuccess"), "ok");
-      } else {
-        startCheckoutPolling();
-      }
-    }
-    if (checkoutState === "cancel") showBanner("checkout-banner", t("checkoutCancel"), "warn");
+    await loadCaregivers();
   }
 
-  function renderAccount() {
-    const user = state.user;
-    const profile = state.profile;
-    const sub = state.subscription;
-    const plan = findPlan(sub?.plan_key);
-    const status = sub?.status ?? "incomplete";
-    const statusInfo = getStatusInfo(status, sub);
-
-    $("welcome").textContent = `${t("welcome")}${profile?.display_name ? `, ${firstName(profile.display_name)}` : ""}`;
-    $("household-line").textContent = state.household?.name ? `${t("household")}: ${state.household.name}` : "";
-    $("account-email").textContent = user?.email ?? "—";
-    $("account-household").textContent = state.household?.name ?? "—";
-    $("account-since").textContent = state.household?.created_at ? formatDate(state.household.created_at) : "—";
-
-    $("plan-name").textContent = (plan && PLAN_NAMES[plan.plan_key] && PLAN_NAMES[plan.plan_key][state.locale])
-      || plan?.display_name
-      || (sub?.plan_key === "full_setup" ? t("planFull") : t("planFamily"));
-    $("plan-price").textContent = plan ? `${formatMoney(plan.monthly_price_cents)} ${t("perMonth")}${sub?.plan_key === "full_setup" ? ` · ${t("setupFee")}` : ""}` : t("noPlan");
-
-    const badge = $("status-badge");
-    badge.textContent = statusInfo.label;
-    badge.className = `badge ${statusInfo.tone}`;
-
-    $("status-detail").textContent = statusInfo.detail;
-
-    const renewalRow = $("renewal-row");
-    if (sub?.current_period_end) {
-      renewalRow.hidden = false;
-      $("renewal-label").textContent = ["canceled", "unpaid"].includes(status) ? t("accessUntil") : t("renews");
-      $("renewal-date").textContent = formatDate(sub.current_period_end);
-    } else {
-      renewalRow.hidden = true;
+  async function loadCaregivers() {
+    const { data, error } = await supabase.rpc("list_caregivers");
+    if (error) {
+      console.error(error);
+      $("fatal-message").textContent = error.message || t("ownerOnly");
+      show("fatal");
+      return;
     }
-
-    const billing = $("billing");
-    const reactivate = $("reactivate");
-    const isOwner = state.membership?.role === "owner";
-
-    billing.hidden = !isOwner || !sub?.provider_customer_id || status === "review";
-    billing.textContent = status === "past_due" || status === "unpaid" ? t("updatePayment") : t("manageBilling");
-    billing.disabled = false;
-
-    const canReactivate = !sub || ["canceled", "unpaid", "incomplete", "paused"].includes(status);
-    reactivate.hidden = !isOwner || !canReactivate || status === "review";
-    reactivate.textContent = !sub ? t("startPlan") : status === "incomplete" ? t("completePayment") : t("reactivate");
-    reactivate.disabled = status === "review";
-
-    if (status === "review") {
-      showBanner("account-banner", t("underReview"), "bad");
-    } else if (status === "past_due" && sub?.grace_until) {
-      showBanner("account-banner", `${t("detailPastDue")} ${t("graceUntil")} ${formatDate(sub.grace_until)}.`, "warn");
-    } else if (sub?.cancel_at_period_end && ["active", "trialing"].includes(status)) {
-      showBanner("account-banner", `${t("cancelsOn")} ${formatDate(sub.current_period_end)}.`, "info");
-    } else if (status === "incomplete" && state.onboarding?.status === "completed") {
-      showBanner("account-banner", t("detailIncomplete"), "warn");
-    } else {
-      $("account-banner").hidden = true;
-    }
-
-    renderApps();
+    state.caregivers = data || [];
+    render();
+    show("app");
   }
 
-  function withLang(url) {
-    if (!url) return url;
-    const u = new URL(url);
-    u.searchParams.set("lang", state.locale);
-    u.searchParams.set("v", BUILD_TAG);
-    return u.toString();
-  }
-
-  // The commercial portal is on a different origin from the apps. The apps
-  // (and the Cuidadores page) adopt the session from the URL hash.
-  async function openExternalApp(event) {
-    const link = event.target.closest("a[data-app-key]");
-    if (!link) return;
-    event.preventDefault();
-    try {
-      let session = (await supabase.auth.getSession()).data.session;
-      if (!session) { location.reload(); return; }
-      const now = Math.floor(Date.now() / 1000);
-      if (!session.expires_at || session.expires_at - now < 120) {
-        const { data, error } = await supabase.auth.refreshSession();
-        if (error || !data.session) { location.reload(); return; }
-        session = data.session;
-      }
-      const u = new URL(link.href);
-      u.hash = new URLSearchParams({
-        access_token: session.access_token,
-        refresh_token: session.refresh_token,
-        expires_in: String(Math.max(60, (session.expires_at || now + 3600) - now)),
-        token_type: "bearer"
-      }).toString();
-      location.assign(u.toString());
-    } catch (error) {
-      console.error("Could not open app with the current session", error);
-      location.reload();
+  function render() {
+    const list = $("list");
+    if (!state.caregivers.length) {
+      list.innerHTML = `<div class="card"><p class="muted">${t("noCaregivers")}</p></div>`;
+      return;
     }
-  }
 
-  function renderApps() {
-    const accessMap = new Map(state.access.map((row) => [row.app_key, row.is_enabled]));
-    const entitled = isEntitled(state.subscription);
-    const labelOf = (app) => {
-      const k = slug(app.app_key);
-      return (APP_NAMES[k] && APP_NAMES[k][state.locale]) || app.display_name || app.app_key;
-    };
-    const apps = state.apps.slice().sort((a, b) => String(labelOf(a)).localeCompare(String(labelOf(b))));
-
-    const enabledCount = apps.filter((app) => accessMap.get(app.app_key) === true).length;
-    $("apps-count").textContent = `${enabledCount} / ${apps.length} ${t("appsReady")}`;
-
-    $("apps").innerHTML = apps.map((app) => {
-      const key = slug(app.app_key);
-      const enabled = accessMap.get(app.app_key) === true;
-      const url = APP_URLS[key] || "";
-      const caregiverApp = key === "rosita" || key === "gastos_mama";
-      const actionHref = caregiverApp ? withLang(CG_URL) : withLang(url);
-      const appName = (APP_NAMES[key] && APP_NAMES[key][state.locale]) || app.display_name || app.app_key;
-      const appDesc = (APP_DESCRIPTIONS[key] && APP_DESCRIPTIONS[key][state.locale]) || app.description || "";
-      const icon = APP_ICONS[key] || String(appName || "•").slice(0, 1).toUpperCase();
-      const label = enabled ? t("enabled") : t("disabled");
-      const tone = enabled ? "ok" : "neutral";
-      const action = enabled && actionHref
-        ? `<a class="btn primary" href="${escapeAttr(actionHref)}" data-app-key="${key}" rel="noopener">${caregiverApp ? t("manageLinks") : t("open")}</a>`
-        : enabled && !actionHref
-          ? `<span class="muted small">${t("linkPending")}</span>`
-          : `<span class="muted small">${t("disabled")}</span>`;
-
+    list.innerHTML = state.caregivers.map((c) => {
+      const revoked = c.status === "revoked";
+      const tone = revoked ? "bad" : "ok";
+      const statusLabel = revoked ? t("revoked") : t("active");
+      const linkLabel = c.has_token ? t("newLink") : t("generate");
+      const lastUsed = c.last_used_at ? formatDate(c.last_used_at) : t("never");
       return `
-        <article class="app ${enabled ? "" : "off"}">
-          <div class="app-top">
-            <div class="app-icon">${escapeHtml(icon)}</div>
-            <span class="badge ${tone}">${label}</span>
+        <article class="person">
+          <div>
+            <div class="name">${escapeHtml(c.full_name)}</div>
+            <div class="meta">${c.phone ? escapeHtml(c.phone) + " · " : ""}${c.has_token ? t("hasLink") : t("noLink")}</div>
           </div>
-          <h3>${escapeHtml(appName)}</h3>
-          <p>${escapeHtml(appDesc)}</p>
-          ${action}
+          <div>
+            <span class="badge ${tone}">${statusLabel}</span>
+            <div class="meta" style="margin-top:6px">${t("lastUsed")}: ${lastUsed}</div>
+          </div>
+          <div class="buttons">
+            ${revoked ? "" : `<button class="btn primary" data-action="link" data-id="${c.id}" data-name="${escapeAttr(c.full_name)}">${linkLabel}</button>`}
+            ${revoked ? "" : `<button class="btn danger" data-action="revoke" data-id="${c.id}" data-name="${escapeAttr(c.full_name)}">${t("revoke")}</button>`}
+          </div>
         </article>
       `;
-    }).join("") || `<div class="card"><p class="muted">${t("genericError")}</p></div>`;
+    }).join("");
 
-    $("apps").onclick = openExternalApp;
-
-    if (!entitled && state.subscription && state.subscription.status === "past_due") {
-      // The grace message is already in the status card; no duplicate banner.
-    }
+    list.querySelectorAll("button[data-action]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const action = button.dataset.action;
+        const id = button.dataset.id;
+        const name = button.dataset.name;
+        if (action === "link") generateLink(id, name);
+        if (action === "revoke") revokeCaregiver(id, name);
+      });
+    });
   }
 
-  function getStatusInfo(status, sub) {
-    switch (status) {
-      case "active":
-        return { label: t("statusActive"), tone: "ok", detail: t("detailActive") };
-      case "trialing":
-        return { label: t("statusTrialing"), tone: "ok", detail: t("detailTrialing") };
-      case "past_due":
-        return {
-          label: t("statusPastDue"),
-          tone: "warn",
-          detail: sub?.grace_until
-            ? `${t("detailPastDue")} ${t("graceUntil")} ${formatDate(sub.grace_until)}.`
-            : t("detailPastDue"),
-        };
-      case "unpaid":
-        return { label: t("statusUnpaid"), tone: "bad", detail: t("detailUnpaid") };
-      case "canceled":
-        return { label: t("statusCanceled"), tone: "bad", detail: t("detailCanceled") };
-      case "review":
-        return { label: t("statusReview"), tone: "bad", detail: t("detailReview") };
-      case "paused":
-        return { label: t("statusPaused"), tone: "neutral", detail: t("detailPaused") };
-      case "incomplete":
-      default:
-        return { label: t("statusIncomplete"), tone: "warn", detail: t("detailIncomplete") };
-    }
-  }
-
-  function isEntitled(sub) {
-    if (!sub || sub.review_hold) return false;
-    if (["active", "trialing"].includes(sub.status)) return true;
-    if (sub.status === "past_due" && sub.grace_until) {
-      return new Date(sub.grace_until).getTime() > Date.now();
-    }
-    return false;
-  }
-
-  function findPlan(planKey) {
-    return state.plans.find((plan) => plan.plan_key === planKey) ?? null;
-  }
-
-  async function manageBilling() {
-    const button = $("billing");
+  async function createCaregiver(event) {
+    event.preventDefault();
+    const button = $("create-button");
+    const errorBox = $("create-error");
     button.disabled = true;
-    try {
-      const { data, error } = await supabase.functions.invoke("create-billing-portal-session", { body: {} });
-      if (error) throw error;
-      if (!data?.url) throw new Error(data?.error || "No portal URL");
-      location.href = data.url;
-    } catch (error) {
-      console.error(error);
-      showBanner("account-banner", t("errorBilling"), "bad");
-      button.disabled = false;
-    }
-  }
+    errorBox.textContent = "";
 
-  async function reactivate() {
-    const button = $("reactivate");
-    button.disabled = true;
     try {
-      const planKey = state.subscription?.plan_key === "full_setup" ? "full_setup" : "family";
-      const { data, error } = await supabase.functions.invoke("create-checkout-session", {
-        body: { plan_key: planKey },
+      const name = $("name").value.trim();
+      const phone = $("phone").value.trim();
+      const { data, error } = await supabase.rpc("create_caregiver", {
+        p_full_name: name,
+        p_phone: phone || null,
       });
       if (error) throw error;
-      if (!data?.url) throw new Error(data?.error || "No checkout URL");
-      location.href = data.url;
+      if (!data?.token) throw new Error("No token returned");
+
+      $("name").value = "";
+      $("phone").value = "";
+      showLinks(data.token, data.caregiver_id, name, phone);
+      await loadCaregivers();
     } catch (error) {
       console.error(error);
-      showBanner("account-banner", t("errorCheckout"), "bad");
-      button.disabled = false;
-    }
-  }
-
-  async function refresh() {
-    const button = $("refresh");
-    button.disabled = true;
-    await loadAccount({ silent: true });
-    button.disabled = false;
-  }
-
-  function startCheckoutPolling() {
-    showBanner("checkout-banner", t("checkoutSuccess"), "info");
-    if (state.polling) return;
-    state.pollCount = 0;
-    state.polling = setInterval(async () => {
-      state.pollCount += 1;
-      await loadAccount({ silent: true });
-
-      if (isEntitled(state.subscription)) {
-        clearInterval(state.polling);
-        state.polling = null;
-        showBanner("checkout-banner", t("checkoutSuccess"), "ok");
-        return;
-      }
-
-      if (state.pollCount >= 20) {
-        clearInterval(state.polling);
-        state.polling = null;
-        showBanner("checkout-banner", t("activationPending"), "warn");
-      }
-    }, 3000);
-  }
-
-  async function signIn(event) {
-    event.preventDefault();
-    const button = $("login-button");
-    const errorBox = $("login-error");
-    errorBox.textContent = "";
-    button.disabled = true;
-
-    try {
-      const email = $("email").value.trim();
-      const password = $("password").value;
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) throw error;
-      await boot();
-    } catch (error) {
-      console.error(error);
-      errorBox.textContent = t("loginError");
+      errorBox.textContent = error.message || t("createError");
     } finally {
       button.disabled = false;
     }
   }
 
-  async function signOut() {
-    if (state.polling) {
-      clearInterval(state.polling);
-      state.polling = null;
+  async function generateLink(caregiverId, name) {
+    try {
+      const { data, error } = await supabase.rpc("issue_caregiver_token", {
+        p_caregiver_id: caregiverId,
+      });
+      if (error) throw error;
+      if (!data) throw new Error("No token returned");
+      showLinks(data, caregiverId, name);
+      await loadCaregivers();
+    } catch (error) {
+      console.error(error);
+      showBanner(error.message || t("linkError"), "bad");
     }
-    await supabase.auth.signOut();
-    state.user = null;
-    state.profile = null;
-    state.membership = null;
-    state.household = null;
-    state.subscription = null;
-    state.onboarding = null;
-    state.apps = [];
-    state.access = [];
-    state.plans = [];
-    $("checkout-banner").hidden = true;
-    $("account-banner").hidden = true;
-    $("signout").hidden = true;
-    show("login");
+  }
+
+  async function revokeCaregiver(caregiverId, name) {
+    if (!confirm(`${t("revokeConfirm")}\n\n${name}`)) return;
+    try {
+      const { error } = await supabase.rpc("revoke_caregiver", {
+        p_caregiver_id: caregiverId,
+      });
+      if (error) throw error;
+      if (state.generated?.caregiverId === caregiverId) state.generated = null;
+      $("links-panel").hidden = true;
+      await loadCaregivers();
+    } catch (error) {
+      console.error(error);
+      showBanner(error.message || t("revokeError"), "bad");
+    }
+  }
+
+  function showLinks(token, caregiverId, fallbackName = "", fallbackPhone = "") {
+    const caregiver = state.caregivers.find((c) => c.id === caregiverId);
+    const name = caregiver?.full_name || fallbackName;
+    const phone = caregiver?.phone || fallbackPhone;
+    const linkLang = state.locale === "es" ? "es" : "en";
+    const rosita = `${ROSITA_URL}?t=${encodeURIComponent(token)}&lang=${linkLang}`;
+    const gastos = `${GASTOS_URL}?t=${encodeURIComponent(token)}&lang=${linkLang}`;
+    state.generated = { token, caregiverId, name, phone };
+
+    $("links-panel").innerHTML = `
+      <div class="card">
+        <h2>${t("linkTitle")} ${escapeHtml(name)}</h2>
+        <p class="muted small">${t("linkHint")}</p>
+        <div class="link-row">
+          <div>
+            <div class="small" style="font-weight:700">${t("rosita")}</div>
+            <code>${escapeHtml(rosita)}</code>
+          </div>
+          <button class="btn secondary" data-copy="${escapeAttr(rosita)}">${t("copy")}</button>
+        </div>
+        <div class="link-row">
+          <div>
+            <div class="small" style="font-weight:700">${t("gastos")}</div>
+            <code>${escapeHtml(gastos)}</code>
+          </div>
+          <button class="btn secondary" data-copy="${escapeAttr(gastos)}">${t("copy")}</button>
+        </div>
+        <div class="actions">
+          ${phone ? `<a class="btn primary" target="_blank" rel="noopener" href="${escapeAttr(whatsappUrl(phone, rosita, gastos))}">${t("whatsapp")}</a>` : ""}
+        </div>
+      </div>
+    `;
+    $("links-panel").hidden = false;
+
+    $("links-panel").querySelectorAll("button[data-copy]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const text = button.dataset.copy;
+        try {
+          await navigator.clipboard.writeText(text);
+          button.textContent = t("copied");
+          setTimeout(() => { button.textContent = t("copy"); }, 1500);
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    });
+  }
+
+  function showBanner(message, tone) {
+    let banner = document.getElementById("action-banner");
+    if (!banner) {
+      banner = document.createElement("div");
+      banner.id = "action-banner";
+      banner.className = "banner";
+      $("app").prepend(banner);
+    }
+    banner.textContent = message;
+    banner.className = `banner ${tone}`;
+    banner.hidden = false;
   }
 
   function show(view) {
-    for (const id of ["loading", "login", "account", "fatal"]) {
-      $(id).hidden = id !== view;
-    }
+    for (const id of ["loading", "fatal", "app"]) $(id).hidden = id !== view;
   }
 
-  function fail(message) {
-    $("fatal-message").textContent = message;
-    show("fatal");
-  }
-
-  function showBanner(id, message, tone) {
-    const el = $(id);
-    el.textContent = message;
-    el.className = `banner ${tone}`;
-    el.hidden = false;
+  function applyLanguage() {
+    document.documentElement.lang = state.locale;
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      el.textContent = t(el.getAttribute("data-i18n"));
+    });
+    document.querySelectorAll("[data-lang]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.lang === state.locale));
+    });
+    $("signout").textContent = t("signOut");
+    if (state.user) render();
   }
 
   function t(key) {
     return I18N[state.locale]?.[key] ?? I18N.en[key] ?? key;
   }
 
-  function applyLanguage() {
-    document.documentElement.lang = state.locale;
-    document.querySelectorAll("[data-i18n]").forEach((el) => {
-      const key = el.getAttribute("data-i18n");
-      if (key) el.textContent = t(key);
-    });
-    document.querySelectorAll("[data-lang]").forEach((button) => {
-      button.setAttribute("aria-pressed", String(button.dataset.lang === state.locale));
-    });
-    $("signout").textContent = t("signOut");
-
-    if (state.user) {
-      renderAccount();
-    }
-  }
-
-  function setLanguage(lang) {
-    state.locale = lang === "es" ? "es" : "en";
-    localStorage.setItem("cad-portal-lang", state.locale);
-    applyLanguage();
-  }
-
-  function firstName(name) {
-    return String(name || "").trim().split(/\s+/)[0] || "";
-  }
-
-  function formatMoney(cents) {
-    const amount = Number(cents || 0) / 100;
-    return new Intl.NumberFormat(state.locale === "es" ? "es-EC" : "en-US", {
-      style: "currency",
-      currency: "USD",
-      maximumFractionDigits: amount % 1 === 0 ? 0 : 2,
-    }).format(amount);
-  }
-
   function formatDate(value) {
-    if (!value) return "—";
     const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return "—";
+    if (Number.isNaN(date.getTime())) return value;
     return date.toLocaleDateString(state.locale === "es" ? "es-EC" : "en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+      year: "numeric", month: "short", day: "numeric",
     });
   }
 
-  function slug(value) {
-    return String(value || "")
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "_")
-      .replace(/^_|_$/g, "");
+  function whatsappUrl(phone, rosita, gastos) {
+    const digits = String(phone || "").replace(/\D/g, "");
+    const message = `${t("linkTitle")} ${state.generated?.name || ""}\n\n${t("rosita")}:\n${rosita}\n\n${t("gastos")}:\n${gastos}`;
+    return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
   }
 
   function escapeHtml(value) {
     return String(value ?? "").replace(/[&<>"']/g, (char) => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;",
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
     }[char]));
   }
 
@@ -913,28 +504,17 @@
   }
 
   document.querySelectorAll("[data-lang]").forEach((button) => {
-    button.addEventListener("click", () => setLanguage(button.dataset.lang));
+    button.addEventListener("click", () => {
+      state.locale = button.dataset.lang === "es" ? "es" : "en";
+      localStorage.setItem("cad-cuidadores-lang", state.locale);
+      applyLanguage();
+    });
   });
 
-  $("login-form").addEventListener("submit", signIn);
-  $("signout").addEventListener("click", signOut);
-  $("billing").addEventListener("click", manageBilling);
-  $("reactivate").addEventListener("click", reactivate);
-  $("refresh").addEventListener("click", refresh);
-
-  supabase.auth.onAuthStateChange((event, session) => {
-    if (event === "SIGNED_OUT") {
-      state.user = null;
-      $("signout").hidden = true;
-      show("login");
-    } else if (session?.user && !state.user) {
-      state.user = session.user;
-      $("signout").hidden = false;
-      loadAccount().catch((error) => {
-        console.error(error);
-        fail(t("genericError"));
-      });
-    }
+  $("create-form").addEventListener("submit", createCaregiver);
+  $("signout").addEventListener("click", async () => {
+    await supabase.auth.signOut();
+    location.href = "portal.html";
   });
 </script>
 </body>
