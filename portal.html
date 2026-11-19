@@ -152,6 +152,7 @@
         <input id="email" type="email" autocomplete="email" required>
         <label for="password" data-i18n="passwordLabel">Password</label>
         <input id="password" type="password" autocomplete="current-password" required>
+        <p style="text-align:right;margin:8px 2px 0"><a href="/reset.html" data-i18n="forgotPassword" style="color:#0f766e;font-size:12px;font-weight:700;text-decoration:none">Forgot password?</a></p>
         <button class="btn primary" type="submit" id="login-button" data-i18n="signIn">Sign in</button>
         <p class="error" id="login-error" role="alert"></p>
       </form>
@@ -302,6 +303,7 @@
       emailLabel: "Email",
       passwordLabel: "Password",
       signIn: "Sign in",
+      forgotPassword: "Forgot password?",
       invited: "Invited to Cuidar a Distancia?",
       startHere: "Start here",
       accountKicker: "YOUR FAMILY ACCOUNT",
@@ -377,6 +379,7 @@
       emailLabel: "Correo",
       passwordLabel: "Contraseña",
       signIn: "Iniciar sesión",
+      forgotPassword: "¿Olvidó su contraseña?",
       invited: "¿Recibió una invitación de Cuidar a Distancia?",
       startHere: "Empiece aquí",
       accountKicker: "LA CUENTA DE SU FAMILIA",
@@ -483,6 +486,17 @@
   async function boot() {
     show("loading");
     try {
+      const handoff = new URLSearchParams(location.hash.replace(/^#/, ""));
+      const handoffAccess = handoff.get("access_token");
+      const handoffRefresh = handoff.get("refresh_token");
+      if (handoffAccess && handoffRefresh) {
+        const adopted = await supabase.auth.setSession({
+          access_token: handoffAccess,
+          refresh_token: handoffRefresh,
+        });
+        if (adopted.error) throw adopted.error;
+        history.replaceState(null, "", location.pathname + location.search);
+      }
       const { data: { session }, error } = await supabase.auth.getSession();
       if (error) throw error;
 
@@ -965,6 +979,33 @@
   $("billing").addEventListener("click", manageBilling);
   $("reactivate").addEventListener("click", reactivate);
   $("refresh").addEventListener("click", refresh);
+
+  document.querySelector(".cs-portal")?.addEventListener("click", async (event) => {
+    event.preventDefault();
+    const portalUrl = "https://cuidar-portal.marbaquero.workers.dev/";
+    try {
+      let { data: { session } } = await supabase.auth.getSession();
+      if (!session) { location.assign(portalUrl); return; }
+      const now = Math.floor(Date.now() / 1000);
+      if (!session.expires_at || session.expires_at - now < 120) {
+        const refreshed = await supabase.auth.refreshSession();
+        if (refreshed.error || !refreshed.data.session) { location.assign(portalUrl); return; }
+        session = refreshed.data.session;
+      }
+      const target = new URL(portalUrl);
+      target.searchParams.set("lang", state.locale || "en");
+      target.hash = new URLSearchParams({
+        access_token: session.access_token,
+        refresh_token: session.refresh_token,
+        expires_in: String(Math.max(60, (session.expires_at || now + 3600) - now)),
+        token_type: "bearer"
+      }).toString();
+      location.assign(target.toString());
+    } catch (error) {
+      console.warn("Could not hand off to portal", error);
+      location.assign(portalUrl);
+    }
+  });
 
   supabase.auth.onAuthStateChange((event, session) => {
     if (event === "SIGNED_OUT") {
