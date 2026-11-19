@@ -76,7 +76,7 @@ input:focus{border-color:var(--green);box-shadow:0 0 0 3px #0f766e18;background:
 const SUPABASE_URL="https://fftnffmttuzfftntzzhu.supabase.co";
 const SUPABASE_KEY="sb_publishable_f5py08cOv3Bdo0Yvm6lmbA_VBxnbEsP";
 const portal="https://marbaquero.github.io/portal.html";
-const supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 const $=id=>document.getElementById(id);
 let locale="en";
 const words={
@@ -104,7 +104,7 @@ $("requestForm").addEventListener("submit",async e=>{
  e.preventDefault(); const btn=$("sendBtn"); btn.disabled=true; $("message").className="message";
  const email=$("email").value.trim();
  try{
-  const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:location.origin+"/reset.html"});
+  const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+"/reset.html"});
   if(error) throw error;
   message($("message"),t("sent"));
  }catch(err){console.error(err);message($("message"),t("error"),true)}finally{btn.disabled=false}
@@ -115,7 +115,7 @@ $("updateForm").addEventListener("submit",async e=>{
  if(p!==c){message($("updateMessage"),t("mismatch"),true);return}
  btn.disabled=true;
  try{
-  const {error}=await supabase.auth.updateUser({password:p});
+  const {error}=await sb.auth.updateUser({password:p});
   if(error) throw error;
   message($("updateMessage"),t("updated"));
   setTimeout(()=>location.assign(portal),1200);
@@ -125,10 +125,10 @@ $("updateForm").addEventListener("submit",async e=>{
  apply();
  const hash=new URLSearchParams(location.hash.replace(/^#/,""));
  if(hash.get("type")==="recovery" || new URLSearchParams(location.search).get("reset")==="1"){
-  const {data:{session}}=await supabase.auth.getSession();
+  const {data:{session}}=await sb.auth.getSession();
   if(session){showUpdate(); if(location.hash) history.replaceState(null,"",location.pathname+location.search);}
  }
- supabase.auth.onAuthStateChange((event)=>{if(event==="PASSWORD_RECOVERY")showUpdate()});
+ sb.auth.onAuthStateChange((event)=>{if(event==="PASSWORD_RECOVERY")showUpdate()});
 })();
 </script>
 </body>
