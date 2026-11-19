@@ -895,6 +895,15 @@ html,body{background:#E3DED2!important;color:#19313A!important}
 .weekly-next{background:#E8E2D6!important}
 
 html,body{overflow-x:hidden}
+
+.portal-login{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 12px;border:1px solid #D8E4DC;border-radius:999px;background:#FFFEFA;color:#176F62;font:600 .84rem/1 var(--f-mono,monospace);letter-spacing:.01em;text-decoration:none;white-space:nowrap}
+.portal-login:hover{border-color:#9FC5B5;background:#F2FAF6;color:#0F5C52}
+.portal-login svg{flex:none}
+@media(max-width:600px){
+  .portal-login{height:34px;padding:0 10px}
+  .portal-login span{display:none}
+}
+
 </style>
 
 
@@ -905,7 +914,11 @@ html,body{overflow-x:hidden}
 <div class="wrap">
   <header class="top">
     <a class="brand" href="#top">Cuidar a Distancia</a>
-    <nav class="main-nav" aria-label="Main navigation"><a href="#apps7" data-en="The platform">La plataforma</a><a href="#apps7" data-en="Explore demos">Ver demos</a><a href="#how" data-en="How it works">Cómo funciona</a><a href="#pricing" data-en="Pricing">Precios</a><a href="/portal.html" data-en="Sign in">Iniciar sesión</a></nav>
+    <nav class="main-nav" aria-label="Main navigation"><a href="#apps7" data-en="The platform">La plataforma</a><a href="#apps7" data-en="Explore demos">Ver demos</a><a href="#how" data-en="How it works">Cómo funciona</a><a href="#pricing" data-en="Pricing">Precios</a></nav>
+    <a class="portal-login" href="/portal.html" aria-label="Iniciar sesión" title="Iniciar sesión">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path d="M4.5 20c.5-3.6 3.3-5.5 7.5-5.5s7 1.9 7.5 5.5"/></svg>
+      <span data-en="Sign in">Entrar</span>
+    </a>
     <div class="langs" role="group" aria-label="Idioma / Language">
       <button type="button" id="l-es" aria-pressed="true">ES</button>
       <button type="button" id="l-en" aria-pressed="false">EN</button>
@@ -1275,11 +1288,7 @@ html,body{overflow-x:hidden}
   document.getElementById("l-es").addEventListener("click",function(){setLang("es")});
   document.getElementById("l-en").addEventListener("click",function(){setLang("en")});
   var pref=null;try{pref=localStorage.getItem("cad-lang")}catch(e){}
-  try{
-    var queryLang=new URLSearchParams(window.location.search).get("lang");
-    if(queryLang==="en"||queryLang==="es")pref=queryLang;
-  }catch(e){}
-  if(!pref)pref="es";
+  if(!pref){pref=(navigator.language||"es").toLowerCase().indexOf("en")===0?"en":"es"}
   if(pref==="en")setLang("en");
 
   function tick(){
