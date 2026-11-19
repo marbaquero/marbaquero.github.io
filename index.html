@@ -905,7 +905,7 @@ html,body{overflow-x:hidden}
 <div class="wrap">
   <header class="top">
     <a class="brand" href="#top">Cuidar a Distancia</a>
-    <nav class="main-nav" aria-label="Main navigation"><a href="#apps7" data-en="The platform">La plataforma</a><a href="#apps7" data-en="Explore demos">Ver demos</a><a href="#how" data-en="How it works">Cómo funciona</a><a href="#pricing" data-en="Pricing">Precios</a></nav>
+    <nav class="main-nav" aria-label="Main navigation"><a href="#apps7" data-en="The platform">La plataforma</a><a href="#apps7" data-en="Explore demos">Ver demos</a><a href="#how" data-en="How it works">Cómo funciona</a><a href="#pricing" data-en="Pricing">Precios</a><a href="/portal.html" data-en="Sign in">Iniciar sesión</a></nav>
     <div class="langs" role="group" aria-label="Idioma / Language">
       <button type="button" id="l-es" aria-pressed="true">ES</button>
       <button type="button" id="l-en" aria-pressed="false">EN</button>
@@ -1275,7 +1275,11 @@ html,body{overflow-x:hidden}
   document.getElementById("l-es").addEventListener("click",function(){setLang("es")});
   document.getElementById("l-en").addEventListener("click",function(){setLang("en")});
   var pref=null;try{pref=localStorage.getItem("cad-lang")}catch(e){}
-  if(!pref){pref=(navigator.language||"es").toLowerCase().indexOf("en")===0?"en":"es"}
+  try{
+    var queryLang=new URLSearchParams(window.location.search).get("lang");
+    if(queryLang==="en"||queryLang==="es")pref=queryLang;
+  }catch(e){}
+  if(!pref)pref="es";
   if(pref==="en")setLang("en");
 
   function tick(){
