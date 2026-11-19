@@ -486,7 +486,7 @@ footer{margin:0!important;padding-top:14px!important;padding-bottom:14px!importa
 
 /* iPhone-first finishing pass: tested layout rules for narrow phones through Pro Max */
 @media(max-width:600px){
-  html,body{max-width:100%;overflow-x:hidden}
+  html,body{max-width:100%;overflow-x:clip}
   body{font-size:16px;line-height:1.58}
   .wrap{width:100%;max-width:100%;padding-left:0;padding-right:0}
   .top{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:12px 0 10px}
@@ -894,7 +894,7 @@ html,body{background:#E3DED2!important;color:#19313A!important}
 .weekly-metrics>div{background:#E1E4D9!important}
 .weekly-next{background:#E8E2D6!important}
 
-html,body{overflow-x:hidden}
+html,body{overflow-x:clip}
 
 .portal-login{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 12px;border:1px solid #D8E4DC;border-radius:999px;background:#FFFEFA;color:#176F62;font:600 .84rem/1 var(--f-mono,monospace);letter-spacing:.01em;text-decoration:none;white-space:nowrap}
 .portal-login:hover{border-color:#9FC5B5;background:#F2FAF6;color:#0F5C52}
