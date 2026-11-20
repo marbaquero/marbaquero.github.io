@@ -1132,6 +1132,21 @@ p,.muted{font-size:16px;font-weight:500;line-height:1.65;color:#4F4A41}
     button.addEventListener("click", () => setLanguage(button.dataset.lang || button.dataset.loginLang));
   });
 
+  function resetBillingActions() {
+    ["billing", "reactivate"].forEach((id) => {
+      const button = $(id);
+      if (button) button.disabled = false;
+    });
+  }
+  window.addEventListener("pageshow", (event) => {
+    resetBillingActions();
+    if (event.persisted && state.user) loadAccount({ silent: true });
+  });
+  window.addEventListener("focus", resetBillingActions);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) resetBillingActions();
+  });
+
   $("login-form").addEventListener("submit", signIn);
   $("signout").addEventListener("click", signOut);
   $("billing").addEventListener("click", manageBilling);
