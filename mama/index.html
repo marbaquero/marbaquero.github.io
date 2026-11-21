@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mamá Apps</title>
+<meta name="theme-color" content="#0a1216">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mamá Apps">
+<meta name="description" content="Acceso a las aplicaciones del hogar.">
+<meta name="robots" content="noindex,nofollow">
+<style>
+  *{box-sizing:border-box}
+  :root{
+    --tile:clamp(64px,24vw,96px);
+    --radius:clamp(16px,5.5vw,23px);
+  }
+  html,body{height:100%}
+  body{
+    margin:0;
+    overflow-x:hidden;
+    min-height:100dvh;
+    background:
+      radial-gradient(120% 80% at 15% 0%, #123a44 0%, transparent 55%),
+      radial-gradient(110% 70% at 90% 100%, #2a1d3f 0%, transparent 50%),
+      linear-gradient(180deg,#0a1216 0%,#0c161b 55%,#080f13 100%);
+    color:#eef4f6;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    display:grid;
+    place-items:center;
+    padding:
+      calc(24px + env(safe-area-inset-top))
+      18px
+      calc(28px + env(safe-area-inset-bottom));
+  }
+  main{width:100%;max-width:420px;margin:0 auto;align-self:center}
+  header{text-align:center;margin:0 0 26px}
+  h1{
+    margin:0;
+    font-size:clamp(1.9rem,8vw,2.35rem);
+    font-weight:800;
+    letter-spacing:-.02em;
+  }
+  header p{
+    margin:9px 0 0;
+    font-size:.86rem;
+    line-height:1.4;
+    color:#9fb2ba;
+  }
+  .card{
+    background:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.028));
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:34px;
+    padding:26px 18px 22px;
+    box-shadow:0 24px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.09);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:22px 8px;
+    justify-items:center;
+  }
+  .tile{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:9px;
+    text-decoration:none;
+    color:inherit;
+    width:100%;
+    min-width:0;
+    -webkit-tap-highlight-color:transparent;
+    border-radius:18px;
+    padding:2px;
+  }
+  .tile:active .icon{transform:scale(.93)}
+  .tile:focus-visible{outline:2px solid #5ad0c4;outline-offset:4px}
+  .icon{
+    width:var(--tile);
+    height:var(--tile);
+    border-radius:var(--radius);
+    display:grid;
+    place-items:center;
+    position:relative;
+    box-shadow:
+      0 10px 22px rgba(0,0,0,.42),
+      inset 0 1px 0 rgba(255,255,255,.22);
+    transition:transform .14s ease;
+  }
+  .icon b{
+    display:block;
+    font-size:clamp(30px,11vw,46px);
+    line-height:1;
+    font-weight:800;
+    letter-spacing:-.03em;
+  }
+  .icon i{
+    position:absolute;
+    bottom:9px;
+    left:0;
+    right:0;
+    text-align:center;
+    font-style:normal;
+    font-size:clamp(7px,2.1vw,9px);
+    font-weight:800;
+    letter-spacing:.9px;
+    opacity:.92;
+  }
+  .icon svg{width:clamp(28px,10.5vw,46px);height:clamp(28px,10.5vw,46px);display:block}
+  .label{
+    font-size:clamp(.68rem,2.9vw,.8rem);
+    overflow-wrap:anywhere;
+    font-weight:600;
+    line-height:1.25;
+    text-align:center;
+    color:#dbe7ea;
+  }
+  footer{
+    margin:22px 0 0;
+    text-align:center;
+    font-size:.72rem;
+    line-height:1.5;
+    color:#7f939c;
+  }
+  @media (prefers-reduced-motion:reduce){
+    .icon{transition:none}
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Mamá Apps</h1>
+    <p>Las siete aplicaciones del hogar, en un solo lugar.</p>
+  </header>
+
+  <div class="card">
+    <nav class="grid" aria-label="Aplicaciones">
+
+      <a class="tile" href="/Gastos-de-mama-admin/">
+        <span class="icon" style="background:#1c2533;color:#f5b41a">
+          <b>$</b><i>ADMIN</i>
+        </span>
+        <span class="label">Gastos Admin</span>
+      </a>
+
+      <a class="tile" href="/Gastos-de-mama-original/">
+        <span class="icon" style="background:#2f6bff;color:#fff">
+          <b>$</b><i>CUIDADORAS</i>
+        </span>
+        <span class="label">Gastos Mamá</span>
+      </a>
+
+      <a class="tile" href="/reporte-rosita/">
+        <span class="icon" style="background:#ff6a00;color:#fff">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6.5 3.5h8L19 8v12.5a1 1 0 0 1-1 1H6.5a1 1 0 0 1-1-1v-16a1 1 0 0 1 1-1z"/>
+            <path d="M14.3 3.7V8h4.3"/>
+            <path d="M8.4 11.6h6.4M8.4 15h6.4M8.4 18.4h3.6"/>
+          </svg>
+        </span>
+        <span class="label">Rosita</span>
+      </a>
+
+      <a class="tile" href="/Pago-Cuidadoras/">
+        <span class="icon" style="background:#22a24b;color:#fff">
+          <b>P</b><i>PAGOS</i>
+        </span>
+        <span class="label">Pagos</span>
+      </a>
+
+      <a class="tile" href="/reporte-rosita/dashboard.html">
+        <span class="icon" style="background:#0f7d85;color:#fff">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 19.5h16"/>
+            <rect x="5.6" y="13" width="3" height="6.5" rx=".6" fill="currentColor" stroke="none"/>
+            <rect x="10.5" y="9.5" width="3" height="10" rx=".6" fill="currentColor" stroke="none"/>
+            <rect x="15.4" y="5.5" width="3" height="14" rx=".6" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>
+        <span class="label">Historial</span>
+      </a>
+
+      <a class="tile" href="/inventario-medicinas/">
+        <span class="icon" style="background:#e01f26;color:#fff">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true">
+            <path d="M12 5.5v13M5.5 12h13"/>
+          </svg>
+        </span>
+        <span class="label">Inventario</span>
+      </a>
+
+      <a class="tile" href="/reporte-rosita/reporte-medico.html">
+        <span class="icon" style="background:#7b3ff2;color:#fff">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M2.5 12.5h4l2.2-5 3.1 9.4 2.6-6.2 1.7 3.3h5.4"/>
+          </svg>
+          <i>MÉDICO</i>
+        </span>
+        <span class="label">Médico</span>
+      </a>
+
+    </nav>
+  </div>
+
+  <footer>
+    Cada aplicación pide la clave familiar una vez.<br>
+    Guárdela como «Mamá Apps» en la pantalla de inicio.
+  </footer>
+</main>
+</body>
+</html>
