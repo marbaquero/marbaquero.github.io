@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dos reportes gratis — Cuidar a Distancia</title>
+<meta name="description" content="Le configuramos el cuidado de su familiar sin costo y le enviamos dos reportes semanales. Descargue el Protocolo de Cuidado a Distancia gratis.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://cuidaradistancia.com/reporte-gratis/">
+<link rel="icon" type="image/png" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cuidaradistancia.com/reporte-gratis/">
+<meta property="og:title" content="Dos reportes gratis — Cuidar a Distancia">
+<meta property="og:description" content="Le configuramos el cuidado de su familiar sin costo y le enviamos dos reportes semanales.">
+<meta property="og:image" content="https://cuidaradistancia.com/og-image.png">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+<style>
+  :root{
+    --bg:#F7F8F5; --surface:#FFFFFF; --ink:#172B35; --muted:#60717A;
+    --line:#E1E7E4; --accent:#16776E; --accent-ink:#FFFFFF; --signal:#B7791F; --soft:#EEF4F2;
+    --f-display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+    --f-body:"Source Sans 3","Segoe UI",Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{overflow-x:hidden;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;
+    padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right))}
+  a{color:var(--accent)}
+  .wrap{max-width:1080px;margin:0 auto;width:100%}
+
+  header{display:flex;align-items:center;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+  .brand{font-family:var(--f-display);font-weight:800;font-size:17px;letter-spacing:-.01em;text-decoration:none;color:var(--ink)}
+  .brand span{color:var(--accent)}
+  .back{margin-left:auto;font-size:13.5px;color:var(--muted);text-decoration:none}
+  .lang{display:flex;gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:3px}
+  .lang button{border:0;background:none;font:inherit;font-size:12px;font-weight:700;color:var(--muted);
+    padding:4px 10px;border-radius:99px;cursor:pointer}
+  .lang button[aria-pressed="true"]{background:var(--ink);color:#fff}
+
+  .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:44px;padding:46px 0 40px;align-items:start}
+  .hero > *{min-width:0}
+  @media(max-width:880px){.hero{grid-template-columns:minmax(0,1fr);gap:30px;padding:30px 0}}
+
+  .kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:800}
+  h1{font-family:var(--f-display);font-size:clamp(28px,4.4vw,44px);line-height:1.08;letter-spacing:-.025em;margin:12px 0 16px;font-weight:800}
+  h1 em{font-style:normal;color:var(--accent)}
+  .sub{font-size:17.5px;color:var(--muted);max-width:32em}
+  .bullets{list-style:none;margin:26px 0 0;display:grid;gap:12px}
+  .bullets li{display:flex;gap:11px;font-size:15.5px;align-items:flex-start}
+  .bullets svg{flex:0 0 18px;margin-top:4px}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:26px;
+    box-shadow:0 1px 2px rgba(23,43,53,.04),0 12px 32px rgba(23,43,53,.05)}
+  .card h2{font-family:var(--f-display);font-size:20px;letter-spacing:-.015em;margin-bottom:4px}
+  .card .note{font-size:13.5px;color:var(--muted);margin-bottom:18px}
+
+  label{display:block;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--muted);margin:14px 0 5px}
+  input,select,textarea{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;
+    font:inherit;font-size:15px;background:#FBFAF8;color:var(--ink)}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px;background:#fff}
+  .hint{font-size:12.5px;color:var(--muted);margin-top:5px}
+
+  button.submit{width:100%;margin-top:20px;padding:14px 18px;border:0;border-radius:10px;
+    background:var(--accent);color:var(--accent-ink);font:inherit;font-size:16px;font-weight:800;
+    cursor:pointer;letter-spacing:.01em}
+  button.submit:hover{background:#125F58}
+  button.submit[disabled]{opacity:.6;cursor:progress}
+
+  .wa{display:block;text-align:center;margin-top:12px;font-size:14px;color:var(--muted)}
+  .wa a{font-weight:700}
+  .err{display:none;margin-top:14px;padding:10px 12px;border-radius:8px;background:#FBEAE7;
+    border:1px solid #E8C4BC;color:#8B3123;font-size:13.5px}
+  .err.on{display:block}
+
+  .done{display:none;text-align:left}
+  .done.on{display:block}
+  .done .badge{display:inline-flex;align-items:center;gap:7px;background:var(--soft);color:var(--accent);
+    font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:99px}
+  .done h2{margin:14px 0 8px}
+  .done p{font-size:14.5px;color:var(--muted)}
+  .dl{display:grid;gap:8px;margin-top:18px}
+  .dl a{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--line);
+    border-radius:10px;text-decoration:none;color:var(--ink);font-weight:700;font-size:14.5px;background:#FBFAF8}
+  .dl a:hover{border-color:var(--accent)}
+
+  .protocol{margin:8px 0 0;padding:26px;border-radius:16px;background:var(--ink);color:#E9F1EE}
+  .protocol .kicker{color:#7FC9BF}
+  .protocol h2{font-family:var(--f-display);font-size:22px;margin:8px 0 8px;color:#fff;letter-spacing:-.015em}
+  .protocol p{font-size:14.5px;color:#BFD2CD;max-width:46em}
+  .protocol .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+  .protocol a{display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:9px;
+    background:#fff;color:var(--ink);text-decoration:none;font-weight:800;font-size:14px}
+  .protocol a.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.28)}
+
+  .trust{margin:34px 0 0;padding:18px 20px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+  .trust p{font-size:13.5px;color:var(--muted)}
+  .trust strong{color:var(--ink)}
+
+  footer{margin:50px 0 30px;padding-top:18px;border-top:1px solid var(--line);
+    font-size:12.5px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap}
+  footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <a class="brand" href="/">Cuidar a <span>Distancia</span></a>
+  <a class="back" href="/" data-es="← Volver al inicio" data-en="← Back to home">← Volver al inicio</a>
+  <div class="lang" role="group" aria-label="Language">
+    <button type="button" id="l-es" aria-pressed="true">ES</button>
+    <button type="button" id="l-en" aria-pressed="false">EN</button>
+  </div>
+</header>
+
+<main class="hero">
+  <div>
+    <div class="kicker" data-es="Sin costo · sin tarjeta" data-en="Free · no card">Sin costo · sin tarjeta</div>
+    <h1 data-es="Le configuramos el cuidado de su familiar y le enviamos <em>dos reportes semanales</em>."
+        data-en="We set up your family member's care and send you <em>two weekly reports</em>.">
+      Le configuramos el cuidado de su familiar y le enviamos <em>dos reportes semanales</em>.
+    </h1>
+    <p class="sub" data-es="Yo lo configuro con usted por WhatsApp: medicinas, cuidadoras y gastos. A los 14 días recibe dos reportes reales. Si no le sirve, no paga nada."
+       data-en="I set it up with you over WhatsApp: medicines, caregivers and expenses. After 14 days you get two real reports. If it doesn't help, you pay nothing.">
+      Yo lo configuro con usted por WhatsApp: medicinas, cuidadoras y gastos. A los 14 días recibe dos reportes reales. Si no le sirve, no paga nada.
+    </p>
+
+    <ul class="bullets">
+      <li><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="#16776E" stroke-width="2"><path d="M4 10.5l4 4 8-9"/></svg>
+        <span data-es="Las cuidadoras reportan en 90 segundos, sin cuenta ni contraseña."
+              data-en="Caregivers report in 90 seconds — no account, no password.">Las cuidadoras reportan en 90 segundos, sin cuenta ni contraseña.</span></li>
+      <li><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="#16776E" stroke-width="2"><path d="M4 10.5l4 4 8-9"/></svg>
+        <span data-es="Usted lee todo en un solo lugar, desde cualquier país."
+              data-en="You read everything in one place, from any country.">Usted lee todo en un solo lugar, desde cualquier país.</span></li>
+      <li><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="#16776E" stroke-width="2"><path d="M4 10.5l4 4 8-9"/></svg>
+        <span data-es="El lunes llega un resumen que su familia y su médico pueden entender."
+              data-en="On Monday a summary arrives that your family and doctor can read.">El lunes llega un resumen que su familia y su médico pueden entender.</span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <form id="lead" novalidate>
+      <div id="formArea">
+        <h2 data-es="Quiero mis dos reportes" data-en="I want my two reports">Quiero mis dos reportes</h2>
+        <p class="note" data-es="Cuatro datos. Le respondo por WhatsApp en menos de 2 horas." data-en="Four fields. I reply on WhatsApp within 2 hours.">Cuatro datos. Le respondo por WhatsApp en menos de 2 horas.</p>
+
+        <label for="name" data-es="Su nombre" data-en="Your name">Su nombre</label>
+        <input id="name" name="name" autocomplete="name" required>
+
+        <label for="email" data-es="Correo electrónico" data-en="Email">Correo electrónico</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+
+        <label for="phone" data-es="WhatsApp (con código de país)" data-en="WhatsApp (with country code)">WhatsApp (con código de país)</label>
+        <input id="phone" name="phone" type="tel" inputmode="tel" placeholder="+1 832 000 0000" autocomplete="tel" required>
+
+        <label for="country" data-es="¿En qué país está su familiar?" data-en="Which country is your family member in?">¿En qué país está su familiar?</label>
+        <input id="country" name="country" placeholder="Ecuador" required>
+
+        <div style="position:absolute;left:-9999px" aria-hidden="true">
+          <label for="website">Website</label>
+          <input id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div id="turnstile-container" style="margin-top:16px"></div>
+
+        <button class="submit" id="submitBtn" type="submit" data-es="Enviar y empezar" data-en="Send and start">Enviar y empezar</button>
+        <p class="wa"><span data-es="¿Prefiere no llenar nada?" data-en="Rather not fill a form?">¿Prefiere no llenar nada?</span>
+          <a href="https://wa.me/18323359906?text=Hola%2C%20quiero%20mis%20dos%20reportes%20gratis" data-es="Escríbame por WhatsApp" data-en="Message me on WhatsApp">Escríbame por WhatsApp</a></p>
+        <div class="err" id="err"></div>
+      </div>
+
+      <div class="done" id="done">
+        <span class="badge" data-es="Recibido" data-en="Received">Recibido</span>
+        <h2 data-es="Listo. Le escribo hoy mismo." data-en="Done. I'll message you today.">Listo. Le escribo hoy mismo.</h2>
+        <p data-es="Mientras tanto, descargue el protocolo. Es suyo, no hace falta registrarse ni pagar."
+           data-en="In the meantime, download the protocol. It's yours — no signup, no payment.">
+          Mientras tanto, descargue el protocolo. Es suyo, no hace falta registrarse ni pagar.
+        </p>
+        <div class="dl">
+          <a href="/protocolo-cuidado-es.pdf" download><span>📄</span><span data-es="Protocolo de cuidado (Español)" data-en="Care protocol (Spanish)">Protocolo de cuidado (Español)</span></a>
+          <a href="/protocolo-cuidado-en.pdf" download><span>📄</span><span data-es="Care protocol (English)" data-en="Care protocol (English)">Care protocol (English)</span></a>
+          <a href="https://wa.me/18323359906?text=Hola%2C%20ya%20envi%C3%A9%20el%20formulario%20de%20los%20dos%20reportes"><span>💬</span><span data-es="Escribirme ahora por WhatsApp" data-en="Message me on WhatsApp now">Escribirme ahora por WhatsApp</span></a>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>
+
+<section class="protocol">
+  <div class="kicker" data-es="Descarga inmediata · sin registro" data-en="Instant download · no signup">Descarga inmediata · sin registro</div>
+  <h2 data-es="El Protocolo de Cuidado a Distancia" data-en="The Distance Care Protocol">El Protocolo de Cuidado a Distancia</h2>
+  <p data-es="Una hoja. Cinco secciones: medicinas, emergencias, turnos, dinero y reporte diario. Imprímala y péguela en la cocina de su familiar. Está pensada para llenarse a mano, entre todos."
+     data-en="One sheet. Five sections: medications, emergencies, shifts, money and the daily report. Print it and put it on your parent's kitchen wall. It's meant to be filled in by hand, together.">
+    Una hoja. Cinco secciones: medicinas, emergencias, turnos, dinero y reporte diario. Imprímala y péguela en la cocina de su familiar. Está pensada para llenarse a mano, entre todos.
+  </p>
+  <div class="row">
+    <a href="/protocolo-cuidado-es.pdf" download data-es="Descargar en español" data-en="Download in Spanish">Descargar en español</a>
+    <a class="ghost" href="/protocolo-cuidado-en.pdf" download data-es="Download in English" data-en="Download in English">Download in English</a>
+  </div>
+</section>
+
+<div class="trust">
+  <p data-es="<strong>Su cuidadora no necesita cuenta ni contraseña.</strong> Usted crea y revoca cada enlace. Los pagos los procesa Stripe: nunca vemos su tarjeta. No vendemos ni compartimos sus datos."
+     data-en="<strong>Your caregiver needs no account or password.</strong> You create and revoke every link. Payments are handled by Stripe: we never see your card. We don't sell or share your data.">
+    <strong>Su cuidadora no necesita cuenta ni contraseña.</strong> Usted crea y revoca cada enlace. Los pagos los procesa Stripe: nunca vemos su tarjeta. No vendemos ni compartimos sus datos.
+  </p>
+</div>
+
+<footer>
+  <span>© 2026 Cuidar a Distancia</span>
+  <a href="mailto:hola@cuidaradistancia.com">hola@cuidaradistancia.com</a>
+  <a href="https://wa.me/18323359906">WhatsApp +1 832 335 9906</a>
+  <a href="/" data-es="Inicio" data-en="Home">Inicio</a>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var lang = (new URLSearchParams(location.search).get('lang') === 'en') ? 'en' : 'es';
+
+  function applyLang(){
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-es]').forEach(function(el){
+      var v = el.getAttribute('data-' + lang);
+      if (v != null) el.innerHTML = v;
+    });
+    document.getElementById('l-es').setAttribute('aria-pressed', lang==='es');
+    document.getElementById('l-en').setAttribute('aria-pressed', lang==='en');
+  }
+  document.getElementById('l-es').onclick = function(){ lang='es'; applyLang(); };
+  document.getElementById('l-en').onclick = function(){ lang='en'; applyLang(); };
+  applyLang();
+
+  var form = document.getElementById('lead');
+  var btn  = document.getElementById('submitBtn');
+  var errEl= document.getElementById('err');
+  var token='', widgetId=null;
+
+  function renderTurnstile(){
+    if (widgetId !== null || !window.turnstile) return;
+    widgetId = window.turnstile.render('#turnstile-container', {
+      sitekey: '0x4AAAAAAF24Sp6JOGsxSbUn',
+      language: lang,
+      callback: function(t){ token = t; },
+      'expired-callback': function(){ token=''; },
+      'error-callback': function(){ token=''; }
+    });
+  }
+  if (window.turnstile) renderTurnstile();
+  else { var w=setInterval(function(){ if(window.turnstile){ clearInterval(w); renderTurnstile(); } }, 200); setTimeout(function(){ clearInterval(w); if(widgetId===null){ var n=document.getElementById('turnstile-container'); n.innerHTML='<p style="font-size:13px;color:#8B3123">No se pudo cargar la verificación. Escríbanos por WhatsApp y lo hacemos ahí.</p>'; } }, 8000); }
+
+  function fail(msg){ errEl.textContent = msg; errEl.classList.add('on'); btn.disabled=false; btn.textContent = lang==='en'?'Send and start':'Enviar y empezar'; }
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    errEl.classList.remove('on');
+    var fd = new FormData(form);
+    var name=(fd.get('name')||'').trim(), email=(fd.get('email')||'').trim(),
+        phone=(fd.get('phone')||'').trim(), country=(fd.get('country')||'').trim();
+
+    if (!name || !email || !phone || !country) return fail(lang==='en'?'Please fill in all four fields.':'Complete los cuatro campos.');
+    if (!token) return fail(lang==='en'?'Please complete the security check below.':'Complete la verificación de seguridad.');
+
+    btn.disabled = true;
+    btn.textContent = lang==='en'?'Sending…':'Enviando…';
+
+    var payload = {
+      turnstile_token: token,
+      full_name: name,
+      email: email,
+      phone: phone,
+      loved_one_location: country,
+      preferred_language: lang,
+      care_relationship: null,
+      care_distance: null,
+      care_team: [],
+      caregiver_count: null,
+      selected_plan: null,
+      needs: [],
+      current_organization: null,
+      desired_start: null,
+      additional_notes: 'Origen: /reporte-gratis · ' + country,
+      contact_consent: true,
+      website: fd.get('website') || ''
+    };
+
+    try{
+      var res = await fetch('https://fftnffmttuzfftntzzhu.supabase.co/functions/v1/submit-customer-lead', {
+        method:'POST',
+        headers:{'Content-Type':'application/json','apikey':'sb_publishable_f5py08cOv3Bdo0Yvm6lmbA_VBxnbEsP'},
+        body: JSON.stringify(payload)
+      });
+      var out = await res.json();
+      if (!res.ok || !out.ok) throw new Error((out && out.error) || 'failed');
+      document.getElementById('formArea').style.display='none';
+      document.getElementById('done').classList.add('on');
+      window.scrollTo({top:0, behavior:'smooth'});
+    }catch(err){
+      fail(lang==='en'
+        ? 'We could not send it. Please try again, or message me on WhatsApp.'
+        : 'No pudimos enviarlo. Intente otra vez o escríbame por WhatsApp.');
+      if (window.turnstile && widgetId !== null) { token=''; window.turnstile.reset(widgetId); }
+    }
+  });
+})();
+</script>
+</body>
+</html>
