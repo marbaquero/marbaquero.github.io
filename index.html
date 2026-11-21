@@ -230,6 +230,9 @@ details p{color:var(--muted);margin-top:10px;max-width:60ch}
 .close p{color:color-mix(in srgb,var(--bg) 70%,transparent);margin-top:16px;max-width:46ch}
 .close .btn{border-color:var(--bg);color:var(--bg)}
 footer{padding-block:28px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+footer a:hover{opacity:.75}
+.legal-links{white-space:nowrap}
 
 @media (max-width:860px){
   .hero,.app,.faq,.close .wrap{grid-template-columns:minmax(0,1fr);gap:36px}
@@ -1308,6 +1311,7 @@ footer{font-size:.85rem!important;line-height:1.6!important}
   <footer class="mono">
     <span>© 2026 Cuidar a Distancia</span>
     <span data-en="Made by a family caregiver, Houston ↔ Quito">Hecho por un hijo cuidador, Houston ↔ Quito</span>
+    <span class="legal-links"><a href="/legal/privacy.html" data-en="Privacy" data-es="Privacidad">Privacidad</a> · <a href="/legal/terms.html" data-en="Terms" data-es="Términos">Términos</a> · <a href="/legal/refunds.html" data-en="Refunds" data-es="Reembolsos">Reembolsos</a></span>
   </footer>
 </div>
 
