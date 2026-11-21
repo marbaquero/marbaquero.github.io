@@ -265,7 +265,8 @@
         phone=(fd.get('phone')||'').trim(), country=(fd.get('country')||'').trim();
 
     if (!name || !email || !phone || !country) return fail(lang==='en'?'Please fill in all four fields.':'Complete los cuatro campos.');
-    if (!token) return fail(lang==='en'?'Please complete the security check below.':'Complete la verificación de seguridad.');
+    if (!token && window.turnstile) { try { token = window.turnstile.getResponse() || ''; } catch(e){} }
+    if (!token) return fail(lang==='en'?'Security check not ready. Wait for the green check, then press send.':'La verificación no está lista. Espere la marca verde y vuelva a enviar.');
 
     btn.disabled = true;
     btn.textContent = lang==='en'?'Sending…':'Enviando…';
@@ -302,9 +303,11 @@
       document.getElementById('done').classList.add('on');
       window.scrollTo({top:0, behavior:'smooth'});
     }catch(err){
-      fail(lang==='en'
+      var serverMsg = (err && err.message && err.message !== 'failed') ? err.message : '';
+      var fallback = lang==='en'
         ? 'We could not send it. Please try again, or message me on WhatsApp.'
-        : 'No pudimos enviarlo. Intente otra vez o escríbame por WhatsApp.');
+        : 'No pudimos enviarlo. Intente otra vez o escríbame por WhatsApp.';
+      fail(serverMsg ? (serverMsg + (lang==='en' ? ' — or message me on WhatsApp.' : ' — o escríbame por WhatsApp.')) : fallback);
       if (window.turnstile && widgetId !== null) { token=''; window.turnstile.reset(widgetId); }
     }
   });
