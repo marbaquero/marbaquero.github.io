@@ -4,49 +4,120 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
-  <meta name="theme-color" content="#0A6F6A">
+  <meta name="theme-color" content="#14584f">
   <title>Registro privado | Cuidar a Distancia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f766e'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='18' font-weight='bold' fill='white' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
   <style>
-    :root{color-scheme:light;--bg:#f5f7f4;--card:#fff;--ink:#172b35;--muted:#60717a;--line:#dfe7e2;--accent:#16776e;--error:#a83232}
-    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;display:grid;place-items:center;padding:24px}
-    main{width:min(100%,560px);background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(24px,5vw,42px);box-shadow:0 12px 36px #172b3510}
-    .brand{font-weight:800;letter-spacing:-.03em;font-size:1.15rem}.brand span{color:var(--accent)}
-    h1{font-size:clamp(1.7rem,5vw,2.25rem);line-height:1.12;letter-spacing:-.04em;margin:30px 0 12px}
-    p{color:var(--muted);margin:0 0 18px}.langs{display:flex;justify-content:flex-end;gap:8px}.langs button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;cursor:pointer}.langs button[aria-pressed=true]{background:var(--ink);color:#fff}
-    label{display:block;font-weight:650;margin:16px 0 6px}input,select{width:100%;font:inherit;padding:12px 13px;border:1px solid #cbd7d0;border-radius:9px;background:#fff;color:var(--ink)}input:focus,select:focus{outline:3px solid #16776e30;border-color:var(--accent)}
-    .hint{font-size:.88rem;color:var(--muted);margin-top:6px}.btn{width:100%;margin-top:22px;background:var(--accent);color:#fff;border:0;border-radius:9px;padding:14px 18px;font:700 1rem inherit;cursor:pointer}.btn:disabled{opacity:.6;cursor:wait}
-    #status{margin-top:18px;padding:12px 14px;border-radius:9px;background:#eef5f1;color:var(--ink);display:none;overflow-wrap:anywhere}#status.error{display:block;background:#fff0f0;color:var(--error)}#status.show{display:block}
-    .foot{font-size:.82rem;margin-top:24px;border-top:1px solid var(--line);padding-top:18px}
+    /* Shared Cuidar portal login system (source: portal.html) */
+    :root{
+      color-scheme:light;
+      --bg:#DCD0BD;--paper:#F2EBDD;--ink:#1D2923;--muted:#4F4A41;--line:#D2C4AE;
+      --green:#0f766e;--green-dark:#0b655e;--soft:#E9EEE2;
+      --amber:#8a5a12;--amber-bg:#fff6e5;--red:#a83232;--red-bg:#fff0f0;
+      --sans:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(circle at 78% 18%,#2c7d70 0,#14584f 38%,#4f8068 72%,#779b82 100%);min-height:100vh;color:var(--ink);font:15.5px/1.65 var(--sans);letter-spacing:-.008em;-webkit-font-smoothing:antialiased}
     [hidden]{display:none!important}
+
+    .login-lang{position:fixed;top:18px;right:20px;display:inline-flex;gap:2px;padding:3px;border:1px solid rgba(255,255,255,.32);border-radius:10px;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);z-index:5}
+    .login-lang button{border:0;background:transparent;color:#d9f0e8;font:750 10px var(--sans);padding:7px 10px;border-radius:7px;line-height:1;cursor:pointer}
+    .login-lang button[aria-pressed="true"]{background:#fff;color:#0f5b52;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+
+    .login-wrap{min-height:100vh;padding:58px 16px 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
+
+    .login-brand{text-align:center;max-width:680px;margin-bottom:22px}
+    .login-logo{width:76px;height:76px;margin:0 auto 14px;filter:drop-shadow(0 10px 22px rgba(0,0,0,.16))}
+    .login-logo svg{width:100%;height:100%;display:block}
+    .login-brand h1{font-family:var(--sans);font-size:clamp(31px,4.2vw,42px);line-height:1.08;letter-spacing:-.04em;color:#fff;margin:0 0 8px;text-shadow:0 2px 16px rgba(0,0,0,.12)}
+    .login-kicker{font-size:12px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:#b9e5d9;margin:0 0 8px}
+    .login-tagline{font-size:13.5px;line-height:1.65;color:#d9eee8;margin:0 auto;max-width:600px}
+
+    .login-card{width:min(440px,100%);background:var(--paper);border:1px solid rgba(255,255,255,.45);border-radius:24px;padding:30px;box-shadow:0 26px 60px rgba(4,35,30,.24)}
+    .login-card h1{font-size:27px;line-height:1.15;letter-spacing:-.035em;margin:0 0 5px;color:#132622;font-weight:800}
+    .login-card .intro{font-size:14px;color:#5d574c;margin:0 0 20px;line-height:1.6}
+
+    label{display:block;font-size:13px;font-weight:800;margin:13px 0 5px;color:#2c2924}
+    input{width:100%;height:48px;border:1px solid #e2eae6;border-radius:11px;padding:0 14px;background:#fbfdfc;color:#2c2924;font:500 15px var(--sans);outline:none;transition:border-color .15s,box-shadow .15s}
+    input:focus{outline:3px solid rgba(15,118,110,.11);border-color:#0f766e;background:#fff}
+    input::placeholder{color:#8a958f}
+    .hint{font-size:12px;color:#5d574c;margin-top:6px}
+
+    .plan-label{margin-top:16px}
+    .plan-box{margin-top:6px;padding:14px 16px;border:1px solid #d9e4d3;border-radius:12px;background:var(--soft);color:#1D2923;font:700 14px var(--sans);display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .plan-box .plan-dot{width:7px;height:7px;border-radius:50%;background:#0f766e;flex:none}
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;width:100%;height:48px;margin-top:20px;border:0;border-radius:11px;background:#0f766e;color:#fff;font:750 13.5px var(--sans);cursor:pointer;box-shadow:0 8px 20px rgba(15,118,110,.22)}
+    .btn:hover{background:var(--green-dark)}
+    .btn:disabled{opacity:.65;cursor:wait}
+
+    #status{margin-top:16px;padding:12px 14px;border-radius:12px;background:var(--soft);color:#1D2923;font:600 13px/1.55 var(--sans);display:none;overflow-wrap:anywhere;text-align:center}
+    #status.show{display:block}
+    #status.error{display:block;background:var(--red-bg);color:var(--red)}
+
+    .foot{display:block;margin-top:16px;padding-top:14px;border-top:1px solid #e8efeb;color:#5f756e;font:500 11px/1.55 var(--sans);text-align:center}
+    .login-security{color:#d7eee7;font:700 12px/1.5 var(--sans);letter-spacing:.02em;text-align:center;margin:17px 0 0}
+
+    @media(max-width:600px){
+      .login-wrap{padding:58px 16px 24px;justify-content:flex-start}
+      .login-lang{top:14px;right:14px}
+      .login-brand{margin:8px 0 18px}
+      .login-logo{width:64px;height:64px;margin-bottom:10px}
+      .login-brand h1{font-size:32px}
+      .login-tagline{font-size:12.5px}
+      .login-card{padding:24px 20px;border-radius:20px}
+      .login-card h1{font-size:24px}
+    }
   </style>
 </head>
-<body>
-<main>
-  <div class="langs" aria-label="Language">
-    <button type="button" id="es" aria-pressed="true">ES</button>
-    <button type="button" id="en" aria-pressed="false">EN</button>
+<body class="login-mode">
+<div class="login-lang" role="group" aria-label="Language / Idioma">
+  <button type="button" id="es" aria-pressed="true">ES</button>
+  <button type="button" id="en" aria-pressed="false">EN</button>
+</div>
+
+<div class="login-wrap">
+  <div class="login-brand">
+    <div class="login-logo" aria-hidden="true">
+      <svg viewBox="0 0 64 64" fill="none">
+        <path d="M7 28.5 32 7l25 21.5v22A4.5 4.5 0 0 1 52.5 55H37V42H27v13H11.5A4.5 4.5 0 0 1 7 50.5v-22Z" fill="#fff" fill-opacity=".97"/>
+        <path d="M32 46s-12-7-12-15c0-4.4 3.4-7.2 7-7.2 2.5 0 4.3 1.3 5 2.8.7-1.5 2.5-2.8 5-2.8 3.6 0 7 2.8 7 7.2 0 8-12 15-12 15Z" fill="#66d2b6"/>
+        <path d="M32 46s-12-7-12-15c0-4.4 3.4-7.2 7-7.2 2.5 0 4.3 1.3 5 2.8.7-1.5 2.5-2.8 5-2.8 3.6 0 7 2.8 7 7.2 0 8-12 15-12 15Z" stroke="#2b8f7c" stroke-width="1.2"/>
+      </svg>
+    </div>
+    <h1>Cuidar a Distancia</h1>
+    <div class="login-kicker">Portal del familiar</div>
+    <p class="login-tagline" data-es="Reporte, sesión, historial, pagos, inventario y gastos, en un solo lugar." data-en="Reports, sessions, history, payments, inventory, and expenses — all in one place.">Reporte, sesión, historial, pagos, inventario y gastos, en un solo lugar.</p>
   </div>
-  <div class="brand">Cuidar <span>a Distancia</span></div>
-  <h1 data-es="Su invitación privada" data-en="Your private invitation">Su invitación privada</h1>
-  <p data-es="Esta página es solo para personas que recibieron una invitación por correo electrónico. Complete sus datos para preparar su cuenta familiar." data-en="This page is only for people who received an email invitation. Complete your details to set up your family account.">Esta página es solo para personas que recibieron una invitación por correo electrónico. Complete sus datos para preparar su cuenta familiar.</p>
 
-  <form id="registration" hidden>
-    <label for="password" data-es="Cree una contraseña" data-en="Create a password">Cree una contraseña</label>
-    <input id="password" type="password" minlength="10" autocomplete="new-password" required>
-    <div class="hint" data-es="Use al menos 10 caracteres." data-en="Use at least 10 characters.">Use al menos 10 caracteres.</div>
+  <div class="login-card">
+    <h1 data-es="Su invitación privada" data-en="Your private invitation">Su invitación privada</h1>
+    <p class="intro" data-es="Esta página es solo para personas que recibieron una invitación por correo electrónico. Complete sus datos para preparar su cuenta familiar." data-en="This page is only for people who received an email invitation. Complete your details to set up your family account.">Esta página es solo para personas que recibieron una invitación por correo electrónico. Complete sus datos para preparar su cuenta familiar.</p>
 
-    <label for="name" data-es="Nombre de la familia o del hogar" data-en="Family or household name">Nombre de la familia o del hogar</label>
-    <input id="name" maxlength="100" autocomplete="organization" required>
+    <form id="registration" hidden>
+      <label for="password" data-es="Cree una contraseña" data-en="Create a password">Cree una contraseña</label>
+      <input id="password" type="password" minlength="10" autocomplete="new-password" required>
+      <div class="hint" data-es="Use al menos 10 caracteres." data-en="Use at least 10 characters.">Use al menos 10 caracteres.</div>
 
-    <label data-es="Plan aprobado" data-en="Approved plan">Plan aprobado</label>
-    <div id="approved-plan" style="padding:12px 13px;border:1px solid #cbd7d0;border-radius:9px;background:#f5f7f4;font-weight:650">Verificando invitación…</div>
+      <label for="name" data-es="Nombre de la familia o del hogar" data-en="Family or household name">Nombre de la familia o del hogar</label>
+      <input id="name" maxlength="100" autocomplete="organization" required>
 
-    <button class="btn" id="submit" type="submit" data-es="Preparar mi cuenta y continuar al pago" data-en="Set up my account and continue to payment">Preparar mi cuenta y continuar al pago</button>
-  </form>
+      <div class="plan-label"><label data-es="Plan aprobado" data-en="Approved plan" style="margin:0">Plan aprobado</label></div>
+      <div id="approved-plan" class="plan-box"><span>Verificando invitación…</span><span class="plan-dot" aria-hidden="true"></span></div>
 
-  <div id="status" role="status" aria-live="polite"></div>
-  <p class="foot" data-es="¿Necesita ayuda? Responda al correo de invitación. No comparta su contraseña con nadie." data-en="Need help? Reply to your invitation email. Never share your password.">¿Necesita ayuda? Responda al correo de invitación. No comparta su contraseña con nadie.</p>
-</main>
+      <button class="btn" id="submit" type="submit" data-es="Preparar mi cuenta y continuar al pago" data-en="Set up my account and continue to payment">Preparar mi cuenta y continuar al pago</button>
+    </form>
+
+    <div id="status" role="status" aria-live="polite"></div>
+    <p class="foot" data-es="¿Necesita ayuda? Responda al correo de invitación. No comparta su contraseña con nadie." data-en="Need help? Reply to your invitation email. Never share your password.">¿Necesita ayuda? Responda al correo de invitación. No comparta su contraseña con nadie.</p>
+  </div>
+
+  <div class="login-security" data-es="Sesión segura · Solo familia y cuidadores" data-en="Secure session · Family and caregivers only">Sesión segura · Solo familia y cuidadores</div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function(){
@@ -55,7 +126,7 @@
   const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
     auth: { autoRefreshToken:true, persistSession:true, detectSessionInUrl:true }
   });
-  const form=document.getElementById("registration"), status=document.getElementById("status"), submit=document.getElementById("submit");
+  const form=document.getElementById("registration"), status=document.getElementById("status"), submit=document.getElementById("submit"), planBox=document.getElementById("approved-plan");
   let locale="es", currentUser=null, approvedPlan=null;
   const words={
     noInvite:{es:"No encontramos una invitación activa. Abra el enlace incluido en el correo que recibió o solicite una nueva invitación.",en:"We couldn't find an active invitation. Open the link in your invitation email or request a new invitation."},
@@ -65,18 +136,28 @@
     error:{es:"No fue posible completar el registro. ",en:"We couldn't complete registration. "},
     password:{es:"La contraseña debe tener al menos 10 caracteres.",en:"Your password must contain at least 10 characters."}
   };
-  function say(key,extra){status.className="show";status.textContent=words[key][locale]+(extra||"");}
+  function planLabel(){
+    if(!approvedPlan)return locale==="es"?"Verificando invitación…":"Checking invitation…";
+    if(approvedPlan==="family")return locale==="es"?"Plan Familia — $29 al mes":"Family Plan — $29/month";
+    return locale==="es"?"Full Setup — $49 al mes + $99 de instalación":"Full Setup — $49/month + $99 setup fee";
+  }
+  function renderPlan(){
+    const dot=planBox.querySelector(".plan-dot");
+    planBox.textContent=planLabel();
+    if(dot)planBox.appendChild(dot);else{const d=document.createElement("span");d.className="plan-dot";d.setAttribute("aria-hidden","true");planBox.appendChild(d);}
+  }
+  function say(key,extra){status.dataset.key=key;status.dataset.extra=extra||"";status.className="show";status.textContent=words[key][locale]+(extra||"");}
   function setLanguage(lang){
     locale=lang;document.documentElement.lang=lang;
     document.querySelectorAll("[data-es][data-en]").forEach(el=>{el.textContent=el.dataset[lang]});
     document.getElementById("es").setAttribute("aria-pressed",String(lang==="es"));
     document.getElementById("en").setAttribute("aria-pressed",String(lang==="en"));
-    if(approvedPlan){document.getElementById("approved-plan").textContent=approvedPlan==="family"?(lang==="es"?"Plan Familia — $29 al mes":"Family Plan — $29/month"):(lang==="es"?"Full Setup — $49 al mes + $99 de instalación":"Full Setup — $49/month + $99 setup fee");}
+    renderPlan();
     if(status.dataset.key)say(status.dataset.key,status.dataset.extra||"");
   }
   document.getElementById("es").addEventListener("click",()=>setLanguage("es"));
   document.getElementById("en").addEventListener("click",()=>setLanguage("en"));
-  function showError(message){status.className="show error";status.textContent=words.error[locale]+message;}
+  function showError(message){delete status.dataset.key;status.className="show error";status.textContent=words.error[locale]+message;}
   async function initialize(){
     try{
       const {data:{session},error}=await client.auth.getSession();
@@ -87,7 +168,7 @@
       currentUser=user;
       approvedPlan=user.user_metadata && user.app_metadata.approved_plan;
       if(!["family","full_setup"].includes(approvedPlan)){say("noInvite");return;}
-      document.getElementById("approved-plan").textContent=approvedPlan==="family"?"Plan Familia — $29 al mes":"Full Setup — $49 al mes + $99 de instalación";
+      renderPlan();
       form.hidden=false;say("ready");
       if(user.email)document.getElementById("name").placeholder=user.email;
     }catch(e){showError(e.message||"");}
@@ -115,7 +196,6 @@
       });
       if(onboardingError)throw onboardingError;
       if(!onboarding||!onboarding.success)throw new Error("Onboarding was not confirmed");
-      onboardingDone=true;
       say("checkout");
       const {data:checkout,error:checkoutError}=await client.functions.invoke("create-checkout-session",{body:{plan_key:plan}});
       if(checkoutError)throw checkoutError;
