@@ -246,6 +246,7 @@
     widgetId = window.turnstile.render('#turnstile-container', {
       sitekey: '0x4AAAAAAF24Sp6JOGsxSbUn',
       language: lang,
+      action: 'customer_registration',
       callback: function(t){ token = t; },
       'expired-callback': function(){ token=''; },
       'error-callback': function(){ token=''; }
