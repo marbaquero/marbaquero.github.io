@@ -971,6 +971,21 @@ footer{font-size:.85rem!important;line-height:1.6!important}
 .legal-links{margin:14px 0 0}
 .legal-links a{color:#40583d;font-weight:600}
 @media (max-width:640px){.facts{grid-template-columns:1fr}}
+
+/* About list: stacked disclosures, with the marker next to the label rather than
+   pinned to the far edge of the row. */
+.about-list{display:block;border-top:1px solid var(--line);margin-top:14px}
+.about-list details{padding-block:18px;border-bottom:1px solid var(--line)}
+.about-list summary{display:flex;align-items:center;gap:10px;justify-content:flex-start;
+  cursor:pointer;font:600 1.1rem var(--f-body);list-style:none}
+.about-list summary::after{content:"+";font-family:var(--f-mono);color:var(--accent);font-weight:400;font-size:1.15rem}
+.about-list details[open] summary::after{content:"–"}
+.about-list .facts{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:9px}
+@media (min-width:900px){.about-list .facts{grid-template-columns:1fr 1fr;gap:9px 30px}}
+/* The floating home button is fixed bottom-right and was sitting on top of the
+   footer's legal links. Give the footer room to end above it. */
+footer{padding-bottom:86px}
+@media (max-width:640px){footer{padding-bottom:76px}}
 </style>
 
 
@@ -1322,7 +1337,7 @@ footer{font-size:.85rem!important;line-height:1.6!important}
 <section class="section" id="trust">
   <div class="wrap">
     <h2 class="sec-title" data-en="About us">Sobre nosotros</h2>
-    <div class="faq">
+    <div class="about-list">
       <details>
         <summary data-en="Who is behind this">Quién está detrás</summary>
         <ul class="facts">
