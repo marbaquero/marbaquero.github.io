@@ -973,6 +973,16 @@ footer{font-size:.85rem!important;line-height:1.6!important}
 .section.compact .card p{font-size:.84rem!important;line-height:1.45!important;margin:0!important}
 .section.compact .card p+p{margin-top:4px!important}
 .section.compact > .wrap > p:last-child{font-size:.8rem!important;margin-top:12px!important}
+
+/* Compact fact list: reference material should read as a list, not six cards. */
+.compact .facts{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px;grid-template-columns:1fr}
+.compact .facts.two{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 26px}
+.compact .facts li{font-size:.85rem;line-height:1.45;color:#3d4a44;margin:0}
+.compact .facts b{color:#1D2923;font-weight:700;margin-right:4px}
+.compact .facts a{color:#40583d}
+.compact .legal-links{font-size:.78rem;color:#5d574c;margin:14px 0 0}
+.compact .legal-links a{color:#40583d;font-weight:600}
+@media (max-width:640px){.compact .facts.two{grid-template-columns:1fr}}
 </style>
 
 
@@ -1321,41 +1331,31 @@ footer{font-size:.85rem!important;line-height:1.6!important}
   </div>
 
   
-<section class="section compact" id="trust" style="padding-top:8px">
+<section class="section compact" id="trust">
   <div class="wrap">
     <h2 class="sec-title" data-en="Who is behind this">Quién está detrás</h2>
-    <p class="sec-sub" style="max-width:720px" data-en="Cuidar a Distancia was built by a son caring for his mother between Houston and Quito.">Cuidar a Distancia lo construyó un hijo que cuida a su mamá entre Houston y Quito.</p>
-    <div class="grid" style="display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:22px">
-      <div class="card" style="padding:22px 24px">
-        <h3 style="margin:0 0 8px" data-en="Built for one family first">Primero fue para una familia</h3>
-        <p style="margin:0;color:#2b3a33" data-en="The reports, the medicines, the receipts and the payments were all in different places. This is the system we built to stop asking the same question on WhatsApp every day.">Los reportes, las medicinas, los recibos y los pagos estaban en lugares distintos. Este es el sistema que armamos para dejar de preguntar lo mismo por WhatsApp todos los días.</p>
-      </div>
-      <div class="card" style="padding:22px 24px">
-        <h3 style="margin:0 0 8px" data-en="You can talk to me">Habla conmigo, no con un formulario</h3>
-        <p style="margin:0;color:#2b3a33" data-en="Marcello Baquero, founder. If something does not work, the message reaches the person who built it.">Marcello Baquero, fundador. Si algo no funciona, el mensaje llega a quien lo construyó.</p>
-        <p style="margin:10px 0 0"><a href="mailto:hola@cuidaradistancia.com" style="color:#40583d;font-weight:700">hola@cuidaradistancia.com</a></p>
-      </div>
-      <div class="card" style="padding:22px 24px">
-        <h3 style="margin:0 0 8px" data-en="Small on purpose">Pequeño a propósito</h3>
-        <p style="margin:0;color:#2b3a33" data-en="We are starting with a few families, with personal setup and a direct line. That is deliberate: it is the only way to learn what a real household needs.">Empezamos con pocas familias, con instalación personal y una línea directa. Es a propósito: es la única forma de aprender lo que una casa real necesita.</p>
-      </div>
-    </div>
+    <p class="sec-sub" data-en="Built by a son caring for his mother between Houston and Quito.">Lo construyó un hijo que cuida a su mamá entre Houston y Quito.</p>
+    <ul class="facts">
+      <li><b data-en="Started with one family">Nació en una familia</b> <span data-en="Reports, medicines, receipts and payments were scattered. This is the system that replaced the daily WhatsApp question.">Reportes, medicinas, recibos y pagos estaban dispersos. Este es el sistema que reemplazó la pregunta diaria por WhatsApp.</span></li>
+      <li><b data-en="Talk to the person who built it">Habla con quien lo construyó</b> <span data-en="Marcello Baquero, founder.">Marcello Baquero, fundador.</span> <a href="mailto:hola@cuidaradistancia.com">hola@cuidaradistancia.com</a></li>
+      <li><b data-en="Few families, on purpose">Pocas familias, a propósito</b> <span data-en="Personal setup and a direct line, so we learn what a real household needs.">Instalación personal y línea directa, para aprender lo que una casa real necesita.</span></li>
+    </ul>
   </div>
 </section>
 
 <section class="section compact" id="security">
   <div class="wrap">
     <h2 class="sec-title" data-en="Privacy and security">Privacidad y seguridad</h2>
-    <p class="sec-sub" style="max-width:720px" data-en="Medical information, medicines, expenses and caregiver data live in your household account. This is how it is protected.">Información médica, medicinas, gastos y datos de sus cuidadoras viven en la cuenta de su hogar. Así se protegen.</p>
-    <div class="grid" style="display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:22px">
-      <div class="card" style="padding:20px 22px"><h3 style="margin:0 0 6px" data-en="Where the data lives">Dónde viven los datos</h3><p style="margin:0;color:#2b3a33" data-en="On Supabase (PostgreSQL, United States) and Cloudflare. Encrypted in transit with HTTPS.">En Supabase (PostgreSQL, Estados Unidos) y Cloudflare. Cifrado en tránsito con HTTPS.</p></div>
-      <div class="card" style="padding:20px 22px"><h3 style="margin:0 0 6px" data-en="Who can see it">Quién puede verlo</h3><p style="margin:0;color:#2b3a33" data-en="Only the members of your household. Each caregiver has a private link to the report form; the link can be revoked at any time.">Solo los miembros de su hogar. Cada cuidadora recibe un enlace privado al formulario; el enlace se puede revocar cuando quiera.</p></div>
-      <div class="card" style="padding:20px 22px"><h3 style="margin:0 0 6px" data-en="Isolation by design">Aislamiento por diseño</h3><p style="margin:0;color:#2b3a33" data-en="Every table is protected by row-level rules: an account can only read its own household, verified with two live accounts.">Cada tabla está protegida por reglas por fila: una cuenta solo puede leer su propio hogar, verificado con dos cuentas reales.</p></div>
-      <div class="card" style="padding:20px 22px"><h3 style="margin:0 0 6px" data-en="Your data is yours">Sus datos son suyos</h3><p style="margin:0;color:#2b3a33" data-en="Download everything as JSON or delete the account from the portal, without writing to us.">Descargue todo en JSON o elimine la cuenta desde el portal, sin escribirnos.</p></div>
-      <div class="card" style="padding:20px 22px"><h3 style="margin:0 0 6px" data-en="Not a medical service">No es un servicio médico</h3><p style="margin:0;color:#2b3a33" data-en="It organises what the family already does. It does not diagnose, prescribe or replace a doctor.">Organiza lo que la familia ya hace. No diagnostica, no receta y no reemplaza al médico.</p></div>
-      <div class="card" style="padding:20px 22px"><h3 style="margin:0 0 6px" data-en="Questions">¿Preguntas?</h3><p style="margin:0;color:#2b3a33" data-en="Write to us and we answer personally.">Escríbanos y le respondemos personalmente.</p><p style="margin:8px 0 0"><a href="mailto:hola@cuidaradistancia.com" style="color:#40583d;font-weight:700">hola@cuidaradistancia.com</a></p></div>
-    </div>
-    <p style="margin-top:18px;font-size:.9rem;color:#5d574c" data-en="Read the full policy:">Lea la política completa: <a href="/legal/privacy.html" style="color:#40583d;font-weight:700">Privacidad</a> · <a href="/legal/terms.html" style="color:#40583d;font-weight:700">Términos</a> · <a href="/legal/refunds.html" style="color:#40583d;font-weight:700">Reembolsos</a></p>
+    <p class="sec-sub" data-en="Medical information, medicines, expenses and caregiver data live in your household account.">Información médica, medicinas, gastos y datos de sus cuidadoras viven en la cuenta de su hogar.</p>
+    <ul class="facts two">
+      <li><b data-en="Where it lives">Dónde vive</b> <span data-en="Supabase (USA) and Cloudflare, HTTPS in transit.">Supabase (EE. UU.) y Cloudflare, HTTPS en tránsito.</span></li>
+      <li><b data-en="Who sees it">Quién lo ve</b> <span data-en="Only your household. Each caregiver has a private, revocable link.">Solo su hogar. Cada cuidadora tiene un enlace privado y revocable.</span></li>
+      <li><b data-en="Isolation">Aislamiento</b> <span data-en="Row-level rules: one account can only read its own household, verified with two live accounts.">Reglas por fila: una cuenta solo lee su hogar, verificado con dos cuentas reales.</span></li>
+      <li><b data-en="Yours">Suyos</b> <span data-en="Export everything as JSON or delete the account from the portal.">Descargue todo en JSON o borre la cuenta desde el portal.</span></li>
+      <li><b data-en="Not medical care">No es atención médica</b> <span data-en="It organises what the family already does. It does not diagnose or prescribe.">Organiza lo que la familia ya hace. No diagnostica ni receta.</span></li>
+      <li><b data-en="Questions">¿Preguntas?</b> <a href="mailto:hola@cuidaradistancia.com">hola@cuidaradistancia.com</a></li>
+    </ul>
+    <p class="legal-links"><a href="/legal/privacy.html" data-en="Privacy">Privacidad</a> · <a href="/legal/terms.html" data-en="Terms">Términos</a> · <a href="/legal/refunds.html" data-en="Refunds">Reembolsos</a></p>
   </div>
 </section>
 
