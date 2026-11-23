@@ -986,6 +986,7 @@ footer{font-size:.85rem!important;line-height:1.6!important}
    footer's legal links. Give the footer room to end above it. */
 footer.mono{padding-bottom:96px!important}
 @media (max-width:640px){footer.mono{padding-bottom:88px!important}}
+.home-float.is-hidden{opacity:0;pointer-events:none;transform:translateY(10px)}
 </style>
 
 
@@ -1673,6 +1674,18 @@ footer.mono{padding-bottom:96px!important}
     if(form&&form.id==="f1")send("demo_interaction",{demo_id:"d1",action:"report_submitted"});
     if(form&&form.id==="f4")send("demo_interaction",{demo_id:"d4",action:"expense_submitted"});
   },true);
+})();
+</script>
+<script>
+/* The floating "back to top" button has no job once the footer is on screen, and
+   it sat on top of the legal links. Hide it there instead of padding around it. */
+(function () {
+  var btn = document.querySelector(".home-float");
+  var foot = document.querySelector("footer");
+  if (!btn || !foot || !("IntersectionObserver" in window)) return;
+  new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { btn.classList.toggle("is-hidden", e.isIntersecting); });
+  }, { threshold: 0.05 }).observe(foot);
 })();
 </script>
 </body>
