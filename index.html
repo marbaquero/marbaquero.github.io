@@ -987,6 +987,10 @@ footer{font-size:.85rem!important;line-height:1.6!important}
 footer.mono{padding-bottom:96px!important}
 @media (max-width:640px){footer.mono{padding-bottom:88px!important}}
 .home-float.is-hidden{opacity:0;pointer-events:none;transform:translateY(10px)}
+#pricing .pricing-link{display:inline-block;margin-top:10px;font-size:.88rem;font-weight:600;
+  color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+#pricing .ui{display:flex;flex-direction:column}
+#pricing .ui > .btn{margin-top:auto}
 </style>
 
 
@@ -1286,7 +1290,7 @@ footer.mono{padding-bottom:96px!important}
             <span class="mono" style="color:var(--accent)" data-en="Most popular">Más popular</span>
             <h3 style="margin-top:10px" data-en="Family Plan">Plan Familia</h3>
             <p style="color:var(--muted);margin-top:8px;font-size:.9rem" data-en="All 7 apps for one household, personally configured for your family.">Las 7 apps para un hogar, configuradas personalmente para su familia.</p>
-            <div style="margin-top:16px"><span style="font:700 1.6rem var(--f-display)">$29</span><span style="color:var(--muted)">/mes</span></div>
+            <div style="margin-top:16px"><span style="font:700 1.6rem var(--f-display)">$29</span><span style="color:var(--muted)" data-en="/month">/mes</span></div>
             <ul style="margin-top:12px;padding-left:18px;color:var(--muted);font-size:.88rem;line-height:1.5">
               <li data-en="Access to all 7 applications">Acceso a las 7 aplicaciones</li>
               <li data-en="Up to 3 caregivers">Hasta 3 cuidadoras</li>
@@ -1305,7 +1309,7 @@ footer.mono{padding-bottom:96px!important}
               <li data-en="Weekly email summary">Resumen semanal por correo</li>
             </ul>
             <a class="btn" href="#weekly-report" style="margin-top:16px" data-en="See weekly report example">Ver ejemplo de reporte semanal</a>
-            <a class="btn" href="https://wa.me/18323359906?text=Hola%2C%20me%20interesa%20Cuidar%20a%20Distancia.%20%2F%20Hello%2C%20I%27m%20interested%20in%20Cuidar%20a%20Distancia." target="_blank" rel="noopener" style="margin-top:16px" data-en="Ask about Full Setup">Consultar instalación</a>
+            <a href="https://wa.me/18323359906?text=Hola%2C%20me%20interesa%20Cuidar%20a%20Distancia.%20%2F%20Hello%2C%20I%27m%20interested%20in%20Cuidar%20a%20Distancia." target="_blank" rel="noopener" class="pricing-link" data-en="Ask about Full Setup">Consultar instalación</a>
           </div>
         </div>
       </div>
