@@ -964,27 +964,13 @@ footer{font-size:.85rem!important;line-height:1.6!important}
 
 /* Compact informational sections: same content, roughly half the height.
    These are reference material, not the sales argument. */
-.section.compact{padding-top:34px;padding-bottom:34px}
-.section.compact .sec-title{font-size:clamp(20px,2.4vw,25px);margin-bottom:4px}
-.section.compact .sec-sub{font-size:.9rem;line-height:1.45;margin-bottom:14px}
-.section.compact .grid{gap:12px!important;margin-top:14px!important}
-.section.compact .card{padding:14px 16px!important;border-radius:14px!important}
-.section.compact h3{font-size:.92rem!important;line-height:1.3;margin:0 0 4px!important}
-.section.compact .card p{font-size:.84rem!important;line-height:1.45!important;margin:0!important}
-.section.compact .card p+p{margin-top:4px!important}
-.section.compact > .wrap > p:last-child{font-size:.8rem!important;margin-top:12px!important}
-
-/* Compact fact list: reference material should read as a list, not six cards. */
-.compact .facts{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px;grid-template-columns:1fr}
-.compact .facts.two{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 28px}
-/* Absolute sizes: the page root is ~21px, so rem values come out larger than intended. */
-.compact .facts li{font-size:13.5px!important;line-height:1.45!important;color:#3d4a44;margin:0}
-.compact .facts b{color:#1D2923;font-weight:700;margin-right:3px;font-size:13.5px!important}
-.compact .facts a{color:#40583d}
-.section.compact .sec-sub{font-size:14px!important;line-height:1.4!important;margin:0 0 2px}
-.compact .legal-links{font-size:12px!important;color:#5d574c;margin:12px 0 0}
-.compact .legal-links a{color:#40583d;font-weight:600}
-@media (max-width:640px){.compact .facts.two{grid-template-columns:1fr}.compact .facts li{font-size:13px!important}}
+.facts{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:10px}
+.facts li{color:#5d574c}
+.facts b{color:#1D2923}
+.facts a{color:#40583d}
+.legal-links{margin:14px 0 0}
+.legal-links a{color:#40583d;font-weight:600}
+@media (max-width:640px){.facts{grid-template-columns:1fr}}
 </style>
 
 
@@ -1333,31 +1319,31 @@ footer{font-size:.85rem!important;line-height:1.6!important}
   </div>
 
   
-<section class="section compact" id="trust">
+<section class="section" id="trust">
   <div class="wrap">
-    <h2 class="sec-title" data-en="Who is behind this">Quién está detrás</h2>
-    <p class="sec-sub" data-en="Built by a son caring for his mother between Houston and Quito.">Lo construyó un hijo que cuida a su mamá entre Houston y Quito.</p>
-    <ul class="facts">
-      <li><b data-en="Started with one family">Nació en una familia</b> <span data-en="Reports, medicines, receipts and payments were scattered. This is the system that replaced the daily WhatsApp question.">Reportes, medicinas, recibos y pagos estaban dispersos. Este es el sistema que reemplazó la pregunta diaria por WhatsApp.</span></li>
-      <li><b data-en="Talk to the person who built it">Habla con quien lo construyó</b> <span data-en="Marcello Baquero, founder.">Marcello Baquero, fundador.</span> <a href="mailto:hola@cuidaradistancia.com">hola@cuidaradistancia.com</a></li>
-      <li><b data-en="Few families, on purpose">Pocas familias, a propósito</b> <span data-en="Personal setup and a direct line, so we learn what a real household needs.">Instalación personal y línea directa, para aprender lo que una casa real necesita.</span></li>
-    </ul>
-  </div>
-</section>
-
-<section class="section compact" id="security">
-  <div class="wrap">
-    <h2 class="sec-title" data-en="Privacy and security">Privacidad y seguridad</h2>
-    <p class="sec-sub" data-en="Medical information, medicines, expenses and caregiver data live in your household account.">Información médica, medicinas, gastos y datos de sus cuidadoras viven en la cuenta de su hogar.</p>
-    <ul class="facts two">
-      <li><b data-en="Where it lives">Dónde vive</b> <span data-en="Supabase (USA) and Cloudflare, HTTPS in transit.">Supabase (EE. UU.) y Cloudflare, HTTPS en tránsito.</span></li>
-      <li><b data-en="Who sees it">Quién lo ve</b> <span data-en="Only your household. Each caregiver has a private, revocable link.">Solo su hogar. Cada cuidadora tiene un enlace privado y revocable.</span></li>
-      <li><b data-en="Isolation">Aislamiento</b> <span data-en="Row-level rules: one account can only read its own household, verified with two live accounts.">Reglas por fila: una cuenta solo lee su hogar, verificado con dos cuentas reales.</span></li>
-      <li><b data-en="Yours">Suyos</b> <span data-en="Export everything as JSON or delete the account from the portal.">Descargue todo en JSON o borre la cuenta desde el portal.</span></li>
-      <li><b data-en="Not medical care">No es atención médica</b> <span data-en="It organises what the family already does. It does not diagnose or prescribe.">Organiza lo que la familia ya hace. No diagnostica ni receta.</span></li>
-      <li><b data-en="Questions">¿Preguntas?</b> <a href="mailto:hola@cuidaradistancia.com">hola@cuidaradistancia.com</a></li>
-    </ul>
-    <p class="legal-links"><a href="/legal/privacy.html" data-en="Privacy">Privacidad</a> · <a href="/legal/terms.html" data-en="Terms">Términos</a> · <a href="/legal/refunds.html" data-en="Refunds">Reembolsos</a></p>
+    <h2 class="sec-title" data-en="About us">Sobre nosotros</h2>
+    <div class="faq">
+      <details>
+        <summary data-en="Who is behind this">Quién está detrás</summary>
+        <ul class="facts">
+          <li><b data-en="Started with one family">Nació en una familia.</b> <span data-en="Reports, medicines, receipts and payments were scattered. This is the system that replaced the daily WhatsApp question.">Reportes, medicinas, recibos y pagos estaban dispersos. Este es el sistema que reemplazó la pregunta diaria por WhatsApp.</span></li>
+          <li><b data-en="Talk to the person who built it">Habla con quien lo construyó.</b> <span data-en="Marcello Baquero, founder.">Marcello Baquero, fundador.</span> <a href="mailto:hola@cuidaradistancia.com">hola@cuidaradistancia.com</a></li>
+          <li><b data-en="Few families, on purpose">Pocas familias, a propósito.</b> <span data-en="Personal setup and a direct line, so we learn what a real household needs.">Instalación personal y línea directa, para aprender lo que una casa real necesita.</span></li>
+        </ul>
+      </details>
+      <details>
+        <summary data-en="Privacy and security">Privacidad y seguridad</summary>
+        <ul class="facts">
+          <li><b data-en="Where it lives">Dónde vive.</b> <span data-en="Supabase (USA) and Cloudflare, HTTPS in transit.">Supabase (EE. UU.) y Cloudflare, HTTPS en tránsito.</span></li>
+          <li><b data-en="Who sees it">Quién lo ve.</b> <span data-en="Only your household. Each caregiver has a private, revocable link.">Solo su hogar. Cada cuidadora tiene un enlace privado y revocable.</span></li>
+          <li><b data-en="Isolation">Aislamiento.</b> <span data-en="Row-level rules: one account can only read its own household, verified with two live accounts.">Reglas por fila: una cuenta solo lee su hogar, verificado con dos cuentas reales.</span></li>
+          <li><b data-en="Yours">Suyos.</b> <span data-en="Export everything as JSON or delete the account from the portal.">Descargue todo en JSON o borre la cuenta desde el portal.</span></li>
+          <li><b data-en="Not medical care">No es atención médica.</b> <span data-en="It organises what the family already does. It does not diagnose or prescribe.">Organiza lo que la familia ya hace. No diagnostica ni receta.</span></li>
+          <li><b data-en="Questions">¿Preguntas?</b> <a href="mailto:hola@cuidaradistancia.com">hola@cuidaradistancia.com</a></li>
+        </ul>
+        <p class="legal-links"><a href="/legal/privacy.html" data-en="Privacy">Privacidad</a> · <a href="/legal/terms.html" data-en="Terms">Términos</a> · <a href="/legal/refunds.html" data-en="Refunds">Reembolsos</a></p>
+      </details>
+    </div>
   </div>
 </section>
 
