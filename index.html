@@ -1029,7 +1029,10 @@ article.app + article.app{margin-top:56px}
    product. Four changes, no new colours outside the existing palette.
 */
 /* 1. narrower reading width: copy lines were reaching 1160px */
-.wrap{max-width:1040px!important}
+/* Narrowing the whole container added 486px of reflow — paragraphs were already
+   capped at 72ch, so the reading width problem was solved there. Keep the grid,
+   trim the container only slightly. */
+.wrap{max-width:1120px!important}
 /* 2. stronger hierarchy: h2 was 51.8px against a 72px h1 — too close to read
       as a different level */
 h1{font-size:clamp(40px,5.2vw,70px)!important}
