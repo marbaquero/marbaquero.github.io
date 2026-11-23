@@ -1050,6 +1050,20 @@ p,li,label,summary{font-size:17px!important}
   #apps,#weekly-report,#pricing,#how{padding-block:26px!important;padding-inline:18px!important}
   h2{font-size:clamp(26px,6vw,34px)!important}
 }
+
+/* Weekly report: the example week is a disclosure, opened from the pricing CTA. */
+.weekly-disclosure{margin-top:26px;border:1px solid var(--line);border-radius:18px;background:var(--card)}
+.weekly-disclosure>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;
+  padding:16px 20px;font:600 1rem var(--f-body);color:var(--ink)}
+.weekly-disclosure>summary::-webkit-details-marker{display:none}
+.weekly-disclosure>summary::after{content:"+";margin-left:auto;font-family:var(--f-mono);color:var(--accent);font-size:1.2rem}
+.weekly-disclosure[open]>summary{border-bottom:1px solid var(--line)}
+.weekly-disclosure[open]>summary::after{content:"–"}
+.weekly-disclosure .weekly-paper{margin:0;border:0;border-radius:0 0 18px 18px;box-shadow:none}
+/* Pricing: same internal structure in all three cards, CTAs aligned. */
+#pricing .ui{display:flex;flex-direction:column}
+#pricing .ui>.btn,#pricing .ui>a.btn{margin-top:auto}
+#pricing .pricing-link{margin-top:8px}
 </style>
 
 
@@ -1281,7 +1295,7 @@ p,li,label,summary{font-size:17px!important}
           <p data-en="Instead of reviewing dozens of individual entries, family members receive one organized summary of care, observations and next steps.">En lugar de revisar decenas de registros individuales, la familia recibe un resumen organizado del cuidado, las observaciones y los próximos pasos.</p>
           <span class="weekly-sample-note" data-en="Illustrative sample — fictional data, not a real patient's record.">Ejemplo ilustrativo: datos ficticios, no corresponden al historial de una persona real.</span>
         </div>
-        <article class="weekly-paper" aria-label="Example weekly family report">
+        <details class="weekly-disclosure" id="weekly-example"><summary data-en="See an example week">Ver un ejemplo de semana</summary><article class="weekly-paper" aria-label="Example weekly family report">
           <div class="weekly-paper-head">
             <div><span class="weekly-kicker" data-en="FAMILY CARE • WEEKLY SUMMARY">CUIDADO FAMILIAR • RESUMEN SEMANAL</span><h3 data-en="Your family's weekly update">Resumen semanal de su familia</h3><p data-en="October 19–25, 2026 · Sample report">19–25 de octubre de 2026 · Reporte de ejemplo</p></div>
             <span class="weekly-status" data-en="Sample">Ejemplo</span>
@@ -1303,7 +1317,7 @@ p,li,label,summary{font-size:17px!important}
             <ul><li data-en="Confirm the missing daily report with the care team.">Confirmar con el equipo el reporte diario pendiente.</li><li data-en="Review household medicine and supply levels.">Revisar las existencias de medicinas y suministros.</li></ul>
           </div>
           <p class="weekly-foot" data-en="Prepared from information entered in the care apps. Missing entries are identified; this report does not replace medical advice or clinical assessment.">Elaborado a partir de la información ingresada en las aplicaciones. Se identifican los registros faltantes; este reporte no reemplaza la orientación médica ni la evaluación clínica.</p>
-        </article>
+        </article></details>
       </div>
     </section>
 
@@ -1341,8 +1355,13 @@ p,li,label,summary{font-size:17px!important}
           <div class="ui" style="border-top:3px solid var(--line)">
             <span class="mono">Demo</span>
             <h3 style="margin-top:10px" data-en="Free forever">Gratis para siempre</h3>
-            <p style="color:var(--muted);margin-top:8px;font-size:.9rem" data-en="Try all 7 demos on this page. No account needed.">Pruebe las siete demostraciones de esta página. No necesita una cuenta.</p>
+            <p style="color:var(--muted);margin-top:8px;font-size:.9rem" data-en="Try all 7 apps with example data.">Pruebe las 7 apps con datos de ejemplo.</p>
             <div style="margin-top:16px;font:600 1.6rem var(--f-display)">$0</div>
+            <ul style="margin-top:12px;padding-left:18px;color:var(--muted);font-size:.88rem;line-height:1.5">
+              <li data-en="All 7 apps, demo data">Las 7 apps, con datos de ejemplo</li>
+              <li data-en="No account needed">Sin cuenta</li>
+              <li data-en="No card required">Sin tarjeta</li>
+            </ul>
             <a class="btn ghost" href="#apps7" style="margin-top:16px" data-en="Try demos">Probar demos</a>
           </div>
           <div class="ui" style="border-top:3px solid var(--accent);box-shadow:0 4px 20px rgba(0,0,0,.06)">
@@ -1367,7 +1386,7 @@ p,li,label,summary{font-size:17px!important}
               <li data-en="1:1 training">Entrenamiento 1:1</li>
               <li data-en="Weekly email summary">Resumen semanal por correo</li>
             </ul>
-            <a class="btn" href="#weekly-report" style="margin-top:16px" data-en="See weekly report example">Ver ejemplo de reporte semanal</a>
+            <a class="btn" href="#weekly-example" style="margin-top:16px" data-en="See weekly report example">Ver ejemplo de reporte semanal</a>
             <a href="https://wa.me/18323359906?text=Hola%2C%20me%20interesa%20Cuidar%20a%20Distancia.%20%2F%20Hello%2C%20I%27m%20interested%20in%20Cuidar%20a%20Distancia." target="_blank" rel="noopener" class="pricing-link" data-en="Ask about Full Setup">Consultar instalación</a>
           </div>
         </div>
@@ -1748,6 +1767,18 @@ p,li,label,summary{font-size:17px!important}
   new IntersectionObserver(function (entries) {
     entries.forEach(function (e) { btn.classList.toggle("is-hidden", e.isIntersecting); });
   }, { threshold: 0.05 }).observe(foot);
+})();
+</script>
+<script>
+/* A link to #weekly-example cannot open a closed <details>; do it on arrival. */
+(function () {
+  function openWeekly() {
+    if (location.hash !== "#weekly-example") return;
+    var d = document.getElementById("weekly-example");
+    if (d) { d.open = true; d.scrollIntoView({ block: "start" }); }
+  }
+  window.addEventListener("hashchange", openWeekly);
+  openWeekly();
 })();
 </script>
 </body>
