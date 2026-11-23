@@ -1010,6 +1010,19 @@ p{max-width:72ch}
 h2{margin-bottom:10px}
 .sub{margin-top:12px!important}
 section>.wrap>p:last-child{margin-top:10px}
+
+/* ---- Row rhythm --------------------------------------------------------
+   Each feature row carried 42px of padding top and bottom AND centred its
+   content vertically, so two rows met with ~170px of nothing between them.
+   Padding drops to 24px, content aligns to the top, and the gap between rows
+   is set once, explicitly.
+*/
+article.app{padding-block:24px!important;align-items:start!important}
+article.app + article.app{margin-top:44px}
+@media (max-width:640px){
+  article.app{padding-block:18px!important}
+  article.app + article.app{margin-top:30px}
+}
 </style>
 
 
