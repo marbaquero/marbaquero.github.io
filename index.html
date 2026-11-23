@@ -1023,6 +1023,30 @@ article.app + article.app{margin-top:56px}
   article.app{padding-block:0!important}
   article.app + article.app{margin-top:36px}
 }
+
+/* ---- Density and section separation ------------------------------------
+   From the review: the page reads as an editorial article rather than a
+   product. Four changes, no new colours outside the existing palette.
+*/
+/* 1. narrower reading width: copy lines were reaching 1160px */
+.wrap{max-width:1040px!important}
+/* 2. stronger hierarchy: h2 was 51.8px against a 72px h1 — too close to read
+      as a different level */
+h1{font-size:clamp(40px,5.2vw,70px)!important}
+h2{font-size:clamp(30px,3.4vw,44px)!important;line-height:1.12!important}
+/* 3. higher density in body copy */
+p,li,label,summary{font-size:17px!important}
+/* 4. section bands, so the eye can tell where one block ends. Tints only,
+      taken from the existing background. */
+#apps{background:#F1EDE3!important}
+#weekly-report{background:#EAE4D8!important}
+#pricing{background:#F1EDE3!important}
+#how{background:#EAE4D8!important}
+#apps,#weekly-report,#pricing,#how{padding-block:52px!important}
+@media (max-width:640px){
+  #apps,#weekly-report,#pricing,#how{padding-block:36px!important}
+  h2{font-size:clamp(26px,6vw,34px)!important}
+}
 </style>
 
 
