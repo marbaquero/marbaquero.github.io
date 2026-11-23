@@ -995,6 +995,21 @@ footer.mono{padding-bottom:96px!important}
 .facts li.stacked b{display:block;margin-right:0}
 .facts li.stacked span{display:block;color:#3d4a44}
 .facts li.stacked a{display:block;margin-top:2px}
+
+/* ---- Typographic polish ------------------------------------------------
+   Same palette, measured changes only:
+   · line-height 1.72 left 31px between 18px lines — the air you noticed
+   · --muted failed AA at 4.48:1 on the page background (46 elements)
+   · the teal used for small labels failed at 4.07:1 (12 elements)
+   · long lines ran to 1080px; 72ch reads better on a laptop
+*/
+p,li,label,summary{line-height:1.6!important}
+p{max-width:72ch}
+:root{--muted:#45585F}
+.mono,.who{color:#0F6A62!important}
+h2{margin-bottom:10px}
+.sub{margin-top:12px!important}
+section>.wrap>p:last-child{margin-top:10px}
 </style>
 
 
