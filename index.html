@@ -1123,6 +1123,13 @@ section.hero p{max-width:54ch}
    the card does not need, and size the headline to land on three lines. */
 section.hero{grid-template-columns:minmax(0,1.22fr) minmax(320px,.78fr)!important}
 section.hero h1{font-size:clamp(34px,3.9vw,56px)!important;line-height:1.07!important;max-width:none!important}
+
+/* The example week is always visible; it is tightened instead of hidden. */
+.weekly-paper{padding:22px 24px!important}
+.weekly-paper p{font-size:15px!important;line-height:1.55!important}
+.weekly-paper h3{font-size:24px!important}
+.weekly-stats{margin-top:14px!important;gap:10px!important}
+@media (max-width:640px){.weekly-paper{padding:16px!important}.weekly-paper p{font-size:14px!important}}
 </style>
 
 
@@ -1354,7 +1361,7 @@ section.hero h1{font-size:clamp(34px,3.9vw,56px)!important;line-height:1.07!impo
           <p data-en="Instead of reviewing dozens of individual entries, family members receive one organized summary of care, observations and next steps.">En lugar de revisar decenas de registros individuales, la familia recibe un resumen organizado del cuidado, las observaciones y los próximos pasos.</p>
           <span class="weekly-sample-note" data-en="Illustrative sample — fictional data, not a real patient's record.">Ejemplo ilustrativo: datos ficticios, no corresponden al historial de una persona real.</span>
         </div>
-        <details class="weekly-disclosure" id="weekly-example"><summary data-en="See an example week">Ver un ejemplo de semana</summary><article class="weekly-paper" aria-label="Example weekly family report">
+        <article class="weekly-paper" aria-label="Example weekly family report">
           <div class="weekly-paper-head">
             <div><span class="weekly-kicker" data-en="FAMILY CARE • WEEKLY SUMMARY">CUIDADO FAMILIAR • RESUMEN SEMANAL</span><h3 data-en="Your family's weekly update">Resumen semanal de su familia</h3><p data-en="October 19–25, 2026 · Sample report">19–25 de octubre de 2026 · Reporte de ejemplo</p></div>
             <span class="weekly-status" data-en="Sample">Ejemplo</span>
@@ -1446,7 +1453,7 @@ section.hero h1{font-size:clamp(34px,3.9vw,56px)!important;line-height:1.07!impo
           <li data-en="1:1 caregiver training">Entrenamiento 1:1</li>
           <li data-en="Weekly email summary">Resumen semanal por correo</li>
         </ul>
-        <a class="btn ghost" href="#weekly-example" data-en="See the weekly example">Ver el ejemplo semanal</a>
+        <a class="btn ghost" href="#weekly-report" data-en="See the weekly example">Ver el ejemplo semanal</a>
         <a class="plan-more" href="https://app.cuidaradistancia.com/?plan=full_setup" data-en="Start with Full Setup">Empezar con Plan Completo</a>
       </article>
     </div>
@@ -1499,8 +1506,7 @@ section.hero h1{font-size:clamp(34px,3.9vw,56px)!important;line-height:1.07!impo
           <li><b data-en="Questions">¿Preguntas?</b> <a href="mailto:hola@cuidaradistancia.com">hola@cuidaradistancia.com</a></li>
         </ul>
         <p class="legal-links"><a href="/legal/privacy.html" data-en="Privacy">Privacidad</a> · <a href="/legal/terms.html" data-en="Terms">Términos</a> · <a href="/legal/refunds.html" data-en="Refunds">Reembolsos</a></p>
-      </details>
-    </div>
+          </div>
   </div>
 </section>
 
