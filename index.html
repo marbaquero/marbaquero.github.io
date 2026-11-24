@@ -1111,6 +1111,12 @@ section.pricing{padding-block:44px!important;padding-inline:clamp(20px,3.4vw,44p
   #demos{padding-block:20px!important}
   #demos .demo{align-items:start!important}
 }
+
+/* The hero headline ran to four lines of 72px type at every laptop width, which
+   reads as a wall rather than a statement. Three lines at 62px, with a little
+   more leading for display sizes. */
+section:first-of-type h1{font-size:clamp(36px,4.4vw,62px)!important;line-height:1.06!important}
+section:first-of-type .sub,section:first-of-type p{max-width:54ch}
 </style>
 
 
