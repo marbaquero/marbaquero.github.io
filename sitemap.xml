@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url><loc>https://cuidaradistancia.com/</loc><lastmod>2026-11-26</lastmod></url>
+  <url>
+    <loc>https://cuidaradistancia.com/</loc>
+    <lastmod>2026-11-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cuidaradistancia.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cuidaradistancia.com/en/"/>
+  </url>
+  <url>
+    <loc>https://cuidaradistancia.com/en/</loc>
+    <lastmod>2026-11-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cuidaradistancia.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cuidaradistancia.com/"/>
+  </url>
+  <url>
+    <loc>https://cuidaradistancia.com/precios.html</loc>
+    <lastmod>2026-11-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cuidaradistancia.com/precios.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cuidaradistancia.com/en/pricing.html"/>
+  </url>
+  <url>
+    <loc>https://cuidaradistancia.com/en/pricing.html</loc>
+    <lastmod>2026-11-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cuidaradistancia.com/en/pricing.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cuidaradistancia.com/precios.html"/>
+  </url>
   <url><loc>https://cuidaradistancia.com/reporte-gratis/</loc><lastmod>2026-11-23</lastmod></url>
   <url>
     <loc>https://cuidaradistancia.com/legal/privacidad.html</loc>
