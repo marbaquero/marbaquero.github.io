@@ -1,8 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://cuidaradistancia.com/</loc><lastmod>2026-11-23</lastmod></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url><loc>https://cuidaradistancia.com/</loc><lastmod>2026-11-26</lastmod></url>
   <url><loc>https://cuidaradistancia.com/reporte-gratis/</loc><lastmod>2026-11-23</lastmod></url>
-  <url><loc>https://cuidaradistancia.com/legal/terms.html</loc><lastmod>2026-11-23</lastmod></url>
-  <url><loc>https://cuidaradistancia.com/legal/privacy.html</loc><lastmod>2026-11-23</lastmod></url>
-  <url><loc>https://cuidaradistancia.com/legal/refunds.html</loc><lastmod>2026-11-23</lastmod></url>
+  <url>
+    <loc>https://cuidaradistancia.com/legal/privacidad.html</loc>
+    <lastmod>2026-11-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cuidaradistancia.com/legal/privacidad.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cuidaradistancia.com/legal/privacy.html"/>
+  </url>
+  <url>
+    <loc>https://cuidaradistancia.com/legal/terminos.html</loc>
+    <lastmod>2026-11-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cuidaradistancia.com/legal/terminos.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cuidaradistancia.com/legal/terms.html"/>
+  </url>
+  <url>
+    <loc>https://cuidaradistancia.com/legal/reembolsos.html</loc>
+    <lastmod>2026-11-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cuidaradistancia.com/legal/reembolsos.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cuidaradistancia.com/legal/refunds.html"/>
+  </url>
+  <url>
+    <loc>https://cuidaradistancia.com/legal/privacy.html</loc>
+    <lastmod>2026-11-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cuidaradistancia.com/legal/privacy.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cuidaradistancia.com/legal/privacidad.html"/>
+  </url>
+  <url>
+    <loc>https://cuidaradistancia.com/legal/terms.html</loc>
+    <lastmod>2026-11-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cuidaradistancia.com/legal/terms.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cuidaradistancia.com/legal/terminos.html"/>
+  </url>
+  <url>
+    <loc>https://cuidaradistancia.com/legal/refunds.html</loc>
+    <lastmod>2026-11-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cuidaradistancia.com/legal/refunds.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://cuidaradistancia.com/legal/reembolsos.html"/>
+  </url>
 </urlset>
