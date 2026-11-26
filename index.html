@@ -483,6 +483,7 @@ footer{margin:0!important;padding-top:14px!important;padding-bottom:14px!importa
 .home-float{position:fixed;right:20px;bottom:20px;z-index:1000;min-height:48px;display:flex;align-items:center;gap:9px;padding:7px 15px 7px 8px;border-radius:999px;background:#172D38;color:#fff;border:1px solid rgba(255,255,255,.4);box-shadow:0 6px 18px rgba(23,45,56,.18);text-decoration:none;line-height:1;transition:transform .18s ease,background .18s ease,opacity .18s ease}
 .home-mark{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#DCEFE8;color:#087F78;font-size:1.15rem;font-weight:700}
 .home-label{font-size:.82rem;font-weight:650;letter-spacing:-.01em;white-space:nowrap}
+.home-label-short{display:none}
 .home-float:hover{transform:translateY(-2px);background:#0A6F6A}.home-float:focus-visible{outline:3px solid #0A8B80;outline-offset:4px}
 @media(max-width:600px){.home-float{right:12px;bottom:12px;min-height:42px;gap:7px;padding:5px 11px 5px 6px}.home-mark{width:28px;height:28px;font-size:1rem}.home-label{font-size:.74rem}}
 
@@ -1314,15 +1315,16 @@ section.shifts h2{max-width:38ch!important}
 /* Phones: icon-only home shortcut (smaller footprint while staying visible),
    and a 44px tap target for the language switch. */
 @media(max-width:600px){
-  .home-float{width:46px;height:46px;min-height:46px;padding:0!important;justify-content:center;border-radius:50%}
+  .home-float{width:auto;height:46px;min-height:46px;padding:4px 14px 4px 5px!important;justify-content:center;border-radius:999px;gap:7px!important}
   .home-float .home-label{display:none}
-  .home-float .home-mark{width:32px;height:32px;font-size:1.05rem}
+  .home-float .home-label-short{display:inline;font-size:.78rem;font-weight:650;letter-spacing:-.01em;white-space:nowrap}
+  .home-float .home-mark{width:30px;height:30px;font-size:1rem}
   .langs button{min-width:44px;min-height:44px!important;padding:7px 12px!important}
 }
 </style>
 </head>
 <body>
-<a class="home-float" href="#top" aria-label="Cuidar a Distancia — volver al inicio" title="Cuidar a Distancia — volver al inicio"><span class="home-mark" aria-hidden="true">✳</span><span class="home-label">Cuidar a Distancia</span></a>
+<a class="home-float" href="#top" aria-label="Cuidar a Distancia — volver al inicio" title="Cuidar a Distancia — volver al inicio"><span class="home-mark" aria-hidden="true">✳</span><span class="home-label">Cuidar a Distancia</span><span class="home-label-short" data-en="Home">Inicio</span></a>
 <div class="wrap">
   <header class="top">
     <a class="brand" href="#top">Cuidar a Distancia</a>
