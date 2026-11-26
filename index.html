@@ -1239,16 +1239,21 @@ section.shifts h2{max-width:38ch!important}
 .weekly-more .weekly-next{margin-top:18px}
 .weekly-more .weekly-foot{margin-top:18px}
 
-/* The closing portrait: a small byline, not a poster. */
-.contact-finale .wrap{display:block!important}
+/* Contact close: same heading and text scale as the pricing head; portrait on the right. */
+.contact-finale .wrap{display:block!important;max-width:900px!important}
 .contact-finale .wrap>div{justify-self:stretch!important}
-.contact-finale-layout{width:100%!important;max-width:none!important;grid-template-columns:104px minmax(0,1fr)!important}
-.close .wrap>div.contact-finale-layout{display:grid!important;flex-wrap:nowrap!important;justify-content:normal!important;justify-self:stretch!important;gap:clamp(24px,4vw,40px)!important;align-items:center!important}
-.contact-finale-photo .contact-finale-inner{max-width:820px!important}
-.contact-finale-photo h2{max-width:24ch!important}
-.contact-finale-portrait{max-width:104px!important;gap:8px!important;transform:none!important}
-.contact-finale-portrait img{aspect-ratio:1!important;border-radius:50%!important;object-position:center 30%!important;background:rgba(255,255,255,.08)!important}
-.contact-finale-portrait span{font-size:.66rem!important;line-height:1.35!important}
+.contact-finale-layout{width:100%!important;max-width:none!important}
+.close .wrap>div.contact-finale-layout{display:grid!important;flex-wrap:nowrap!important;justify-content:center!important;justify-self:stretch!important;
+  grid-template-columns:minmax(0,620px) 220px!important;gap:clamp(36px,3.4vw,52px)!important;align-items:center!important}
+.contact-finale-photo .contact-finale-inner{max-width:620px!important;order:1}
+.contact-finale-photo h2{max-width:30ch!important;font-size:clamp(1.8rem,3.2vw,2.5rem)!important;line-height:1.15!important;
+  letter-spacing:-.02em!important;margin-top:12px!important}
+.contact-finale-photo p{font-size:17px!important;line-height:1.6!important;max-width:46ch!important}
+.contact-kicker{font-family:var(--f-mono)!important;font-size:17px!important;font-weight:400!important;
+  letter-spacing:1.02px!important;text-transform:uppercase!important}
+.contact-finale-portrait{order:2;justify-self:end!important;width:220px!important;max-width:220px!important;gap:10px!important;transform:none!important}
+.contact-finale-portrait img{aspect-ratio:4/5!important;border-radius:22px!important;object-position:center 32%!important;background:rgba(255,255,255,.06)!important}
+.contact-finale-portrait span{font-size:.7rem!important;line-height:1.4!important}
 
 #trust .about-list{background:var(--panel)!important;border:1px solid var(--panel-line)!important;
   border-radius:18px!important;box-shadow:var(--panel-shadow)!important;padding:4px 22px!important}
@@ -1257,15 +1262,18 @@ section.shifts h2{max-width:38ch!important}
 #trust{margin-top:30px!important}
 @media(max-width:820px){
   #trust{margin-top:22px!important}
-  .close .wrap>div.contact-finale-layout{align-items:start!important}
+  .close .wrap>div.contact-finale-layout{grid-template-columns:1fr!important;gap:18px!important;align-items:start!important}
+  .contact-finale-photo .contact-finale-inner{order:1;max-width:none!important}
   section.shifts{padding-block:18px 40px!important}
   .apps .app{padding-block:34px!important}
   .apps7{padding-block:44px!important}
   #apps,#weekly-report,#pricing,#how{padding-block:26px!important}
   .contact-finale-photo{padding:22px 18px!important}
-  .contact-finale-layout{grid-template-columns:80px minmax(0,1fr)!important;gap:16px!important}
-  .contact-finale-portrait{max-width:80px!important}
+  .contact-finale-layout{grid-template-columns:1fr!important;gap:18px!important}
+  .contact-finale-portrait{order:2;justify-self:end!important;width:140px!important;max-width:140px!important}
+  .contact-finale-portrait img{aspect-ratio:4/5!important}
   .contact-finale-portrait span{display:none!important}
+  .contact-finale-photo h2{font-size:clamp(1.8rem,3.2vw,2.5rem)!important;max-width:26ch!important}
 }
 </style>
 </head>
